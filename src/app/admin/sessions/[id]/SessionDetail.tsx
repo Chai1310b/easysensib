@@ -60,6 +60,46 @@ interface Draft {
   tags: string[];
 }
 
+/** Keys of `adminSessions.detail.errors` describing why a draft cannot be saved. */
+type DraftErrorKey = 'date' | 'startTime' | 'endTime' | 'timeOrder' | 'capacity';
+
+const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+
+/** True when the string is a real calendar date, e.g. "2026-02-30" is not. */
+function isValidIsoDate(value: string): boolean {
+  if (!ISO_DATE.test(value)) return false;
+  const date = new Date(`${value}T00:00:00`);
+  if (Number.isNaN(date.getTime())) return false;
+  return `${date.getFullYear()}`.padStart(4, '0') === value.slice(0, 4);
+}
+
+/** "09:30" -> 570, or null when the value is not a time of day. */
+function toMinutes(value: string): number | null {
+  const match = /^(\d{2}):(\d{2})$/.exec(value);
+  if (!match) return null;
+  const hours = Number(match[1]);
+  const minutes = Number(match[2]);
+  if (hours > 23 || minutes > 59) return null;
+  return hours * 60 + minutes;
+}
+
+/**
+ * First reason the draft cannot be saved, or null when it is sound.
+ * Guards the detail page against empty or inconsistent inputs.
+ */
+function findDraftError(draft: Draft, registered: number): DraftErrorKey | null {
+  if (!isValidIsoDate(draft.date)) return 'date';
+  const start = toMinutes(draft.startTime);
+  const end = toMinutes(draft.endTime);
+  if (start === null) return 'startTime';
+  if (end === null) return 'endTime';
+  if (end <= start) return 'timeOrder';
+  if (!Number.isFinite(draft.capacity) || draft.capacity < 1 || draft.capacity < registered) {
+    return 'capacity';
+  }
+  return null;
+}
+
 function toDraft(session: AdminSession): Draft {
   return {
     date: session.date,
@@ -114,6 +154,7 @@ export function SessionDetail({ session, sites, candidates, commonTags }: Sessio
   }, [candidates, participants, enrollSearch]);
 
   const tagSuggestions = commonTags.filter((tag) => !draft.tags.includes(tag));
+  const draftError = editing ? findDraftError(draft, registered) : null;
 
   function startEdit() {
     setDraft(toDraft(current));
@@ -122,6 +163,11 @@ export function SessionDetail({ session, sites, candidates, commonTags }: Sessio
   }
 
   function save() {
+    const error = findDraftError(draft, registered);
+    if (error) {
+      showToast(t(`detail.errors.${error}`, { count: registered }), 'error');
+      return;
+    }
     setCurrent((session_) => ({
       ...session_,
       date: draft.date,
@@ -246,7 +292,7 @@ export function SessionDetail({ session, sites, candidates, commonTags }: Sessio
                 <Button variant="ghost" size="sm" onClick={() => setEditing(false)}>
                   {t('detail.cancelEdit')}
                 </Button>
-                <Button size="sm" onClick={save}>
+                <Button size="sm" onClick={save} disabled={draftError !== null}>
                   <CheckIcon size={14} />
                   {t('detail.save')}
                 </Button>
@@ -262,6 +308,14 @@ export function SessionDetail({ session, sites, candidates, commonTags }: Sessio
           <div className="px-5 py-5">
             {editing ? (
               <div className="flex flex-col gap-4">
+                {draftError ? (
+                  <p
+                    role="alert"
+                    className="rounded-lg border border-danger/25 bg-danger-tint px-3 py-2 text-[12.5px] text-danger-text"
+                  >
+                    {t(`detail.errors.${draftError}`, { count: registered })}
+                  </p>
+                ) : null}
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                   <Field label={t('create.fields.date')} htmlFor="detail-date">
                     <TextInput

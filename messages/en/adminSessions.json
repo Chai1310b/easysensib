@@ -115,6 +115,13 @@
     "save": "Save",
     "cancelEdit": "Cancel",
     "saved": "Changes saved (demo)",
+    "errors": {
+      "date": "Enter a valid date.",
+      "startTime": "Enter a valid start time.",
+      "endTime": "Enter a valid end time.",
+      "timeOrder": "The end time must be later than the start time.",
+      "capacity": "Capacity must be at least 1 seat and cover the {count} registered."
+    },
     "notFoundTitle": "Session not found",
     "notFoundHint": "This session does not exist or has been deleted.",
     "backToList": "Back to sessions",

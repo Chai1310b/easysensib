@@ -115,6 +115,13 @@
     "save": "Enregistrer",
     "cancelEdit": "Annuler",
     "saved": "Modifications enregistrées (démo)",
+    "errors": {
+      "date": "Renseignez une date valide.",
+      "startTime": "Renseignez une heure de début valide.",
+      "endTime": "Renseignez une heure de fin valide.",
+      "timeOrder": "L'heure de fin doit être postérieure à l'heure de début.",
+      "capacity": "La capacité doit être d'au moins 1 place et couvrir les {count} inscrits."
+    },
     "notFoundTitle": "Session introuvable",
     "notFoundHint": "Cette session n'existe pas ou a été supprimée.",
     "backToList": "Retour aux sessions",
