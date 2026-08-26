@@ -36,5 +36,9 @@
     "remainingDays": "Reste {count} j",
     "expiresInMonths": "Expire dans {count} mois",
     "validMonthsLeft": "Valide {count} mois encore"
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "description": "Cette page n'existe pas ou n'est plus disponible."
   }
 }

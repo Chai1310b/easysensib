@@ -1,0 +1,101 @@
+{
+  "title": "Certificats à contrôler",
+  "subtitle": "Attestations e-learning déposées par les utilisateurs. Une validation acquiert la sensibilisation, un rejet renvoie un motif à l'utilisateur.",
+  "breadcrumb": "Certificats",
+  "stats": {
+    "pending": "En attente de contrôle",
+    "pendingHint": "sur {total} dépôts enregistrés",
+    "aging": "Déposés depuis plus de 7 jours",
+    "agingHint": "à traiter en priorité",
+    "approved": "Validés",
+    "approvedHint": "sensibilisations acquises par certificat",
+    "rejected": "Rejetés",
+    "rejectedHint": "motif communiqué à l'utilisateur"
+  },
+  "pending": {
+    "title": "En attente de contrôle",
+    "countOne": "1 certificat",
+    "countOther": "{count} certificats",
+    "countZero": "aucun certificat",
+    "searchPlaceholder": "Utilisateur, sensibilisation ou fichier",
+    "empty": "Aucun certificat en attente",
+    "emptyHint": "Tous les dépôts ont été contrôlés. Les nouveaux certificats apparaîtront ici.",
+    "emptySearch": "Aucun certificat ne correspond",
+    "emptySearchHint": "Ajustez la recherche pour élargir la liste."
+  },
+  "columns": {
+    "user": "Utilisateur",
+    "training": "Sensibilisation",
+    "file": "Fichier",
+    "uploadedAt": "Déposé le",
+    "age": "Ancienneté",
+    "actions": "Décision",
+    "decision": "Décision",
+    "reviewedBy": "Contrôlé par",
+    "reason": "Motif"
+  },
+  "age": {
+    "today": "Aujourd'hui",
+    "oneDay": "1 jour",
+    "days": "{days} jours",
+    "ariaLate": "Dépôt ancien, à traiter en priorité"
+  },
+  "file": {
+    "size": "{size} Ko",
+    "completedAt": "Passé le {date}",
+    "completedUnknown": "Date de passage non renseignée"
+  },
+  "actions": {
+    "preview": "Aperçu",
+    "previewAria": "Voir l'aperçu du document de {name}",
+    "approve": "Valider",
+    "reject": "Rejeter",
+    "approveAria": "Valider le certificat de {name}",
+    "rejectAria": "Rejeter le certificat de {name}"
+  },
+  "preview": {
+    "title": "Aperçu du document",
+    "subtitle": "{fileName} · {size} Ko",
+    "demoNotice": "Aperçu de démonstration, le document réel n'est pas chargé.",
+    "docTitle": "Attestation de suivi",
+    "docSubtitle": "Module e-learning",
+    "fieldUser": "Participant",
+    "fieldTraining": "Sensibilisation",
+    "fieldCompletedAt": "Date de passage",
+    "fieldScore": "Résultat",
+    "score": "Acquis",
+    "signature": "Signature électronique du prestataire",
+    "approveFromPreview": "Valider ce certificat"
+  },
+  "reject": {
+    "title": "Rejeter le certificat",
+    "subtitle": "{name} · {training}",
+    "notice": "Le motif est envoyé à l'utilisateur, qui pourra déposer un nouveau document.",
+    "label": "Motif du rejet",
+    "placeholder": "Précisez ce qui empêche la validation",
+    "suggestions": "Motifs fréquents",
+    "presets": {
+      "unreadable": "Document illisible",
+      "expired": "Certificat trop ancien",
+      "wrongTraining": "Ne correspond pas à la sensibilisation",
+      "incomplete": "Document incomplet"
+    },
+    "confirm": "Rejeter"
+  },
+  "processed": {
+    "title": "Derniers certificats traités",
+    "hint": "Historique des décisions prises sur les dépôts e-learning.",
+    "show": "Afficher",
+    "hide": "Masquer",
+    "empty": "Aucun certificat traité",
+    "emptyHint": "Les décisions validées ou rejetées seront listées ici.",
+    "justNow": "À l'instant",
+    "uploadedOn": "Déposé le {date}",
+    "you": "Vous",
+    "noReason": "Aucun motif renseigné"
+  },
+  "toast": {
+    "approved": "Certificat de {name} validé (démo)",
+    "rejected": "Certificat de {name} rejeté (démo)"
+  }
+}

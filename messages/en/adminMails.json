@@ -1,0 +1,151 @@
+{
+  "title": "Mail reminders",
+  "subtitle": "Every run of the reminder engine, what it analysed and the mails it produces.",
+  "principle": {
+    "title": "How the engine picks who to remind",
+    "body": "The engine does not remind everyone: it caps invitations at {margin} % of the free seats of each session and keeps the highest priority users. The same user is never reminded more than once every {days} days."
+  },
+  "stats": {
+    "executions": "Recorded runs",
+    "executionsHint": "including {count, plural, one {# simulation} other {# simulations}}",
+    "mails": "Mails of the last run",
+    "mailsHint": "run no. {number}",
+    "fillRate": "Fill rate",
+    "fillRateHint": "invitations over seats with margin",
+    "duration": "Average time",
+    "durationHint": "per run"
+  },
+  "actions": {
+    "newSimulation": "New simulation",
+    "launch": "Run the simulation",
+    "openDetail": "Open the detail of run no. {number}"
+  },
+  "simulation": {
+    "title": "Run a new simulation",
+    "notice": "Simulation mode · no mail will actually be sent",
+    "description": "The simulation replays the reminder algorithm on today's data to show who would be reminded, on which sessions and with which priority score. Nothing is written to the mail queue.",
+    "settingsTitle": "Settings applied",
+    "margin": "Invitation margin",
+    "marginValue": "{margin} % of the free seats",
+    "days": "Delay between two reminders",
+    "daysValue": "{days} days",
+    "sessions": "Sessions offered per mail",
+    "sessionsValue": "up to {count}",
+    "sender": "Sender",
+    "launched": "Simulation started (demo), no mail was sent"
+  },
+  "filters": {
+    "ariaLabel": "Filter runs by type",
+    "all": "All",
+    "searchPlaceholder": "Search a number or an author"
+  },
+  "types": {
+    "auto": "Automatic",
+    "simulation": "Simulation",
+    "manual": "Manual"
+  },
+  "table": {
+    "ariaLabel": "Runs of the reminder engine",
+    "execution": "Run",
+    "date": "Date",
+    "type": "Type",
+    "status": "Status",
+    "launchedBy": "Started by",
+    "metrics": "Metrics",
+    "duration": "Duration",
+    "number": "no. {number}",
+    "count": "{count, plural, one {# run} other {# runs}}"
+  },
+  "metrics": {
+    "eligible": "Eligible",
+    "seats": "Free seats",
+    "mails": "Mails to send",
+    "duration": "Time",
+    "seconds": "{seconds} s"
+  },
+  "empty": {
+    "title": "No run",
+    "description": "Adjust the search or the type filter to widen the list.",
+    "noRun": "The reminder engine has not run yet."
+  },
+  "detail": {
+    "back": "Back to reminders",
+    "title": "Run no. {number}",
+    "meta": "{type} · {date} · started by {author}",
+    "summaryTitle": "Overview",
+    "summary": "This run analysed {analysed} users. {eligible} eligible (including {newcomers} newcomers). {seats} seats over {sessions} sessions. {mails} mails to send (fill rate {fillRate} %). {excluded} excluded.",
+    "summarySimulation": "This simulation analysed {analysed} users. {eligible} eligible (including {newcomers} newcomers). {seats} seats over {sessions} sessions. {mails} mails would have been sent (fill rate {fillRate} %). {excluded} excluded.",
+    "noMailNotice": "Simulation: no mail was sent, this run only shows what the algorithm would have done.",
+    "failedTitle": "Failed run",
+    "failedBody": "The engine stopped before prioritisation: no distribution is available and no mail was produced.",
+    "cards": {
+      "analysed": "Total analysed",
+      "analysedHint": "users reviewed",
+      "eligible": "Eligible",
+      "eligibleHint": "kept after exclusions",
+      "newcomers": "Newcomers",
+      "newcomersHint": "never validated, never reminded",
+      "seats": "Free seats",
+      "seatsHint": "over {sessions} future sessions",
+      "mails": "Mails to send",
+      "mailsHint": "one mail per assigned user",
+      "excluded": "Excluded",
+      "excludedHint": "dropped before prioritisation"
+    }
+  },
+  "priority": {
+    "title": "Priority distribution",
+    "hint": "Split of the {count} eligible users by score category. The higher the score, the sooner the user is reminded.",
+    "categories": {
+      "newNoMail": "Newcomers · never reminded",
+      "newWithMail": "Newcomers · already reminded",
+      "expired": "Expired",
+      "expiringSoon": "Expiring soon",
+      "regular": "Regular"
+    },
+    "scoringTitle": "Priority model",
+    "scoreColumn": "Score range",
+    "ranges": {
+      "newNoMail": "1000",
+      "newWithMail": "800 to 999",
+      "expired": "400 to 799",
+      "expiringSoon": "200 to 399",
+      "regular": "0 to 199"
+    },
+    "criteria": {
+      "newNoMail": "Never validated the training, never reminded, no booking",
+      "newWithMail": "Never validated but already reminded at least once",
+      "expired": "Validity over, the score rises with age",
+      "expiringSoon": "Still valid but expires in less than {days} days",
+      "regular": "Up to date, or without history"
+    },
+    "empty": "No eligible user on this run."
+  },
+  "exclusions": {
+    "title": "Exclusion distribution",
+    "hint": "Why {count} users were dropped before prioritisation.",
+    "empty": "No user excluded on this run.",
+    "reasons": {
+      "vip": "VIP user",
+      "validTraining": "Training still valid",
+      "recentMail": "Recent mail",
+      "bookedSlot": "Session already booked",
+      "noEmail": "No email",
+      "inactive": "Inactive"
+    }
+  },
+  "unassigned": {
+    "title": "Unassigned users",
+    "hint": "{count} eligible users no session could take.",
+    "empty": "Every eligible user was attached to a session.",
+    "reasons": {
+      "noCompatibleSession": "No compatible session",
+      "noSessionOnSite": "No session on their site",
+      "compatibleSessionsFull": "Compatible sessions full"
+    }
+  },
+  "notFound": {
+    "title": "Run not found",
+    "description": "This run does not exist or was purged from the history."
+  }
+}

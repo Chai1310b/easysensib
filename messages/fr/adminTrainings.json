@@ -1,0 +1,146 @@
+{
+  "list": {
+    "title": "Sensibilisations",
+    "subtitle": "Le catalogue des sensibilisations, leur validité et la population concernée.",
+    "searchPlaceholder": "Rechercher une sensibilisation",
+    "create": "Créer une sensibilisation",
+    "categoryAria": "Filtrer par filière",
+    "allCategories": "Toutes",
+    "resultCount": "{count, plural, =0 {Aucune sensibilisation} one {# sensibilisation} other {# sensibilisations}}",
+    "columns": {
+      "name": "Sensibilisation",
+      "category": "Filière",
+      "mode": "Mode",
+      "validity": "Validité",
+      "usersConcerned": "Concernés",
+      "usersLate": "En retard",
+      "sessions": "Sessions planifiées"
+    },
+    "empty": "Aucune sensibilisation",
+    "emptyHint": "Ajustez la recherche ou la filière pour élargir la liste.",
+    "emptyAction": "Réinitialiser les filtres"
+  },
+  "stats": {
+    "total": "Sensibilisations",
+    "totalHint": "au catalogue",
+    "concerned": "Obligations actives",
+    "concernedHint": "toutes sensibilisations confondues",
+    "late": "Obligations en retard",
+    "lateHint": "à replanifier",
+    "sessions": "Sessions planifiées",
+    "sessionsHint": "à venir"
+  },
+  "mode": {
+    "session": "Session",
+    "elearning": "E-learning",
+    "aria": "Modes de validation"
+  },
+  "units": {
+    "months": "{count} mois",
+    "hours": "{value, number} h"
+  },
+  "form": {
+    "createTitle": "Créer une sensibilisation",
+    "createSubtitle": "Les champs sont simulés, aucune donnée n'est enregistrée.",
+    "name": "Nom de la sensibilisation",
+    "namePlaceholder": "Exemple : Manipulation des extincteurs",
+    "category": "Filière",
+    "duration": "Durée d'une session",
+    "durationHint": "En heures, décimales autorisées.",
+    "validity": "Durée de validité",
+    "validityHint": "En mois, à partir de la date de validation.",
+    "owner": "Responsable de la sensibilisation",
+    "ownerNone": "Aucun responsable",
+    "elearning": "Validation par e-learning",
+    "elearningHint": "L'utilisateur peut déposer un certificat au lieu de suivre une session.",
+    "submit": "Enregistrer",
+    "cancel": "Annuler",
+    "saved": "Sensibilisation enregistrée (démo)",
+    "created": "Sensibilisation créée (démo)"
+  },
+  "detail": {
+    "notFound": "Sensibilisation introuvable",
+    "notFoundHint": "Cette sensibilisation n'existe pas ou n'est plus au catalogue.",
+    "backToList": "Retour à la liste",
+    "duration": "Durée",
+    "validity": "Validité",
+    "owner": "Responsable",
+    "ownerNone": "Non attribué",
+    "tabs": {
+      "settings": "Paramètres",
+      "users": "Utilisateurs concernés",
+      "sessions": "Sessions"
+    },
+    "tabsAria": "Sections de la sensibilisation",
+    "stats": {
+      "concerned": "Utilisateurs concernés",
+      "concernedHint": "obligation active",
+      "late": "En retard",
+      "lateHint": "à replanifier",
+      "sessions": "Sessions planifiées",
+      "sessionsHint": "à venir",
+      "coverage": "Taux de couverture",
+      "coverageHint": "utilisateurs à jour"
+    }
+  },
+  "settings": {
+    "title": "Paramètres de la sensibilisation",
+    "subtitle": "Modifiez la fiche puis enregistrez. Les changements sont simulés.",
+    "reset": "Réinitialiser"
+  },
+  "users": {
+    "title": "Utilisateurs concernés",
+    "searchPlaceholder": "Rechercher un utilisateur",
+    "stateAria": "Filtrer par état",
+    "allStates": "Tous",
+    "columns": {
+      "user": "Utilisateur",
+      "site": "Site",
+      "state": "État",
+      "lastValidated": "Dernière validation",
+      "expires": "Expire le",
+      "actions": "Actions"
+    },
+    "never": "Jamais",
+    "validatedBy": {
+      "session": "en session",
+      "certificate": "par certificat"
+    },
+    "cancelValidation": "Annuler la validation",
+    "empty": "Aucun utilisateur",
+    "emptyHint": "Ajustez la recherche ou l'état pour élargir la liste.",
+    "vip": "VIP"
+  },
+  "cancelModal": {
+    "title": "Annuler la validation",
+    "subtitle": "{name} · {training}",
+    "intro": "La sensibilisation repassera à l'état non validé et l'utilisateur redeviendra éligible aux relances.",
+    "reasonLabel": "Motif de l'annulation",
+    "reasonPlaceholder": "Choisir un motif",
+    "reasons": {
+      "trainerNotQualified": "Formateur non habilité",
+      "sessionInvalid": "Session invalidée",
+      "attendanceError": "Erreur de saisie de présence",
+      "certificateInvalid": "Certificat non conforme",
+      "other": "Autre motif"
+    },
+    "commentLabel": "Commentaire",
+    "commentPlaceholder": "Précisez le contexte de l'annulation",
+    "relanceLabel": "Déclencher une relance immédiate",
+    "relanceHint": "L'utilisateur est repositionné en tête de file pour la prochaine session.",
+    "confirm": "Annuler la validation",
+    "keep": "Conserver la validation",
+    "done": "Validation annulée (démo)",
+    "missingReason": "Sélectionnez un motif avant de confirmer."
+  },
+  "sessions": {
+    "title": "Sessions liées",
+    "seats": "{registered} / {capacity}",
+    "seatsLabel": "inscrits",
+    "trainer": "Formateur",
+    "empty": "Aucune session",
+    "emptyHint": "Aucune session ne porte encore cette sensibilisation.",
+    "seeSession": "Voir la session",
+    "planSession": "Planifier une session"
+  }
+}

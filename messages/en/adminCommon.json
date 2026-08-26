@@ -1,0 +1,105 @@
+{
+  "space": {
+    "badge": "Manager space",
+    "admin": "Manager space",
+    "user": "User space",
+    "toUser": "Go to the user space",
+    "toAdmin": "Go to the manager space"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "sections": {
+      "trainings": "Trainings",
+      "users": "Users",
+      "administration": "Administration"
+    },
+    "trainingsList": "Training list",
+    "sessions": "Sessions",
+    "certificates": "Certificates to review",
+    "allUsers": "All users",
+    "privilegedUsers": "Privileged users",
+    "mails": "Mail reminders",
+    "settings": "Settings",
+    "ariaLabel": "Manager space navigation"
+  },
+  "actions": {
+    "search": "Search",
+    "filter": "Filter",
+    "create": "Create",
+    "save": "Save",
+    "cancel": "Cancel",
+    "approve": "Approve",
+    "reject": "Reject",
+    "edit": "Edit",
+    "delete": "Delete",
+    "export": "Export",
+    "close": "Close",
+    "seeAll": "See all",
+    "seeDetail": "See details",
+    "back": "Back",
+    "confirm": "Confirm",
+    "reset": "Reset"
+  },
+  "status": {
+    "planned": "Planned",
+    "done": "Completed",
+    "cancelled": "Cancelled",
+    "pending": "Pending",
+    "running": "Running",
+    "failed": "Failed",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "valid": "Up to date",
+    "expiring": "To renew",
+    "overdue": "Overdue",
+    "registered": "Registered",
+    "never": "Never validated",
+    "active": "Active",
+    "inactive": "Inactive"
+  },
+  "roles": {
+    "user": "User",
+    "perimeter_manager": "Perimeter manager",
+    "training_manager": "Training manager",
+    "admin": "Administrator"
+  },
+  "format": {
+    "onsite": "On site",
+    "remote": "Remote",
+    "hybrid": "Hybrid"
+  },
+  "labels": {
+    "site": "Site",
+    "sites": "Sites",
+    "category": "Business line",
+    "allCategories": "All business lines",
+    "allSites": "All sites",
+    "all": "All",
+    "vip": "VIP",
+    "seats": "Seats",
+    "capacity": "Capacity",
+    "date": "Date",
+    "name": "Name",
+    "email": "Email",
+    "role": "Role",
+    "tags": "Tags",
+    "trainer": "Trainer",
+    "noEmail": "Not provided"
+  },
+  "table": {
+    "empty": "No result",
+    "emptyHint": "Adjust the search or the filters to widen the list.",
+    "previous": "Previous page",
+    "next": "Next page",
+    "summary": "{from} to {to} of {total}"
+  },
+  "breadcrumb": {
+    "ariaLabel": "Breadcrumb",
+    "root": "Manager space"
+  },
+  "toast": {
+    "dismiss": "Dismiss notification",
+    "saved": "Changes saved",
+    "simulated": "Simulated action, no data was changed"
+  }
+}

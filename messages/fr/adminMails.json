@@ -1,0 +1,151 @@
+{
+  "title": "Relances mail",
+  "subtitle": "Chaque exécution du moteur de relance, ce qu'elle a analysé et les mails qu'elle produit.",
+  "principle": {
+    "title": "Comment le moteur décide qui relancer",
+    "body": "Le moteur ne relance pas tout le monde : il plafonne les invitations à {margin} % des places libres de chaque créneau et retient les utilisateurs les plus prioritaires. Un même utilisateur n'est pas relancé plus d'une fois tous les {days} jours."
+  },
+  "stats": {
+    "executions": "Exécutions enregistrées",
+    "executionsHint": "dont {count, plural, one {# simulation} other {# simulations}}",
+    "mails": "Mails de la dernière exécution",
+    "mailsHint": "exécution n° {number}",
+    "fillRate": "Taux de remplissage",
+    "fillRateHint": "invitations sur places avec marge",
+    "duration": "Temps moyen",
+    "durationHint": "par exécution"
+  },
+  "actions": {
+    "newSimulation": "Nouvelle simulation",
+    "launch": "Lancer la simulation",
+    "openDetail": "Ouvrir le détail de l'exécution n° {number}"
+  },
+  "simulation": {
+    "title": "Lancer une nouvelle simulation",
+    "notice": "Mode simulation · aucun mail ne sera réellement envoyé",
+    "description": "La simulation rejoue l'algorithme de relance sur les données du jour pour visualiser qui serait relancé, sur quels créneaux et avec quel score de priorité. Rien n'est écrit dans la file d'attente.",
+    "settingsTitle": "Paramètres appliqués",
+    "margin": "Marge d'invitation",
+    "marginValue": "{margin} % des places libres",
+    "days": "Délai entre deux relances",
+    "daysValue": "{days} jours",
+    "sessions": "Sessions proposées par mail",
+    "sessionsValue": "jusqu'à {count}",
+    "sender": "Expéditeur",
+    "launched": "Simulation lancée (démo), aucun mail n'a été envoyé"
+  },
+  "filters": {
+    "ariaLabel": "Filtrer les exécutions par type",
+    "all": "Toutes",
+    "searchPlaceholder": "Rechercher un numéro ou un auteur"
+  },
+  "types": {
+    "auto": "Automatique",
+    "simulation": "Simulation",
+    "manual": "Manuel"
+  },
+  "table": {
+    "ariaLabel": "Exécutions du moteur de relance",
+    "execution": "Exécution",
+    "date": "Date",
+    "type": "Type",
+    "status": "Statut",
+    "launchedBy": "Lancé par",
+    "metrics": "Métriques",
+    "duration": "Durée",
+    "number": "n° {number}",
+    "count": "{count, plural, one {# exécution} other {# exécutions}}"
+  },
+  "metrics": {
+    "eligible": "Éligibles",
+    "seats": "Places disponibles",
+    "mails": "Mails à envoyer",
+    "duration": "Temps",
+    "seconds": "{seconds} s"
+  },
+  "empty": {
+    "title": "Aucune exécution",
+    "description": "Ajustez la recherche ou le filtre de type pour élargir la liste.",
+    "noRun": "Le moteur de relance n'a pas encore tourné."
+  },
+  "detail": {
+    "back": "Retour aux relances",
+    "title": "Exécution n° {number}",
+    "meta": "{type} · {date} · lancée par {author}",
+    "summaryTitle": "Vue d'ensemble",
+    "summary": "Cette exécution a analysé {analysed} utilisateurs. {eligible} éligibles (dont {newcomers} nouveaux). {seats} places sur {sessions} créneaux. {mails} mails à envoyer (taux de remplissage {fillRate} %). {excluded} exclus.",
+    "summarySimulation": "Cette simulation a analysé {analysed} utilisateurs. {eligible} éligibles (dont {newcomers} nouveaux). {seats} places sur {sessions} créneaux. {mails} mails auraient été envoyés (taux de remplissage {fillRate} %). {excluded} exclus.",
+    "noMailNotice": "Simulation : aucun mail n'a été envoyé, cette exécution montre seulement ce que l'algorithme aurait fait.",
+    "failedTitle": "Exécution en échec",
+    "failedBody": "Le moteur s'est arrêté avant la priorisation : aucune distribution n'est disponible et aucun mail n'a été produit.",
+    "cards": {
+      "analysed": "Total analysés",
+      "analysedHint": "utilisateurs passés en revue",
+      "eligible": "Éligibles",
+      "eligibleHint": "retenus après exclusions",
+      "newcomers": "Nouveaux arrivants",
+      "newcomersHint": "jamais validé, jamais relancé",
+      "seats": "Places disponibles",
+      "seatsHint": "sur {sessions} créneaux futurs",
+      "mails": "Mails à envoyer",
+      "mailsHint": "un mail par utilisateur assigné",
+      "excluded": "Exclus",
+      "excludedHint": "écartés avant la priorisation"
+    }
+  },
+  "priority": {
+    "title": "Distribution par priorité",
+    "hint": "Répartition des {count} éligibles par catégorie de score. Plus le score est haut, plus l'utilisateur est relancé tôt.",
+    "categories": {
+      "newNoMail": "Nouveaux · jamais relancés",
+      "newWithMail": "Nouveaux · déjà relancés",
+      "expired": "Expirés",
+      "expiringSoon": "Expire bientôt",
+      "regular": "Réguliers"
+    },
+    "scoringTitle": "Système de priorisation",
+    "scoreColumn": "Plage de score",
+    "ranges": {
+      "newNoMail": "1000",
+      "newWithMail": "800 à 999",
+      "expired": "400 à 799",
+      "expiringSoon": "200 à 399",
+      "regular": "0 à 199"
+    },
+    "criteria": {
+      "newNoMail": "Jamais validé la sensibilisation, jamais relancé, aucune réservation",
+      "newWithMail": "Jamais validé mais déjà relancé au moins une fois",
+      "expired": "Validité dépassée, le score monte avec l'ancienneté",
+      "expiringSoon": "Encore valide mais expire dans moins de {days} jours",
+      "regular": "À jour, ou sans historique"
+    },
+    "empty": "Aucun éligible sur cette exécution."
+  },
+  "exclusions": {
+    "title": "Distribution des exclusions",
+    "hint": "Pourquoi {count} utilisateurs ont été écartés avant la priorisation.",
+    "empty": "Aucun utilisateur exclu sur cette exécution.",
+    "reasons": {
+      "vip": "Utilisateur VIP",
+      "validTraining": "Objectif valide",
+      "recentMail": "Mail récent",
+      "bookedSlot": "Créneau réservé",
+      "noEmail": "Sans email",
+      "inactive": "Inactif"
+    }
+  },
+  "unassigned": {
+    "title": "Utilisateurs non assignés",
+    "hint": "{count} éligibles qu'aucun créneau n'a pu accueillir.",
+    "empty": "Tous les éligibles ont été rattachés à un créneau.",
+    "reasons": {
+      "noCompatibleSession": "Aucun créneau compatible",
+      "noSessionOnSite": "Aucun créneau sur son site",
+      "compatibleSessionsFull": "Créneaux compatibles remplis"
+    }
+  },
+  "notFound": {
+    "title": "Exécution introuvable",
+    "description": "Cette exécution n'existe pas ou a été purgée de l'historique."
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "title": "Settings",
+  "subtitle": "Relance engine parameters and shared referentials of the manager space: business lines, session tags, sites and rooms.",
+  "columns": {
+    "actions": "Actions"
+  },
+  "units": {
+    "days": "days",
+    "sessions": "sessions"
+  },
+  "toggle": {
+    "on": "Enabled",
+    "off": "Disabled"
+  },
+  "relance": {
+    "title": "Mail relances",
+    "description": "Parameters of the engine picking the users to remind and the sessions proposed to them.",
+    "autoOn": "Automatic run at {time}",
+    "autoOff": "Automatic run disabled",
+    "seatMargin": "Over-invitation margin",
+    "seatMarginHint": "Invitations sent per free seat, to offset users who never answer.",
+    "seatMarginUnit": "invitation per seat",
+    "daysBetween": "Delay between two relances",
+    "daysBetweenHint": "A user reminded recently is dropped from the next run.",
+    "expiringSoon": "\"Expiring soon\" threshold",
+    "expiringSoonHint": "A valid training joins the relance queue within this window before expiry.",
+    "sessionsPerMail": "Sessions proposed per mail",
+    "sessionsPerMailHint": "Maximum number of slots listed inside one invitation.",
+    "autoRunTime": "Sending time",
+    "autoRunTimeHint": "Time of the daily automatic run.",
+    "sender": "Sender address",
+    "senderHint": "Address shown as the sender of the invitations.",
+    "autoRun": "Automatic run",
+    "autoRunHint": "Runs the engine every day without any action.",
+    "onCancel": "Relance on cancellation",
+    "onCancelHint": "Immediately reminds a user whose validation has been cancelled.",
+    "estimate": "About <b>{invitations}</b> invitations for <b>{seats}</b> free seats across the upcoming sessions.",
+    "savedToast": "Relance settings saved (demo)"
+  },
+  "categories": {
+    "title": "Business lines",
+    "description": "The business line is the category carried by the training. It is used as a filter across the manager space.",
+    "add": "Add a business line",
+    "columns": {
+      "trainings": "Trainings",
+      "sessions": "Upcoming sessions",
+      "users": "Users concerned"
+    },
+    "rename": "Rename the {name} business line",
+    "drawerCreateTitle": "New business line",
+    "drawerEditTitle": "Rename the business line",
+    "drawerSubtitle": "A business line groups several trainings.",
+    "nameLabel": "Business line name",
+    "namePlaceholder": "E.g. Environment",
+    "nameHint": "Two characters minimum, visible in every filter.",
+    "duplicate": "This business line already exists.",
+    "renameWarning": "{count, plural, one {# training carries this business line and will be updated.} other {# trainings carry this business line and will be updated.}}",
+    "createdToast": "Business line \"{name}\" created (demo)",
+    "renamedToast": "Business line renamed to \"{name}\" (demo)"
+  },
+  "tags": {
+    "title": "Session tags",
+    "description": "Common referential of the free tags proposed when creating a session.",
+    "count": "{count, plural, one {# tag} other {# tags}}",
+    "usage": "{count, plural, =0 {No session} one {# session} other {# sessions}}",
+    "add": "Add",
+    "addLabel": "New tag",
+    "addPlaceholder": "E.g. New joiners",
+    "addHint": "The figure shows how many sessions already carry the tag.",
+    "duplicate": "This tag is already in the referential.",
+    "remove": "Remove the {name} tag",
+    "removeTitle": "Remove this tag?",
+    "removeUsed": "The tag \"{name}\" is set on {count, plural, one {# session} other {# sessions}}. It leaves the suggestions but stays visible there.",
+    "removeUnused": "The tag \"{name}\" is set on no session. It will be removed from the suggestions.",
+    "emptyTitle": "No common tag",
+    "emptyHint": "Add a first tag to propose it when creating a session.",
+    "addedToast": "Tag \"{name}\" added to the referential (demo)",
+    "removedToast": "Tag \"{name}\" removed from the referential (demo)"
+  },
+  "rooms": {
+    "title": "Sites and rooms",
+    "description": "Rooms available per site. The room is picked session by session, never frozen at series level.",
+    "add": "Add a room",
+    "seats": "seats",
+    "siteSummary": "{rooms, plural, one {# room} other {# rooms}} · {capacity} seats in total",
+    "booked": "{count, plural, =0 {No upcoming session} one {# upcoming session} other {# upcoming sessions}}",
+    "emptyTitle": "No room on this site",
+    "emptyHint": "Add a room to be able to pick it when planning a session.",
+    "drawerTitle": "New room",
+    "drawerSubtitle": "{site} site",
+    "buildingLabel": "Building",
+    "buildingPlaceholder": "E.g. Building A",
+    "buildingHint": "Pick an existing building or type a new one.",
+    "roomLabel": "Room",
+    "roomPlaceholder": "E.g. Room 14",
+    "capacityHint": "Number of seats, cap of the registrations to a session.",
+    "addedToast": "Room \"{name}\" added on the {site} site (demo)"
+  }
+}

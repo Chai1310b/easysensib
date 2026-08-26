@@ -1,0 +1,101 @@
+{
+  "title": "Certificates to review",
+  "subtitle": "E-learning proofs uploaded by users. Approving grants the training, rejecting returns a reason to the user.",
+  "breadcrumb": "Certificates",
+  "stats": {
+    "pending": "Waiting for review",
+    "pendingHint": "out of {total} uploads on record",
+    "aging": "Uploaded more than 7 days ago",
+    "agingHint": "to handle first",
+    "approved": "Approved",
+    "approvedHint": "trainings granted by certificate",
+    "rejected": "Rejected",
+    "rejectedHint": "reason sent to the user"
+  },
+  "pending": {
+    "title": "Waiting for review",
+    "countOne": "1 certificate",
+    "countOther": "{count} certificates",
+    "countZero": "no certificate",
+    "searchPlaceholder": "User, training or file",
+    "empty": "No certificate waiting",
+    "emptyHint": "Every upload has been reviewed. New certificates will show up here.",
+    "emptySearch": "No matching certificate",
+    "emptySearchHint": "Adjust the search to widen the list."
+  },
+  "columns": {
+    "user": "User",
+    "training": "Training",
+    "file": "File",
+    "uploadedAt": "Uploaded on",
+    "age": "Age",
+    "actions": "Decision",
+    "decision": "Decision",
+    "reviewedBy": "Reviewed by",
+    "reason": "Reason"
+  },
+  "age": {
+    "today": "Today",
+    "oneDay": "1 day",
+    "days": "{days} days",
+    "ariaLate": "Old upload, to handle first"
+  },
+  "file": {
+    "size": "{size} KB",
+    "completedAt": "Taken on {date}",
+    "completedUnknown": "Completion date not provided"
+  },
+  "actions": {
+    "preview": "Preview",
+    "previewAria": "Preview the document of {name}",
+    "approve": "Approve",
+    "reject": "Reject",
+    "approveAria": "Approve the certificate of {name}",
+    "rejectAria": "Reject the certificate of {name}"
+  },
+  "preview": {
+    "title": "Document preview",
+    "subtitle": "{fileName} · {size} KB",
+    "demoNotice": "Demo preview, the real document is not loaded.",
+    "docTitle": "Completion certificate",
+    "docSubtitle": "E-learning module",
+    "fieldUser": "Participant",
+    "fieldTraining": "Training",
+    "fieldCompletedAt": "Completion date",
+    "fieldScore": "Result",
+    "score": "Passed",
+    "signature": "Electronic signature of the provider",
+    "approveFromPreview": "Approve this certificate"
+  },
+  "reject": {
+    "title": "Reject the certificate",
+    "subtitle": "{name} · {training}",
+    "notice": "The reason is sent to the user, who can then upload a new document.",
+    "label": "Rejection reason",
+    "placeholder": "State what prevents the approval",
+    "suggestions": "Common reasons",
+    "presets": {
+      "unreadable": "Unreadable document",
+      "expired": "Certificate too old",
+      "wrongTraining": "Does not match the training",
+      "incomplete": "Incomplete document"
+    },
+    "confirm": "Reject"
+  },
+  "processed": {
+    "title": "Recently reviewed certificates",
+    "hint": "History of the decisions taken on e-learning uploads.",
+    "show": "Show",
+    "hide": "Hide",
+    "empty": "No reviewed certificate",
+    "emptyHint": "Approved or rejected decisions will be listed here.",
+    "justNow": "Just now",
+    "uploadedOn": "Uploaded on {date}",
+    "you": "You",
+    "noReason": "No reason provided"
+  },
+  "toast": {
+    "approved": "Certificate of {name} approved (demo)",
+    "rejected": "Certificate of {name} rejected (demo)"
+  }
+}

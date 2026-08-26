@@ -1,0 +1,154 @@
+{
+  "list": {
+    "title": "Users",
+    "subtitle": "Training obligations tracked site by site.",
+    "searchPlaceholder": "Search a name or an email",
+    "stats": {
+      "total": "Tracked users",
+      "totalHint": "Accounts attached to the three sites",
+      "late": "Overdue",
+      "lateHint": "At least one training to renew",
+      "registered": "Registered to a session",
+      "registeredHint": "A seat booked and pending",
+      "privileged": "Privileged",
+      "privilegedHint": "Managers and administrators"
+    },
+    "filters": {
+      "siteAria": "Filter by site",
+      "stateAria": "Filter by state",
+      "all": "All",
+      "late": "Overdue",
+      "upToDate": "Up to date",
+      "vip": "VIP",
+      "inactive": "Inactive accounts"
+    },
+    "columns": {
+      "name": "User",
+      "email": "Email",
+      "site": "Site",
+      "trainings": "Trainings",
+      "vip": "VIP",
+      "role": "Role",
+      "lastActivity": "Last activity"
+    },
+    "sortAria": "Sort by {column}",
+    "trainings": {
+      "valid": "{count} up to date",
+      "late": "{count} overdue",
+      "registered": "{count} registered",
+      "none": "No training"
+    },
+    "vipTitle": "Excluded from automatic reminders",
+    "inactiveTitle": "Inactive account, never reminded",
+    "empty": "No user",
+    "emptyHint": "Adjust the search or the filters to widen the list."
+  },
+  "detail": {
+    "backToList": "All users",
+    "notFound": "User not found",
+    "notFoundHint": "This user does not exist or is no longer inside your perimeter.",
+    "noEmail": "No email address",
+    "lastActivity": "Last sign-in on {date}",
+    "counters": {
+      "valid": "Up to date",
+      "late": "Overdue",
+      "registered": "Registered"
+    },
+    "vipNote": "VIP user, excluded from automatic reminders.",
+    "inactiveNote": "Inactive account, no reminder is ever sent.",
+    "noEmailNote": "No known email, this user cannot be reminded.",
+    "trainingsTitle": "Assigned trainings",
+    "trainingsSubtitle": "Each row is an obligation carried by the user.",
+    "columns": {
+      "training": "Training",
+      "state": "State",
+      "validity": "Validity",
+      "lastValidation": "Last validation",
+      "action": "Action"
+    },
+    "validatedBySession": "Session of {date}",
+    "validatedByCertificate": "Certificate of {date}",
+    "neverValidated": "Never validated",
+    "registeredHint": "Seat booked",
+    "empty": "No assigned training",
+    "emptyHint": "This user carries no obligation for now.",
+    "perimeterTitle": "Rights perimeter",
+    "perimeterSubtitle": "What this user may see and manage, apart from their own obligations.",
+    "managedSites": "Managed sites",
+    "managedTrainings": "Managed trainings",
+    "allSites": "All sites",
+    "none": "None",
+    "allTrainings": "All trainings"
+  },
+  "validity": {
+    "overdueDays": "{count} days overdue",
+    "remainingDays": "Expires in {count} days",
+    "validMonths": "{count} months left",
+    "registered": "Seat booked",
+    "never": "Never validated"
+  },
+  "cancel": {
+    "action": "Cancel validation",
+    "title": "Cancel validation",
+    "subtitle": "{training} · {user}",
+    "warning": "The training goes back to overdue and the user must validate it again.",
+    "reasonLabel": "Cancellation reason",
+    "reasons": {
+      "sessionInvalid": "Session not compliant",
+      "trainerNotQualified": "Trainer not qualified",
+      "attendanceError": "Attendance input error",
+      "certificateInvalid": "Invalid certificate",
+      "other": "Other reason"
+    },
+    "commentLabel": "Details",
+    "commentPlaceholder": "Context passed on to the user (optional)",
+    "requeueLabel": "Book another session",
+    "requeueHint": "The user is registered on the chosen slot straight away.",
+    "sessionLabel": "Session",
+    "sessionOption": "{date} · {site} · {time}",
+    "noSession": "No upcoming session carries this training.",
+    "confirm": "Cancel validation",
+    "keep": "Keep it",
+    "doneRequeued": "Validation cancelled, user booked again (demo)",
+    "done": "Validation cancelled (demo)"
+  },
+  "privileged": {
+    "title": "Privileged users",
+    "subtitle": "Perimeter managers, training managers and administrators.",
+    "explainerTitle": "Assignment and rights perimeter are two different things",
+    "explainerAssignment": "Assigning a training creates an obligation: the manager must validate it too and sees it in their own user space.",
+    "explainerPerimeter": "The rights perimeter defines what the manager may see and manage for other people: sites, trainings, or both.",
+    "stats": {
+      "perimeter": "Perimeter managers",
+      "perimeterHint": "Rights bounded by site",
+      "training": "Training managers",
+      "trainingHint": "Rights bounded by training",
+      "admin": "Administrators",
+      "adminHint": "Full perimeter"
+    },
+    "filterAria": "Filter by role",
+    "columns": {
+      "name": "Manager",
+      "role": "Role",
+      "sites": "Perimeter · sites",
+      "trainings": "Perimeter · trainings",
+      "own": "Own obligations"
+    },
+    "sitesAll": "All sites",
+    "sitesNone": "No site",
+    "trainingsNone": "No training",
+    "trainingsMore": "+{count}",
+    "ownCount": "{count} assigned",
+    "ownLate": "{count} overdue",
+    "empty": "No privileged user",
+    "emptyHint": "No account carries this role for now.",
+    "drawerPerimeter": "Rights perimeter",
+    "drawerPerimeterHint": "What they may manage for other people.",
+    "drawerOwn": "Own obligations",
+    "drawerOwnHint": "What they must validate themselves.",
+    "drawerSites": "Sites",
+    "drawerTrainings": "Trainings",
+    "seeProfile": "See the full profile",
+    "trainingsAll": "All trainings"
+  }
+}

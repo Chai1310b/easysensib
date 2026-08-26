@@ -1,0 +1,146 @@
+{
+  "list": {
+    "title": "Trainings",
+    "subtitle": "The training catalogue, its validity periods and the population it covers.",
+    "searchPlaceholder": "Search a training",
+    "create": "Create a training",
+    "categoryAria": "Filter by business line",
+    "allCategories": "All",
+    "resultCount": "{count, plural, =0 {No training} one {# training} other {# trainings}}",
+    "columns": {
+      "name": "Training",
+      "category": "Business line",
+      "mode": "Mode",
+      "validity": "Validity",
+      "usersConcerned": "Covered",
+      "usersLate": "Overdue",
+      "sessions": "Planned sessions"
+    },
+    "empty": "No training",
+    "emptyHint": "Adjust the search or the business line to widen the list.",
+    "emptyAction": "Reset the filters"
+  },
+  "stats": {
+    "total": "Trainings",
+    "totalHint": "in the catalogue",
+    "concerned": "Active obligations",
+    "concernedHint": "across all trainings",
+    "late": "Overdue obligations",
+    "lateHint": "to reschedule",
+    "sessions": "Planned sessions",
+    "sessionsHint": "upcoming"
+  },
+  "mode": {
+    "session": "Session",
+    "elearning": "E-learning",
+    "aria": "Validation modes"
+  },
+  "units": {
+    "months": "{count} months",
+    "hours": "{value, number} h"
+  },
+  "form": {
+    "createTitle": "Create a training",
+    "createSubtitle": "The fields are simulated, nothing is stored.",
+    "name": "Training name",
+    "namePlaceholder": "For example: Fire extinguisher handling",
+    "category": "Business line",
+    "duration": "Session duration",
+    "durationHint": "In hours, decimals allowed.",
+    "validity": "Validity period",
+    "validityHint": "In months, counted from the validation date.",
+    "owner": "Training owner",
+    "ownerNone": "No owner",
+    "elearning": "E-learning validation",
+    "elearningHint": "The user may upload a certificate instead of attending a session.",
+    "submit": "Save",
+    "cancel": "Cancel",
+    "saved": "Training saved (demo)",
+    "created": "Training created (demo)"
+  },
+  "detail": {
+    "notFound": "Training not found",
+    "notFoundHint": "This training does not exist or is no longer in the catalogue.",
+    "backToList": "Back to the list",
+    "duration": "Duration",
+    "validity": "Validity",
+    "owner": "Owner",
+    "ownerNone": "Unassigned",
+    "tabs": {
+      "settings": "Settings",
+      "users": "Covered users",
+      "sessions": "Sessions"
+    },
+    "tabsAria": "Training sections",
+    "stats": {
+      "concerned": "Covered users",
+      "concernedHint": "active obligation",
+      "late": "Overdue",
+      "lateHint": "to reschedule",
+      "sessions": "Planned sessions",
+      "sessionsHint": "upcoming",
+      "coverage": "Coverage rate",
+      "coverageHint": "users up to date"
+    }
+  },
+  "settings": {
+    "title": "Training settings",
+    "subtitle": "Edit the record then save. Changes are simulated.",
+    "reset": "Reset"
+  },
+  "users": {
+    "title": "Covered users",
+    "searchPlaceholder": "Search a user",
+    "stateAria": "Filter by state",
+    "allStates": "All",
+    "columns": {
+      "user": "User",
+      "site": "Site",
+      "state": "State",
+      "lastValidated": "Last validation",
+      "expires": "Expires on",
+      "actions": "Actions"
+    },
+    "never": "Never",
+    "validatedBy": {
+      "session": "in session",
+      "certificate": "by certificate"
+    },
+    "cancelValidation": "Cancel the validation",
+    "empty": "No user",
+    "emptyHint": "Adjust the search or the state to widen the list.",
+    "vip": "VIP"
+  },
+  "cancelModal": {
+    "title": "Cancel the validation",
+    "subtitle": "{name} · {training}",
+    "intro": "The training goes back to the unvalidated state and the user becomes eligible for reminders again.",
+    "reasonLabel": "Cancellation reason",
+    "reasonPlaceholder": "Pick a reason",
+    "reasons": {
+      "trainerNotQualified": "Trainer not qualified",
+      "sessionInvalid": "Session invalidated",
+      "attendanceError": "Attendance input error",
+      "certificateInvalid": "Non compliant certificate",
+      "other": "Other reason"
+    },
+    "commentLabel": "Comment",
+    "commentPlaceholder": "Describe the context of the cancellation",
+    "relanceLabel": "Trigger an immediate reminder",
+    "relanceHint": "The user is moved to the front of the queue for the next session.",
+    "confirm": "Cancel the validation",
+    "keep": "Keep the validation",
+    "done": "Validation cancelled (demo)",
+    "missingReason": "Pick a reason before confirming."
+  },
+  "sessions": {
+    "title": "Linked sessions",
+    "seats": "{registered} / {capacity}",
+    "seatsLabel": "registered",
+    "trainer": "Trainer",
+    "empty": "No session",
+    "emptyHint": "No session carries this training yet.",
+    "seeSession": "See the session",
+    "planSession": "Plan a session"
+  }
+}

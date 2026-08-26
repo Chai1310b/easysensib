@@ -1,0 +1,61 @@
+{
+  "title": "Dashboard",
+  "subtitle": "Overview of trainings, sessions and mail reminders.",
+  "stats": {
+    "usersLate": "Overdue users",
+    "usersLateHint": "at least one training to renew",
+    "upcomingSessions": "Upcoming sessions",
+    "upcomingSessionsHint": "planned from today on",
+    "fillRate": "Fill rate",
+    "fillRateHint": "actual registrations over open seats",
+    "certificates": "Certificates to review",
+    "certificatesHint": "waiting for a decision"
+  },
+  "upcoming": {
+    "title": "Next sessions",
+    "seats": "{registered}/{capacity} registered",
+    "empty": "No planned session",
+    "emptyHint": "Create a session to open seats to users."
+  },
+  "relances": {
+    "title": "Latest mail runs",
+    "metrics": "{eligible} eligible · {mails} mails",
+    "empty": "No run recorded",
+    "emptyHint": "The reminder engine has not run yet."
+  },
+  "types": {
+    "auto": "Automatic",
+    "simulation": "Simulation",
+    "manual": "Manual"
+  },
+  "attention": {
+    "title": "Attention points",
+    "subtitle": "Situations to handle first",
+    "certificates": {
+      "label": "certificates pending for more than {days} days",
+      "pill": "{days} d",
+      "empty": "No certificate left waiting"
+    },
+    "sessions": {
+      "label": "sessions within {days} days filled under {fill} %",
+      "pill": "{percent} %",
+      "seats": "{registered}/{capacity} registered",
+      "empty": "No session at risk this week"
+    },
+    "users": {
+      "label": "users overdue for more than {days} days",
+      "pill": "{days} d",
+      "empty": "No long-standing overdue user"
+    }
+  },
+  "quickLinks": {
+    "title": "Quick links",
+    "trainings": "Trainings",
+    "sessions": "Sessions",
+    "certificates": "Certificates",
+    "users": "Users",
+    "privileged": "Privileged users",
+    "mails": "Mail reminders",
+    "settings": "Settings"
+  }
+}

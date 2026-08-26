@@ -1,0 +1,99 @@
+{
+  "title": "Paramètres",
+  "subtitle": "Réglages du moteur de relance et référentiels partagés de l'espace responsable : filières, tags de session, sites et salles.",
+  "columns": {
+    "actions": "Actions"
+  },
+  "units": {
+    "days": "jours",
+    "sessions": "sessions"
+  },
+  "toggle": {
+    "on": "Activé",
+    "off": "Désactivé"
+  },
+  "relance": {
+    "title": "Relances mail",
+    "description": "Paramètres du moteur qui choisit les utilisateurs à relancer et les sessions proposées.",
+    "autoOn": "Envoi automatique à {time}",
+    "autoOff": "Envoi automatique désactivé",
+    "seatMargin": "Marge de sur-invitation",
+    "seatMarginHint": "Nombre d'invitations envoyées par place libre, pour compenser les non-réponses.",
+    "seatMarginUnit": "invitation par place",
+    "daysBetween": "Délai entre deux relances",
+    "daysBetweenHint": "Un utilisateur relancé récemment est écarté de l'exécution suivante.",
+    "expiringSoon": "Seuil « expire bientôt »",
+    "expiringSoonHint": "Une sensibilisation valide entre dans la file de relance sous ce délai avant expiration.",
+    "sessionsPerMail": "Sessions proposées par mail",
+    "sessionsPerMailHint": "Nombre maximum de créneaux listés dans une invitation.",
+    "autoRunTime": "Heure d'envoi",
+    "autoRunTimeHint": "Heure de l'exécution automatique quotidienne.",
+    "sender": "Adresse expéditrice",
+    "senderHint": "Adresse affichée comme émetteur des invitations.",
+    "autoRun": "Exécution automatique",
+    "autoRunHint": "Lance le moteur chaque jour sans intervention.",
+    "onCancel": "Relance sur annulation",
+    "onCancelHint": "Relance immédiatement un utilisateur dont la validation est annulée.",
+    "estimate": "Environ <b>{invitations}</b> invitations pour <b>{seats}</b> places libres sur les sessions à venir.",
+    "savedToast": "Paramètres de relance enregistrés (démo)"
+  },
+  "categories": {
+    "title": "Filières",
+    "description": "La filière est la catégorie portée par la sensibilisation. Elle sert de filtre dans tout l'espace responsable.",
+    "add": "Ajouter une filière",
+    "columns": {
+      "trainings": "Sensibilisations",
+      "sessions": "Sessions à venir",
+      "users": "Utilisateurs concernés"
+    },
+    "rename": "Renommer la filière {name}",
+    "drawerCreateTitle": "Nouvelle filière",
+    "drawerEditTitle": "Renommer la filière",
+    "drawerSubtitle": "La filière regroupe plusieurs sensibilisations.",
+    "nameLabel": "Nom de la filière",
+    "namePlaceholder": "Ex. Environnement",
+    "nameHint": "Deux caractères minimum, visible partout dans les filtres.",
+    "duplicate": "Cette filière existe déjà.",
+    "renameWarning": "{count, plural, one {# sensibilisation porte cette filière et sera mise à jour.} other {# sensibilisations portent cette filière et seront mises à jour.}}",
+    "createdToast": "Filière « {name} » créée (démo)",
+    "renamedToast": "Filière renommée en « {name} » (démo)"
+  },
+  "tags": {
+    "title": "Tags de session",
+    "description": "Référentiel commun des tags libres proposés à la création d'une session.",
+    "count": "{count, plural, one {# tag} other {# tags}}",
+    "usage": "{count, plural, =0 {Aucune session} one {# session} other {# sessions}}",
+    "add": "Ajouter",
+    "addLabel": "Nouveau tag",
+    "addPlaceholder": "Ex. Nouveaux arrivants",
+    "addHint": "Le chiffre indique le nombre de sessions qui portent déjà le tag.",
+    "duplicate": "Ce tag est déjà dans le référentiel.",
+    "remove": "Supprimer le tag {name}",
+    "removeTitle": "Supprimer ce tag ?",
+    "removeUsed": "Le tag « {name} » est posé sur {count, plural, one {# session} other {# sessions}}. Il disparaît des suggestions mais reste visible dessus.",
+    "removeUnused": "Le tag « {name} » n'est posé sur aucune session. Il sera retiré des suggestions.",
+    "emptyTitle": "Aucun tag commun",
+    "emptyHint": "Ajoutez un premier tag pour le proposer à la création d'une session.",
+    "addedToast": "Tag « {name} » ajouté au référentiel (démo)",
+    "removedToast": "Tag « {name} » retiré du référentiel (démo)"
+  },
+  "rooms": {
+    "title": "Sites et salles",
+    "description": "Salles disponibles par site. La salle est choisie session par session, jamais figée au niveau d'une série.",
+    "add": "Ajouter une salle",
+    "seats": "places",
+    "siteSummary": "{rooms, plural, one {# salle} other {# salles}} · {capacity} places au total",
+    "booked": "{count, plural, =0 {Aucune session à venir} one {# session à venir} other {# sessions à venir}}",
+    "emptyTitle": "Aucune salle sur ce site",
+    "emptyHint": "Ajoutez une salle pour pouvoir la sélectionner lors de la planification d'une session.",
+    "drawerTitle": "Nouvelle salle",
+    "drawerSubtitle": "Site {site}",
+    "buildingLabel": "Bâtiment",
+    "buildingPlaceholder": "Ex. Bât. A",
+    "buildingHint": "Choisissez un bâtiment existant ou saisissez-en un nouveau.",
+    "roomLabel": "Salle",
+    "roomPlaceholder": "Ex. Salle 14",
+    "capacityHint": "Nombre de places assises, plafond des inscriptions à une session.",
+    "addedToast": "Salle « {name} » ajoutée sur le site {site} (démo)"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "title": "Tableau de bord",
+  "subtitle": "Vue d'ensemble des sensibilisations, des sessions et des relances.",
+  "stats": {
+    "usersLate": "Utilisateurs en retard",
+    "usersLateHint": "au moins une sensibilisation à repasser",
+    "upcomingSessions": "Sessions à venir",
+    "upcomingSessionsHint": "planifiées à partir d'aujourd'hui",
+    "fillRate": "Taux de remplissage",
+    "fillRateHint": "inscriptions réelles sur les places ouvertes",
+    "certificates": "Certificats à contrôler",
+    "certificatesHint": "en attente d'une décision"
+  },
+  "upcoming": {
+    "title": "Prochaines sessions",
+    "seats": "{registered}/{capacity} inscrits",
+    "empty": "Aucune session planifiée",
+    "emptyHint": "Créez une session pour ouvrir des places aux utilisateurs."
+  },
+  "relances": {
+    "title": "Dernières relances",
+    "metrics": "{eligible} éligibles · {mails} mails",
+    "empty": "Aucune exécution enregistrée",
+    "emptyHint": "Le moteur de relance n'a pas encore tourné."
+  },
+  "types": {
+    "auto": "Automatique",
+    "simulation": "Simulation",
+    "manual": "Manuel"
+  },
+  "attention": {
+    "title": "Points d'attention",
+    "subtitle": "Situations à traiter en priorité",
+    "certificates": {
+      "label": "certificats en attente depuis plus de {days} jours",
+      "pill": "{days} j",
+      "empty": "Aucun certificat en souffrance"
+    },
+    "sessions": {
+      "label": "sessions à moins de {days} jours remplies à moins de {fill} %",
+      "pill": "{percent} %",
+      "seats": "{registered}/{capacity} inscrits",
+      "empty": "Aucune session à risque cette semaine"
+    },
+    "users": {
+      "label": "utilisateurs en retard depuis plus de {days} jours",
+      "pill": "{days} j",
+      "empty": "Aucun retard installé"
+    }
+  },
+  "quickLinks": {
+    "title": "Accès rapides",
+    "trainings": "Sensibilisations",
+    "sessions": "Sessions",
+    "certificates": "Certificats",
+    "users": "Utilisateurs",
+    "privileged": "Utilisateurs à privilège",
+    "mails": "Relances mail",
+    "settings": "Paramètres"
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "space": {
+    "badge": "Espace responsable",
+    "admin": "Espace responsable",
+    "user": "Espace utilisateur",
+    "toUser": "Voir l'espace utilisateur",
+    "toAdmin": "Voir l'espace responsable"
+  },
+  "nav": {
+    "dashboard": "Tableau de bord",
+    "sections": {
+      "trainings": "Sensibilisations",
+      "users": "Utilisateurs",
+      "administration": "Administration"
+    },
+    "trainingsList": "Liste des sensibilisations",
+    "sessions": "Sessions",
+    "certificates": "Certificats à contrôler",
+    "allUsers": "Tous les utilisateurs",
+    "privilegedUsers": "Utilisateurs à privilège",
+    "mails": "Relances mail",
+    "settings": "Paramètres",
+    "ariaLabel": "Navigation de l'espace responsable"
+  },
+  "actions": {
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "create": "Créer",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "approve": "Valider",
+    "reject": "Rejeter",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "export": "Exporter",
+    "close": "Fermer",
+    "seeAll": "Tout voir",
+    "seeDetail": "Voir le détail",
+    "back": "Retour",
+    "confirm": "Confirmer",
+    "reset": "Réinitialiser"
+  },
+  "status": {
+    "planned": "Planifiée",
+    "done": "Terminée",
+    "cancelled": "Annulée",
+    "pending": "En attente",
+    "running": "En cours",
+    "failed": "Échec",
+    "approved": "Validé",
+    "rejected": "Rejeté",
+    "valid": "À jour",
+    "expiring": "À repasser",
+    "overdue": "En retard",
+    "registered": "Inscrit",
+    "never": "Jamais validé",
+    "active": "Actif",
+    "inactive": "Inactif"
+  },
+  "roles": {
+    "user": "Utilisateur",
+    "perimeter_manager": "Responsable de périmètre",
+    "training_manager": "Responsable de sensibilisation",
+    "admin": "Administrateur"
+  },
+  "format": {
+    "onsite": "Présentiel",
+    "remote": "Distanciel",
+    "hybrid": "Mixte"
+  },
+  "labels": {
+    "site": "Site",
+    "sites": "Sites",
+    "category": "Filière",
+    "allCategories": "Toutes les filières",
+    "allSites": "Tous les sites",
+    "all": "Tous",
+    "vip": "VIP",
+    "seats": "Places",
+    "capacity": "Capacité",
+    "date": "Date",
+    "name": "Nom",
+    "email": "Email",
+    "role": "Rôle",
+    "tags": "Tags",
+    "trainer": "Formateur",
+    "noEmail": "Non renseigné"
+  },
+  "table": {
+    "empty": "Aucun résultat",
+    "emptyHint": "Ajustez la recherche ou les filtres pour élargir la liste.",
+    "previous": "Page précédente",
+    "next": "Page suivante",
+    "summary": "{from} à {to} sur {total}"
+  },
+  "breadcrumb": {
+    "ariaLabel": "Fil d'ariane",
+    "root": "Espace responsable"
+  },
+  "toast": {
+    "dismiss": "Fermer la notification",
+    "saved": "Modifications enregistrées",
+    "simulated": "Action simulée, aucune donnée n'a été modifiée"
+  }
+}

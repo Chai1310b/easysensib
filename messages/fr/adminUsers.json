@@ -1,0 +1,154 @@
+{
+  "list": {
+    "title": "Utilisateurs",
+    "subtitle": "Suivi des obligations de sensibilisation, site par site.",
+    "searchPlaceholder": "Rechercher un nom ou un email",
+    "stats": {
+      "total": "Utilisateurs suivis",
+      "totalHint": "Comptes rattachés aux trois sites",
+      "late": "En retard",
+      "lateHint": "Au moins une sensibilisation à repasser",
+      "registered": "Inscrits à une session",
+      "registeredHint": "Une place réservée en attente",
+      "privileged": "À privilège",
+      "privilegedHint": "Responsables et administrateurs"
+    },
+    "filters": {
+      "siteAria": "Filtrer par site",
+      "stateAria": "Filtrer par état",
+      "all": "Tous",
+      "late": "En retard",
+      "upToDate": "À jour",
+      "vip": "VIP",
+      "inactive": "Comptes inactifs"
+    },
+    "columns": {
+      "name": "Utilisateur",
+      "email": "Email",
+      "site": "Site",
+      "trainings": "Sensibilisations",
+      "vip": "VIP",
+      "role": "Rôle",
+      "lastActivity": "Dernière activité"
+    },
+    "sortAria": "Trier par {column}",
+    "trainings": {
+      "valid": "{count} à jour",
+      "late": "{count} en retard",
+      "registered": "{count} inscrit",
+      "none": "Aucune sensibilisation"
+    },
+    "vipTitle": "Exclu des relances automatiques",
+    "inactiveTitle": "Compte inactif, jamais relancé",
+    "empty": "Aucun utilisateur",
+    "emptyHint": "Ajustez la recherche ou les filtres pour élargir la liste."
+  },
+  "detail": {
+    "backToList": "Tous les utilisateurs",
+    "notFound": "Utilisateur introuvable",
+    "notFoundHint": "Cet utilisateur n'existe pas ou n'est plus rattaché à votre périmètre.",
+    "noEmail": "Aucun email renseigné",
+    "lastActivity": "Dernière connexion le {date}",
+    "counters": {
+      "valid": "À jour",
+      "late": "En retard",
+      "registered": "Inscrit"
+    },
+    "vipNote": "Utilisateur VIP, exclu des relances automatiques.",
+    "inactiveNote": "Compte inactif, aucune relance ne lui est envoyée.",
+    "noEmailNote": "Aucun email connu, cet utilisateur ne peut pas être relancé.",
+    "trainingsTitle": "Sensibilisations attribuées",
+    "trainingsSubtitle": "Chaque ligne est une obligation portée par l'utilisateur.",
+    "columns": {
+      "training": "Sensibilisation",
+      "state": "État",
+      "validity": "Validité",
+      "lastValidation": "Dernière validation",
+      "action": "Action"
+    },
+    "validatedBySession": "Session du {date}",
+    "validatedByCertificate": "Certificat du {date}",
+    "neverValidated": "Jamais validée",
+    "registeredHint": "Place réservée",
+    "empty": "Aucune sensibilisation attribuée",
+    "emptyHint": "Cet utilisateur ne porte aucune obligation pour le moment.",
+    "perimeterTitle": "Périmètre de droits",
+    "perimeterSubtitle": "Ce que cet utilisateur peut voir et gérer, indépendamment de ses propres obligations.",
+    "managedSites": "Sites gérés",
+    "managedTrainings": "Sensibilisations gérées",
+    "allSites": "Tous les sites",
+    "none": "Aucun",
+    "allTrainings": "Toutes les sensibilisations"
+  },
+  "validity": {
+    "overdueDays": "En retard de {count} j",
+    "remainingDays": "Expire dans {count} j",
+    "validMonths": "Valide encore {count} mois",
+    "registered": "Session réservée",
+    "never": "Jamais validée"
+  },
+  "cancel": {
+    "action": "Annuler la validation",
+    "title": "Annuler la validation",
+    "subtitle": "{training} · {user}",
+    "warning": "La sensibilisation repassera en retard et l'utilisateur devra la valider de nouveau.",
+    "reasonLabel": "Motif de l'annulation",
+    "reasons": {
+      "sessionInvalid": "Session non conforme",
+      "trainerNotQualified": "Formateur non habilité",
+      "attendanceError": "Erreur de saisie de présence",
+      "certificateInvalid": "Certificat non valide",
+      "other": "Autre motif"
+    },
+    "commentLabel": "Précision",
+    "commentPlaceholder": "Contexte transmis à l'utilisateur (facultatif)",
+    "requeueLabel": "Reconvoquer à une session",
+    "requeueHint": "L'utilisateur est inscrit d'office au créneau choisi.",
+    "sessionLabel": "Session",
+    "sessionOption": "{date} · {site} · {time}",
+    "noSession": "Aucune session à venir ne porte cette sensibilisation.",
+    "confirm": "Annuler la validation",
+    "keep": "Conserver",
+    "doneRequeued": "Validation annulée, utilisateur reconvoqué (démo)",
+    "done": "Validation annulée (démo)"
+  },
+  "privileged": {
+    "title": "Utilisateurs à privilège",
+    "subtitle": "Responsables de périmètre, responsables de sensibilisation et administrateurs.",
+    "explainerTitle": "Attribution et périmètre de droits sont deux choses différentes",
+    "explainerAssignment": "L'attribution d'une sensibilisation crée une obligation : le responsable doit lui aussi la valider et il la voit dans son espace utilisateur.",
+    "explainerPerimeter": "Le périmètre de droits définit ce que le responsable peut voir et gérer chez les autres : des sites, des sensibilisations, ou les deux.",
+    "stats": {
+      "perimeter": "Responsables de périmètre",
+      "perimeterHint": "Droits délimités par site",
+      "training": "Responsables de sensibilisation",
+      "trainingHint": "Droits délimités par sensibilisation",
+      "admin": "Administrateurs",
+      "adminHint": "Périmètre complet"
+    },
+    "filterAria": "Filtrer par rôle",
+    "columns": {
+      "name": "Responsable",
+      "role": "Rôle",
+      "sites": "Périmètre · sites",
+      "trainings": "Périmètre · sensibilisations",
+      "own": "Ses obligations"
+    },
+    "sitesAll": "Tous les sites",
+    "sitesNone": "Aucun site",
+    "trainingsNone": "Aucune sensibilisation",
+    "trainingsMore": "+{count}",
+    "ownCount": "{count} attribuées",
+    "ownLate": "{count} en retard",
+    "empty": "Aucun utilisateur à privilège",
+    "emptyHint": "Aucun compte ne porte ce rôle pour le moment.",
+    "drawerPerimeter": "Périmètre de droits",
+    "drawerPerimeterHint": "Ce qu'il peut gérer chez les autres.",
+    "drawerOwn": "Ses propres obligations",
+    "drawerOwnHint": "Ce qu'il doit valider lui-même.",
+    "drawerSites": "Sites",
+    "drawerTrainings": "Sensibilisations",
+    "seeProfile": "Voir la fiche complète",
+    "trainingsAll": "Toutes les sensibilisations"
+  }
+}

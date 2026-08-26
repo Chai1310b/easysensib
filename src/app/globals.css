@@ -63,17 +63,154 @@
   --color-stepper-future: #d5d7d1;
 }
 
-body {
-  background: var(--color-page);
-  color: var(--color-ink);
-  font-family: var(--font-body);
+/* Element defaults live in the `base` layer so that any utility class set on an
+   element (`text-white` on a button-like link, `text-ink` on a list row link)
+   still wins the cascade. Unlayered rules beat every Tailwind layer, which
+   would silently override those utilities. */
+@layer base {
+  body {
+    background: var(--color-page);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+  }
+
+  a {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--color-accent-hover);
+  }
 }
 
-a {
-  color: var(--color-accent);
-  text-decoration: none;
+/* ------------------------------------------------------------------ */
+/* Motion: page transitions and micro-interactions                     */
+/* Sober and short (150 to 220 ms). Every animation is disabled when   */
+/* the visitor asks for reduced motion.                                */
+/* ------------------------------------------------------------------ */
+
+@keyframes ui-page-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-a:hover {
-  color: var(--color-accent-hover);
+@keyframes ui-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ui-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes ui-slide-left {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes ui-pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Applied by src/app/template.tsx: soft fade plus a small upward move. */
+.ui-page-enter {
+  animation: ui-page-in 200ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+/* Cards: lift slightly on hover. */
+.ui-card:hover {
+  border-color: var(--color-btn-outline);
+  box-shadow: 0 4px 14px rgba(22, 24, 28, 0.06);
+}
+
+/* Any pressable surface: buttons, chips, clickable tiles. */
+.ui-pressable {
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease,
+    transform 120ms ease;
+}
+
+.ui-pressable:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+/* Table rows and list rows. */
+.ui-row {
+  transition: background-color 150ms ease;
+}
+
+/* Cascade for lists: set --ui-index on each item (0, 1, 2...). */
+.ui-stagger {
+  animation: ui-rise-in 260ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation-delay: calc(var(--ui-index, 0) * 45ms);
+}
+
+/* Overlays, drawers, modals and toasts. */
+.ui-overlay {
+  animation: ui-fade-in 180ms ease both;
+}
+
+.ui-drawer {
+  animation: ui-slide-left 220ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+.ui-modal,
+.ui-toast {
+  animation: ui-pop-in 200ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-page-enter,
+  .ui-stagger,
+  .ui-overlay,
+  .ui-drawer,
+  .ui-modal,
+  .ui-toast {
+    animation: none;
+  }
+
+  .ui-pressable {
+    transition: none;
+  }
+
+  .ui-pressable:active:not(:disabled) {
+    transform: none;
+  }
+
+  .ui-card:hover {
+    box-shadow: none;
+  }
 }

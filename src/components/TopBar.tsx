@@ -1,11 +1,16 @@
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import { getCurrentUser } from '@/services/user';
+import { SpaceSwitch } from './SpaceSwitch';
 import { ShieldLogoIcon } from './icons';
 
 /** Dark top bar shared by every page (rendered from the root layout). */
 export async function TopBar() {
-  const [t, user] = await Promise.all([getTranslations('common'), getCurrentUser()]);
+  const [t, tAdmin, user] = await Promise.all([
+    getTranslations('common'),
+    getTranslations('adminCommon'),
+    getCurrentUser(),
+  ]);
 
   return (
     <header className="flex h-16 items-center justify-between bg-topbar px-10">
@@ -14,6 +19,7 @@ export async function TopBar() {
         <span className="font-display text-lg font-semibold text-topbar-text">{t('app.name')}</span>
       </Link>
       <div className="flex items-center gap-[22px]">
+        <SpaceSwitch toAdmin={tAdmin('space.toAdmin')} toUser={tAdmin('space.toUser')} />
         <a href="#" className="text-[13px] text-topbar-secondary hover:text-topbar-text">
           {t('topbar.help')}
         </a>
