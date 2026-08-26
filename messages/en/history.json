@@ -1,1 +1,16 @@
-{}
+{
+  "title": "My participation history",
+  "filters": {
+    "all": "All"
+  },
+  "detail": {
+    "elearningCertificate": "E-learning · certificate uploaded",
+    "trainer": "Trainer: {name}",
+    "remote": "Remote"
+  },
+  "status": {
+    "attended": "Attended",
+    "absent": "Absent",
+    "certificate": "Validated"
+  }
+}

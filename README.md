@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EasySensib · refonte
 
-## Getting Started
+Refonte de l'application EasySensib (suivi des sensibilisations sécurité en entreprise) pour Thales. Ce dépôt contient le nouveau front utilisateur : une interface épurée autour de deux concepts seulement, les **sensibilisations** (anciennement « objectifs ») et les **sessions**.
 
-First, run the development server:
+Un utilisateur standard dispose d'une page unique listant ses sensibilisations. Chaque sensibilisation se valide en participant à une session (présentiel ou visio), par e-learning (dépôt d'un certificat), ou les deux. Une fois validée, elle porte une durée de validité puis doit être repassée.
+
+## Statut actuel
+
+Front seul, alimenté par des fixtures typées. **Aucune base de données, aucun backend.** La couche `src/services/` est la frontière : le jour où le backend existe, seul l'intérieur des services change, les signatures et les pages restent identiques.
+
+## Stack
+
+| Brique                  | Choix                                                                      |
+| ----------------------- | -------------------------------------------------------------------------- |
+| Framework               | Next.js 16.3.3 (App Router, TypeScript strict)                             |
+| Gestionnaire de paquets | bun 1.3.14                                                                 |
+| Styles                  | Tailwind CSS v4 (design tokens dans `src/app/globals.css`)                 |
+| i18n                    | next-intl (UI en français, miroir anglais prêt, pas de routing par locale) |
+| Icônes                  | SVG inline copiés des maquettes (pas de librairie d'icônes)                |
+| Fonts                   | Space Grotesk (titres) + Instrument Sans (corps), via next/font/google     |
+
+## Prérequis
+
+- bun 1.3.14 ou plus récent
+- Node.js 20+ (pour l'outillage Next.js)
+
+## Commandes
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+bun install            # Installer les dépendances
+bun dev                # Serveur de développement (http://localhost:3000)
+bun run build          # Build de production
+bun run start          # Servir le build
+
+bun run typecheck      # tsc --noEmit
+bun run lint           # ESLint
+bun run lint:fix       # ESLint avec corrections
+bun run format         # Prettier (écriture)
+bun run format:check   # Prettier (vérification)
+bun run check          # typecheck + lint + format:check
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Structure du dépôt
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+├── messages/              # Chaînes UI next-intl
+│   ├── fr/                # common, home, training, history, certificates
+│   └── en/                # Miroir anglais des mêmes namespaces
+├── src/
+│   ├── app/               # Pages (App Router)
+│   │   ├── page.tsx       # / : Mes sensibilisations (page unique utilisateur)
+│   │   ├── trainings/[id] # Inscription à une session
+│   │   ├── history        # Historique des participations
+│   │   ├── certificates   # Certificats e-learning
+│   │   └── globals.css    # Design tokens Tailwind v4 (@theme)
+│   ├── components/        # Composants partagés (TopBar, DateBlock, jauge, stepper...)
+│   ├── i18n/              # Configuration next-intl
+│   ├── lib/               # types.ts (modèle de domaine), format.ts (dates fr-FR)
+│   └── services/          # Frontière backend : services typés + fixtures/
+└── docs/                  # Contexte interne (refonte, décisions, questions ouvertes, modèle de données)
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Pages
 
-## Learn More
+| Route             | Contenu                                                                              |
+| ----------------- | ------------------------------------------------------------------------------------ |
+| `/`               | Mes sensibilisations : l'état de chaque sensibilisation dicte l'affichage            |
+| `/trainings/[id]` | Page dédiée d'inscription à une session (stepper Inscription · Session · Validation) |
+| `/history`        | Historique des participations (sessions suivies, absences, certificats)              |
+| `/certificates`   | Certificats e-learning déposés (validé, en attente, rejeté)                          |
 
-To learn more about Next.js, take a look at the following resources:
+## Documentation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `docs/context.md` : la refonte, existant vs cible, le renommage objectif vers sensibilisation
+- `docs/decisions.md` : décisions produit et design actées
+- `docs/open-questions.md` : points encore ouverts côté client
+- `docs/data-model.md` : le modèle de données et sa correspondance avec le vocabulaire métier
+- `CLAUDE.md` : conventions et pièges pour les agents et contributeurs

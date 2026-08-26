@@ -1,1 +1,16 @@
-{}
+{
+  "title": "Mes certificats e-learning",
+  "subtitle": "Les certificats que vous avez déposés pour valider une sensibilisation en ligne.",
+  "uploadedOn": "déposé le {date}",
+  "rejectionReason": "motif : {reason}",
+  "status": {
+    "approved": "Validé · jusqu'en {monthYear}",
+    "pending": "En attente de contrôle",
+    "rejected": "Rejeté"
+  },
+  "reupload": "Redéposer",
+  "dropzone": {
+    "title": "Déposer un nouveau certificat",
+    "hint": "Glissez un fichier PDF ou image, ou cliquez pour parcourir"
+  }
+}

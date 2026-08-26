@@ -1,1 +1,16 @@
-{}
+{
+  "title": "My e-learning certificates",
+  "subtitle": "The certificates you have uploaded to validate an online awareness training.",
+  "uploadedOn": "uploaded on {date}",
+  "rejectionReason": "reason: {reason}",
+  "status": {
+    "approved": "Approved · until {monthYear}",
+    "pending": "Awaiting review",
+    "rejected": "Rejected"
+  },
+  "reupload": "Upload again",
+  "dropzone": {
+    "title": "Upload a new certificate",
+    "hint": "Drag a PDF or image file, or click to browse"
+  }
+}

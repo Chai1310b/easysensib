@@ -1,1 +1,16 @@
-{}
+{
+  "title": "Historique de mes participations",
+  "filters": {
+    "all": "Tout"
+  },
+  "detail": {
+    "elearningCertificate": "E-learning · certificat déposé",
+    "trainer": "Formateur : {name}",
+    "remote": "Visio"
+  },
+  "status": {
+    "attended": "Présente",
+    "absent": "Absente",
+    "certificate": "Validée"
+  }
+}

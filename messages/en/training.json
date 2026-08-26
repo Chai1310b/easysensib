@@ -1,1 +1,6 @@
-{}
+{
+  "meta": "{category} · duration {duration} · valid for {years, plural, one {# year} other {# years}}",
+  "sessionsAvailable": "{count, plural, =0 {No session available} one {# session available} other {# sessions available}}",
+  "allSites": "All sites",
+  "mailNote": "No date works for you? You will be reminded by email as soon as a new session opens."
+}
