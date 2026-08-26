@@ -110,23 +110,29 @@ export function RelanceSettingsCard({ settings, freeSeats, index }: RelanceSetti
         </SettingsRow>
 
         <SettingsRow label={t('relance.autoRunTime')} hint={t('relance.autoRunTimeHint')}>
-          <input
-            type="time"
-            aria-label={t('relance.autoRunTime')}
-            value={draft.autoRunTime}
-            onChange={(event) => update('autoRunTime', event.target.value)}
-            className={`${FIELD_CLASS} w-[130px] font-display tabular-nums`}
-          />
+          <div className="flex items-center justify-end gap-2">
+            <input
+              type="time"
+              aria-label={t('relance.autoRunTime')}
+              value={draft.autoRunTime}
+              onChange={(event) => update('autoRunTime', event.target.value)}
+              className={`${FIELD_CLASS} w-[130px] font-display tabular-nums`}
+            />
+            <span className={UNIT_SLOT} aria-hidden="true" />
+          </div>
         </SettingsRow>
 
         <SettingsRow label={t('relance.sender')} hint={t('relance.senderHint')}>
-          <input
-            type="email"
-            aria-label={t('relance.sender')}
-            value={draft.senderEmail}
-            onChange={(event) => update('senderEmail', event.target.value)}
-            className={`${FIELD_CLASS} w-[240px]`}
-          />
+          <div className="flex items-center justify-end gap-2">
+            <input
+              type="email"
+              aria-label={t('relance.sender')}
+              value={draft.senderEmail}
+              onChange={(event) => update('senderEmail', event.target.value)}
+              className={`${FIELD_CLASS} w-[240px]`}
+            />
+            <span className={UNIT_SLOT} aria-hidden="true" />
+          </div>
         </SettingsRow>
 
         <SettingsRow label={t('relance.autoRun')} hint={t('relance.autoRunHint')}>
@@ -176,6 +182,9 @@ export function RelanceSettingsCard({ settings, freeSeats, index }: RelanceSetti
 const FIELD_CLASS =
   'h-10 rounded-lg border border-card-border bg-card px-3 text-[13px] text-ink outline-none transition-[border-color,box-shadow] duration-200 focus:border-accent-border focus:shadow-[0_0_0_3px_var(--color-accent-surface)]';
 
+/** Fixed slot holding the unit after a control, so every field shares one right edge. */
+const UNIT_SLOT = 'block w-[124px] shrink-0';
+
 interface NumberFieldProps {
   value: number;
   step: number;
@@ -189,7 +198,7 @@ interface NumberFieldProps {
 /** Numeric input with its unit, Space Grotesk digits. */
 function NumberField({ value, step, min, max, suffix, label, onChange }: NumberFieldProps) {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center justify-end gap-2">
       <input
         type="number"
         aria-label={label}
@@ -203,7 +212,7 @@ function NumberField({ value, step, min, max, suffix, label, onChange }: NumberF
         }}
         className={`${FIELD_CLASS} w-[96px] font-display font-medium tabular-nums`}
       />
-      <span className="text-[12.5px] text-ink-tertiary">{suffix}</span>
+      <span className={`${UNIT_SLOT} text-[12.5px] text-ink-tertiary`}>{suffix}</span>
     </div>
   );
 }

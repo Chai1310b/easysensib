@@ -4,7 +4,16 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useMemo, useState, type CSSProperties } from 'react';
-import { Button, FilterChips, SearchInput, Table, TableEmptyRow, Td, Th } from '@/components/admin';
+import {
+  Button,
+  FilterChips,
+  SearchInput,
+  SortableTh,
+  Table,
+  TableEmptyRow,
+  Td,
+  Th,
+} from '@/components/admin';
 import { ChevronRightIcon } from '@/components/admin/adminIcons';
 import type { AdminTraining, TrainingCategory } from '@/lib/admin-types';
 import { CategoryChip, ModeTags } from './TrainingBadges';
@@ -82,7 +91,7 @@ export function TrainingsClient({ trainings, categories }: TrainingsClientProps)
 
   const sortProps = (key: SortKey) => ({
     active: key === sortKey,
-    direction: sortDirection,
+    descending: sortDirection === 'desc',
     onClick: () => toggleSort(key),
   });
 
@@ -109,41 +118,29 @@ export function TrainingsClient({ trainings, categories }: TrainingsClientProps)
       <Table
         head={
           <tr>
-            <Th>
-              <SortButton label={t('list.columns.name')} {...sortProps('name')} />
-            </Th>
-            <Th>
-              <SortButton label={t('list.columns.category')} {...sortProps('category')} />
-            </Th>
+            <SortableTh label={t('list.columns.name')} {...sortProps('name')} />
+            <SortableTh label={t('list.columns.category')} {...sortProps('category')} />
             <Th>{t('list.columns.mode')}</Th>
-            <Th align="right">
-              <SortButton
-                label={t('list.columns.validity')}
-                align="right"
-                {...sortProps('validityMonths')}
-              />
-            </Th>
-            <Th align="right">
-              <SortButton
-                label={t('list.columns.usersConcerned')}
-                align="right"
-                {...sortProps('usersConcerned')}
-              />
-            </Th>
-            <Th align="right">
-              <SortButton
-                label={t('list.columns.usersLate')}
-                align="right"
-                {...sortProps('usersLate')}
-              />
-            </Th>
-            <Th align="right">
-              <SortButton
-                label={t('list.columns.sessions')}
-                align="right"
-                {...sortProps('sessions')}
-              />
-            </Th>
+            <SortableTh
+              label={t('list.columns.validity')}
+              align="right"
+              {...sortProps('validityMonths')}
+            />
+            <SortableTh
+              label={t('list.columns.usersConcerned')}
+              align="right"
+              {...sortProps('usersConcerned')}
+            />
+            <SortableTh
+              label={t('list.columns.usersLate')}
+              align="right"
+              {...sortProps('usersLate')}
+            />
+            <SortableTh
+              label={t('list.columns.sessions')}
+              align="right"
+              {...sortProps('sessions')}
+            />
             <Th align="right" className="w-8">
               <span className="sr-only">{tCommon('actions.seeDetail')}</span>
             </Th>
@@ -219,48 +216,5 @@ export function TrainingsClient({ trainings, categories }: TrainingsClientProps)
         )}
       </Table>
     </div>
-  );
-}
-
-interface SortButtonProps {
-  label: string;
-  active: boolean;
-  direction: SortDirection;
-  align?: 'left' | 'right';
-  onClick: () => void;
-}
-
-/** Header cell button carrying the sort state through a small caret. */
-function SortButton({ label, active, direction, align = 'left', onClick }: SortButtonProps) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`flex w-full cursor-pointer items-center gap-1 text-[11px] font-semibold tracking-[0.06em] uppercase transition-colors duration-200 ${
-        align === 'right' ? 'justify-end' : 'justify-start'
-      } ${active ? 'text-ink-secondary' : 'text-ink-tertiary hover:text-ink-secondary'}`}
-    >
-      {label}
-      <span className={active ? 'text-accent' : 'text-transparent'}>
-        <svg
-          width="9"
-          height="9"
-          viewBox="0 0 24 24"
-          fill="none"
-          aria-hidden="true"
-          className={`transition-transform duration-200 ${
-            active && direction === 'asc' ? 'rotate-180' : ''
-          }`}
-        >
-          <path
-            d="M6 9L12 15L18 9"
-            stroke="currentColor"
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </span>
-    </button>
   );
 }

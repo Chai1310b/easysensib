@@ -17,8 +17,12 @@ const SIZE: Record<ButtonSize, string> = {
   sm: 'h-9 px-3 text-[13px]',
 };
 
-const BASE =
-  'ui-pressable inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg font-medium transition-[background-color,border-color,color] duration-200 disabled:cursor-default disabled:opacity-50';
+// A disabled button drops to the neutral fill rather than a faded accent:
+// white text over a 50 % opacity blue was unreadable.
+const DISABLED =
+  'disabled:cursor-default disabled:border-transparent disabled:bg-btn-secondary disabled:text-ink-tertiary disabled:hover:bg-btn-secondary';
+
+const BASE = `ui-pressable inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg font-medium transition-[background-color,border-color,color] duration-200 ${DISABLED}`;
 
 interface CommonProps {
   variant?: ButtonVariant;

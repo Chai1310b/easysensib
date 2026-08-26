@@ -104,3 +104,60 @@ export function TableEmptyRow({ colSpan, children }: { colSpan: number; children
     </tr>
   );
 }
+
+interface SortableThProps {
+  label: string;
+  /** True when the table is currently sorted on this column. */
+  active: boolean;
+  /** Direction of the current sort, only meaningful while active. */
+  descending: boolean;
+  onClick: () => void;
+  align?: Align;
+  /** Accessible label of the sort button, already translated. */
+  ariaLabel?: string;
+}
+
+/**
+ * Header cell carrying the sort control of its column.
+ * Shared by every admin table so the sort affordance reads the same
+ * everywhere: the caret shows up only on the column actually sorted.
+ */
+export function SortableTh({
+  label,
+  active,
+  descending,
+  onClick,
+  align = 'left',
+  ariaLabel,
+}: SortableThProps) {
+  return (
+    <Th align={align} aria-sort={active ? (descending ? 'descending' : 'ascending') : 'none'}>
+      <button
+        type="button"
+        aria-label={ariaLabel}
+        onClick={onClick}
+        className={`inline-flex cursor-pointer items-center gap-1 tracking-[0.06em] uppercase transition-colors duration-200 hover:text-ink-secondary ${
+          active ? 'text-ink-secondary' : ''
+        }`}
+      >
+        {label}
+        <span
+          aria-hidden="true"
+          className={`flex text-accent transition-[opacity,transform] duration-200 ${
+            active ? 'opacity-100' : 'opacity-0'
+          } ${active && !descending ? 'rotate-180' : ''}`}
+        >
+          <svg width="9" height="9" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M6 9L12 15L18 9"
+              stroke="currentColor"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </span>
+      </button>
+    </Th>
+  );
+}

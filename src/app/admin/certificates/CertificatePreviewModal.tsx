@@ -60,7 +60,7 @@ export function CertificatePreviewModal({ row, onClose, onApprove }: Certificate
         <div className="relative overflow-hidden rounded-lg border border-card-border bg-card-muted p-5">
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute -top-2 -right-8 rotate-[18deg] font-display text-[46px] leading-none font-semibold text-ink-disabled/25 select-none"
+            className="pointer-events-none absolute top-3 right-4 rotate-[14deg] font-display text-[40px] leading-none font-semibold text-ink-disabled/25 select-none"
           >
             DEMO
           </span>

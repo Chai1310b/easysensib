@@ -6,8 +6,7 @@ import { useMemo, useState } from 'react';
 import { FilterChips, type FilterChip } from '@/components/admin/FilterChips';
 import { Pagination } from '@/components/admin/Pagination';
 import { SearchInput } from '@/components/admin/SearchInput';
-import { Table, TableEmptyRow, Td, Th, Tr } from '@/components/admin/DataTable';
-import { ChevronRightIcon } from '@/components/admin/adminIcons';
+import { SortableTh, Table, TableEmptyRow, Td, Th, Tr } from '@/components/admin/DataTable';
 import type { AdminRole, Site } from '@/lib/admin-types';
 import { Avatar, CountDot, InactiveBadge, RoleLabel, VipBadge, staggerClass } from './UserBits';
 import type { TrainingCounts } from './userDisplay';
@@ -32,46 +31,6 @@ type SortKey = 'name' | 'site' | 'late' | 'lastActivity';
 const PAGE_SIZE = 12;
 
 /** Sortable header cell rendered as a button inside a `Th`. */
-function SortableTh({
-  label,
-  sortKey,
-  active,
-  descending,
-  onSort,
-  ariaLabel,
-  align = 'left',
-}: {
-  label: string;
-  sortKey: SortKey;
-  active: boolean;
-  descending: boolean;
-  onSort: (key: SortKey) => void;
-  ariaLabel: string;
-  align?: 'left' | 'right';
-}) {
-  return (
-    <Th align={align} aria-sort={active ? (descending ? 'descending' : 'ascending') : 'none'}>
-      <button
-        type="button"
-        aria-label={ariaLabel}
-        onClick={() => onSort(sortKey)}
-        className={`inline-flex cursor-pointer items-center gap-1 uppercase transition-colors duration-200 hover:text-ink-secondary ${
-          active ? 'text-ink-secondary' : ''
-        }`}
-      >
-        {label}
-        <span
-          aria-hidden="true"
-          className={`transition-[opacity,transform] duration-200 ${
-            active ? 'opacity-100' : 'opacity-0'
-          } ${descending ? 'rotate-90' : '-rotate-90'}`}
-        >
-          <ChevronRightIcon size={11} />
-        </span>
-      </button>
-    </Th>
-  );
-}
 
 /** Searchable, filterable and sortable list of users. */
 export function UsersTable({ rows, sites }: { rows: UserRow[]; sites: Site[] }) {
@@ -196,35 +155,31 @@ export function UsersTable({ rows, sites }: { rows: UserRow[]; sites: Site[] }) 
           <tr>
             <SortableTh
               label={t('list.columns.name')}
-              sortKey="name"
               active={sort.key === 'name'}
               descending={sort.descending}
-              onSort={onSort}
+              onClick={() => onSort('name')}
               ariaLabel={t('list.sortAria', { column: t('list.columns.name') })}
             />
             <SortableTh
               label={t('list.columns.site')}
-              sortKey="site"
               active={sort.key === 'site'}
               descending={sort.descending}
-              onSort={onSort}
+              onClick={() => onSort('site')}
               ariaLabel={t('list.sortAria', { column: t('list.columns.site') })}
             />
             <SortableTh
               label={t('list.columns.trainings')}
-              sortKey="late"
               active={sort.key === 'late'}
               descending={sort.descending}
-              onSort={onSort}
+              onClick={() => onSort('late')}
               ariaLabel={t('list.sortAria', { column: t('list.columns.trainings') })}
             />
             <Th>{t('list.columns.role')}</Th>
             <SortableTh
               label={t('list.columns.lastActivity')}
-              sortKey="lastActivity"
               active={sort.key === 'lastActivity'}
               descending={sort.descending}
-              onSort={onSort}
+              onClick={() => onSort('lastActivity')}
               ariaLabel={t('list.sortAria', { column: t('list.columns.lastActivity') })}
               align="right"
             />

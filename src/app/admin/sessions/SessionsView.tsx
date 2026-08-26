@@ -3,7 +3,15 @@
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useMemo, useState, type CSSProperties } from 'react';
-import { FilterChips, SearchInput, Table, TableEmptyRow, Td, Th } from '@/components/admin';
+import {
+  FilterChips,
+  SearchInput,
+  SortableTh,
+  Table,
+  TableEmptyRow,
+  Td,
+  Th,
+} from '@/components/admin';
 import type { AdminSession, SessionFormat, Site } from '@/lib/admin-types';
 import { formatLongDate } from '@/lib/format';
 import { SelectInput } from './formFields';
@@ -151,7 +159,7 @@ export function SessionsView({ sessions, sites, today }: SessionsViewProps) {
             <SortableTh
               label={t('columns.date')}
               active={sortKey === 'date'}
-              asc={sortAsc}
+              descending={!sortAsc}
               onClick={() => toggleSort('date')}
             />
             <Th>{t('columns.trainings')}</Th>
@@ -160,7 +168,7 @@ export function SessionsView({ sessions, sites, today }: SessionsViewProps) {
             <SortableTh
               label={t('columns.seats')}
               active={sortKey === 'seats'}
-              asc={sortAsc}
+              descending={!sortAsc}
               onClick={() => toggleSort('seats')}
             />
             <Th>{t('columns.status')}</Th>
@@ -289,42 +297,5 @@ export function SessionsView({ sessions, sites, today }: SessionsViewProps) {
         )}
       </Table>
     </section>
-  );
-}
-
-/** Header cell carrying the sort control of its column. */
-function SortableTh({
-  label,
-  active,
-  asc,
-  onClick,
-}: {
-  label: string;
-  active: boolean;
-  asc: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <Th aria-sort={active ? (asc ? 'ascending' : 'descending') : 'none'}>
-      <button
-        type="button"
-        onClick={onClick}
-        className={`inline-flex cursor-pointer items-center gap-1 tracking-[0.06em] uppercase transition-colors duration-200 hover:text-ink-secondary ${
-          active ? 'text-accent' : ''
-        }`}
-      >
-        {label}
-        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path
-            d={active && !asc ? 'M12 5v14M6 13l6 6 6-6' : 'M12 19V5M6 11l6-6 6 6'}
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            opacity={active ? 1 : 0.45}
-          />
-        </svg>
-      </button>
-    </Th>
   );
 }

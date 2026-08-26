@@ -184,48 +184,56 @@ export function SessionCreateForm({
                 description={t('create.trainings.emptyHint')}
               />
             ) : (
-              <ul className="flex max-h-[360px] flex-col gap-1.5 overflow-y-auto pr-1">
-                {visibleTrainings.map((training) => {
-                  const selected = selectedIds.includes(training.id);
-                  return (
-                    <li key={training.id}>
-                      <button
-                        type="button"
-                        aria-pressed={selected}
-                        onClick={() => toggleTraining(training.id)}
-                        className={`ui-pressable flex w-full cursor-pointer items-center gap-3 rounded-lg border px-3 py-2.5 text-left transition-colors duration-200 ${
-                          selected
-                            ? 'border-accent-border bg-accent-surface'
-                            : 'border-card-border bg-card hover:bg-card-muted'
-                        }`}
-                      >
-                        <span
-                          className={`flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[5px] border transition-colors duration-200 ${
+              <div className="relative">
+                <ul className="flex max-h-[360px] flex-col gap-1.5 overflow-y-auto pr-1 pb-1">
+                  {visibleTrainings.map((training) => {
+                    const selected = selectedIds.includes(training.id);
+                    return (
+                      <li key={training.id}>
+                        <button
+                          type="button"
+                          aria-pressed={selected}
+                          onClick={() => toggleTraining(training.id)}
+                          className={`ui-pressable flex w-full cursor-pointer items-center gap-3 rounded-lg border px-3 py-2.5 text-left transition-colors duration-200 ${
                             selected
-                              ? 'border-accent bg-accent text-white'
-                              : 'border-btn-outline bg-card text-transparent'
+                              ? 'border-accent-border bg-accent-surface'
+                              : 'border-card-border bg-card hover:bg-card-muted'
                           }`}
                         >
-                          <CheckIcon size={11} strokeWidth={2.4} />
-                        </span>
-
-                        <span className="flex min-w-0 grow flex-col gap-0.5">
-                          <span className="truncate text-[13.5px] font-medium text-ink">
-                            {training.name}
+                          <span
+                            className={`flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[5px] border transition-colors duration-200 ${
+                              selected
+                                ? 'border-accent bg-accent text-white'
+                                : 'border-btn-outline bg-card text-transparent'
+                            }`}
+                          >
+                            <CheckIcon size={11} strokeWidth={2.4} />
                           </span>
-                          <span className="text-[11.5px] text-ink-tertiary">
-                            {t('create.trainings.duration', { hours: training.durationHours })} ·{' '}
-                            {t('create.trainings.validity', { months: training.validityMonths })} ·{' '}
-                            {t('create.trainings.concerned', { count: training.usersConcerned })}
-                          </span>
-                        </span>
 
-                        <Chip>{training.category}</Chip>
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
+                          <span className="flex min-w-0 grow flex-col gap-0.5">
+                            <span className="truncate text-[13.5px] font-medium text-ink">
+                              {training.name}
+                            </span>
+                            <span className="text-[11.5px] text-ink-tertiary">
+                              {t('create.trainings.duration', { hours: training.durationHours })} ·{' '}
+                              {t('create.trainings.validity', { months: training.validityMonths })}{' '}
+                              ·{' '}
+                              {t('create.trainings.concerned', { count: training.usersConcerned })}
+                            </span>
+                          </span>
+
+                          <Chip>{training.category}</Chip>
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+                {/* Fade telling the reader the list keeps going below the fold. */}
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-x-0 bottom-0 h-8 rounded-b-lg bg-gradient-to-t from-card to-transparent"
+                />
+              </div>
             )}
           </div>
         </FormSection>

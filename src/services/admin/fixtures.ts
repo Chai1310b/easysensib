@@ -112,7 +112,7 @@ const RAW_TRAININGS: RawTraining[] = [
   },
   {
     id: 't-voyage',
-    name: 'Sûreté des déplacements à l’étranger',
+    name: "Sûreté des déplacements à l'étranger",
     category: 'Sûreté',
     mode: 'both',
     validityMonths: 36,

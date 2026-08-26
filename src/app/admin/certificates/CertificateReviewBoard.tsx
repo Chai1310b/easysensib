@@ -430,7 +430,9 @@ function FileCell({ fileName, sizeLabel }: { fileName: string; sizeLabel: string
         {isImage ? <FileImageIcon size={15} /> : <FileTextIcon size={15} />}
       </span>
       <span className="flex min-w-0 flex-col">
-        <span className="block max-w-[200px] truncate">{fileName}</span>
+        <span className="block max-w-[260px] truncate" title={fileName}>
+          {fileName}
+        </span>
         <span className="font-display text-xs tabular-nums text-ink-tertiary">{sizeLabel}</span>
       </span>
     </span>
