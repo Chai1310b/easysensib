@@ -571,6 +571,25 @@ function normalizeEmail(raw: RawUser): string {
   return `${strip(raw.firstName)}.${strip(raw.lastName)}@thales.fr`;
 }
 
+/** ISO date shifted by the given number of months (negative to go back). */
+function addMonths(iso: string, months: number): string {
+  const [year, month, day] = iso.split('-').map(Number);
+  const date = new Date(year, month - 1 + months, day);
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(
+    date.getDate(),
+  ).padStart(2, '0')}`;
+}
+
+function validityMonthsOf(trainingId: string): number {
+  return RAW_TRAININGS.find((training) => training.id === trainingId)?.validityMonths ?? 24;
+}
+
+/** E-learning-only trainings can only ever be validated by certificate. */
+function defaultValidatedBy(trainingId: string): 'session' | 'certificate' {
+  const mode = RAW_TRAININGS.find((training) => training.id === trainingId)?.mode;
+  return mode === 'elearning' ? 'certificate' : 'session';
+}
+
 function toUserTraining(entry: RawUser['trainings'][number]): AdminUserTraining {
   const [trainingId, state, dateHint, validatedBy] = entry;
   const base: AdminUserTraining = {
@@ -578,11 +597,16 @@ function toUserTraining(entry: RawUser['trainings'][number]): AdminUserTraining 
     trainingName: trainingName(trainingId),
     state,
   };
-  if (state === 'valid' || state === 'expiring') {
-    return { ...base, expiresAt: dateHint, validatedBy: validatedBy ?? 'session' };
-  }
-  if (state === 'overdue') {
-    return { ...base, expiresAt: dateHint, validatedBy: validatedBy ?? 'session' };
+  if (state === 'valid' || state === 'expiring' || state === 'overdue') {
+    // A validated (even expired) training was obtained one validity period
+    // before its expiry: derive the date so counters, gauges and history all
+    // tell the same story.
+    return {
+      ...base,
+      expiresAt: dateHint,
+      lastValidatedAt: addMonths(dateHint as string, -validityMonthsOf(trainingId)),
+      validatedBy: validatedBy ?? defaultValidatedBy(trainingId),
+    };
   }
   return base;
 }
@@ -955,6 +979,37 @@ export const adminSessionsFixture: AdminSession[] = RAW_SESSIONS.map((raw) => ({
   trainerName: raw.trainerName,
   participants: raw.participants.map(toParticipant),
 }));
+
+/* ------------------------------------------------------------------ */
+/* Reconciliation: attending a done session refreshes the validity     */
+/* of the trainings it carries, so gauges, history and counters agree. */
+/* ------------------------------------------------------------------ */
+
+function daysUntil(iso: string): number {
+  return Math.round(
+    (new Date(`${iso}T00:00:00`).getTime() - new Date(`${TODAY}T00:00:00`).getTime()) / 86_400_000,
+  );
+}
+
+for (const session of adminSessionsFixture) {
+  if (session.status !== 'done') continue;
+  for (const participant of session.participants) {
+    if (participant.attendance !== 'attended') continue;
+    const user = USERS_BY_ID.get(participant.userId);
+    if (!user) continue;
+    for (const trainingId of session.trainingIds) {
+      const held = user.trainings.find((t) => t.trainingId === trainingId);
+      if (!held) continue;
+      if (held.lastValidatedAt && held.lastValidatedAt >= session.date) continue;
+      const expiresAt = addMonths(session.date, validityMonthsOf(trainingId));
+      held.lastValidatedAt = session.date;
+      held.expiresAt = expiresAt;
+      held.validatedBy = 'session';
+      held.state =
+        daysUntil(expiresAt) < 0 ? 'overdue' : daysUntil(expiresAt) <= 90 ? 'expiring' : 'valid';
+    }
+  }
+}
 
 /* ------------------------------------------------------------------ */
 /* Trainings, with counters derived from users and sessions            */

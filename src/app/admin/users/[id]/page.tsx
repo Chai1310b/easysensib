@@ -4,7 +4,7 @@ import { Breadcrumb } from '@/components/admin/Breadcrumb';
 import { EmptyState } from '@/components/admin/EmptyState';
 import { ButtonLink } from '@/components/admin/Button';
 import { CalendarGridIcon, KeyIcon, UsersIcon } from '@/components/admin/adminIcons';
-import { DonutChart, ProgressRing } from '@/components/admin/charts';
+import { ProgressRing } from '@/components/admin/charts';
 import { StatusPill } from '@/components/StatusPill';
 import { DateBlock } from '@/components/DateBlock';
 import { MailIcon, PinIcon } from '@/components/icons';
@@ -111,6 +111,42 @@ export default async function AdminUserPage({ params }: UserPageProps) {
         session.participants.some((participant) => participant.userId === user.id),
     )
     .sort((a, b) => b.date.localeCompare(a.date));
+
+  // Validations that no session fixture covers (older sessions, e-learning):
+  // shown in the history too, so "validated" and "participated" always agree.
+  const coveredTrainingIds = new Set(myPast.flatMap((session) => session.trainingIds));
+  const extraValidations = user.trainings
+    .filter((entry) => entry.lastValidatedAt && !coveredTrainingIds.has(entry.trainingId))
+    .map((entry) => ({
+      id: `v-${entry.trainingId}`,
+      date: entry.lastValidatedAt as string,
+      trainingId: entry.trainingId,
+      trainingName: entry.trainingName,
+      kind: entry.validatedBy ?? 'session',
+    }));
+
+  const historyEntries = [
+    ...myPast.map((session) => ({
+      id: session.id,
+      date: session.date,
+      href: `/admin/sessions/${session.id}`,
+      title: session.trainingNames.join(', '),
+      subtitle: `${formatLongDate(session.date)} · ${session.site}`,
+      attendance:
+        session.participants.find((participant) => participant.userId === user.id)?.attendance ??
+        ('registered' as const),
+    })),
+    ...extraValidations.map((entry) => ({
+      id: entry.id,
+      date: entry.date,
+      href: `/admin/trainings/${entry.trainingId}`,
+      title: entry.trainingName,
+      subtitle: formatLongDate(entry.date),
+      attendance: (entry.kind === 'certificate' ? 'certificate' : 'attended') as
+        | 'certificate'
+        | 'attended',
+    })),
+  ].sort((a, b) => b.date.localeCompare(a.date));
   const attendedCount = myPast.filter(
     (session) => session.participants.find((p) => p.userId === user.id)?.attendance === 'attended',
   ).length;
@@ -121,16 +157,6 @@ export default async function AdminUserPage({ params }: UserPageProps) {
     attendedCount + absentCount > 0
       ? Math.round((attendedCount / (attendedCount + absentCount)) * 100)
       : 100;
-
-  const stateCounts = { valid: 0, expiring: 0, overdue: 0, registered: 0, never: 0 };
-  for (const entry of user.trainings) stateCounts[entry.state] += 1;
-  const stateColors = {
-    valid: 'var(--color-gauge-success)',
-    registered: 'var(--color-accent)',
-    expiring: 'var(--color-gauge-warning)',
-    overdue: 'var(--color-gauge-danger)',
-    never: 'var(--color-ink-tertiary)',
-  } as const;
 
   const isManager = user.role !== 'user';
   const managedTrainingNames = (user.managedTrainingIds ?? []).map(
@@ -145,6 +171,53 @@ export default async function AdminUserPage({ params }: UserPageProps) {
         userName={user.name}
         rows={rows}
         sessions={requeueSessions}
+        obligationsTitle={t('sections.obligations')}
+        asideCards={
+          <>
+        <div className="ui-card flex flex-col gap-4 rounded-xl border border-card-border bg-card p-5">
+          <h2 className="text-[14px] font-semibold text-ink">{t('sections.assiduity')}</h2>
+          <div className="flex grow items-center justify-center">
+            <ProgressRing
+              percent={assiduityPercent}
+              label={t('sections.assiduity')}
+              color={assiduityPercent >= 80 ? 'var(--color-success)' : 'var(--color-warning)'}
+              size={100}
+            />
+          </div>
+        </div>
+
+        <div className="ui-card flex flex-col gap-3 rounded-xl border border-card-border bg-card p-5">
+          <h2 className="flex items-center gap-2 text-[14px] font-semibold text-ink">
+            <CalendarGridIcon size={15} />
+            {t('sections.upcoming')}
+          </h2>
+          {myUpcoming.length === 0 ? (
+            <p className="text-[12.5px] text-ink-tertiary">{t('sections.noUpcoming')}</p>
+          ) : (
+            <ul className="flex flex-col gap-2">
+              {myUpcoming.map((session) => (
+                <li key={session.id}>
+                  <Link
+                    href={`/admin/sessions/${session.id}`}
+                    className="ui-row flex items-center gap-3 rounded-lg border border-card-border px-3 py-2 text-ink! hover:bg-card-muted"
+                  >
+                    <DateBlock date={session.date} width={38} daySize={16} tone="accent" />
+                    <span className="flex min-w-0 flex-col">
+                      <span className="truncate text-[13px] font-medium">
+                        {session.trainingNames.join(', ')}
+                      </span>
+                      <span className="text-[11.5px] text-ink-tertiary">
+                        {session.startTime} · {session.site}
+                      </span>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+          </>
+        }
         identity={
           <div className="flex items-center gap-4">
             <Avatar
@@ -195,110 +268,44 @@ export default async function AdminUserPage({ params }: UserPageProps) {
         }
       />
 
-      <section className="grid grid-cols-1 gap-5 lg:grid-cols-3">
-        <div className="ui-card flex flex-col gap-4 rounded-xl border border-card-border bg-card p-5">
-          <h2 className="text-[14px] font-semibold text-ink">{t('sections.obligations')}</h2>
-          <DonutChart
-            size={116}
-            data={(['overdue', 'never', 'expiring', 'registered', 'valid'] as const).map(
-              (state) => ({
-                label: tCommon(`status.${state}`),
-                value: stateCounts[state],
-                color: stateColors[state],
-              }),
-            )}
-          />
-        </div>
-
-        <div className="ui-card flex flex-col gap-4 rounded-xl border border-card-border bg-card p-5">
-          <h2 className="text-[14px] font-semibold text-ink">{t('sections.assiduity')}</h2>
-          <div className="flex grow items-center justify-center">
-            <ProgressRing
-              percent={assiduityPercent}
-              label={t('sections.assiduity')}
-              color={assiduityPercent >= 80 ? 'var(--color-success)' : 'var(--color-warning)'}
-              size={100}
-            />
-          </div>
-        </div>
-
-        <div className="ui-card flex flex-col gap-3 rounded-xl border border-card-border bg-card p-5">
-          <h2 className="flex items-center gap-2 text-[14px] font-semibold text-ink">
-            <CalendarGridIcon size={15} />
-            {t('sections.upcoming')}
-          </h2>
-          {myUpcoming.length === 0 ? (
-            <p className="text-[12.5px] text-ink-tertiary">{t('sections.noUpcoming')}</p>
-          ) : (
-            <ul className="flex flex-col gap-2">
-              {myUpcoming.map((session) => (
-                <li key={session.id}>
-                  <Link
-                    href={`/admin/sessions/${session.id}`}
-                    className="ui-row flex items-center gap-3 rounded-lg border border-card-border px-3 py-2 text-ink! hover:bg-card-muted"
-                  >
-                    <DateBlock date={session.date} width={38} daySize={16} tone="accent" />
-                    <span className="flex min-w-0 flex-col">
-                      <span className="truncate text-[13px] font-medium">
-                        {session.trainingNames.join(', ')}
-                      </span>
-                      <span className="text-[11.5px] text-ink-tertiary">
-                        {session.startTime} · {session.site}
-                      </span>
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      </section>
-
       <section className="flex flex-col gap-3">
         <h2 className="font-display text-[16px] font-semibold">{t('sections.history')}</h2>
-        {myPast.length === 0 ? (
+        {historyEntries.length === 0 ? (
           <p className="rounded-xl border border-card-border bg-card-muted px-4 py-3.5 text-[12.5px] text-ink-tertiary">
             {t('sections.noHistory')}
           </p>
         ) : (
           <ul className="flex flex-col overflow-hidden rounded-xl border border-card-border bg-card">
-            {myPast.map((session) => {
-              const attendance =
-                session.participants.find((participant) => participant.userId === user.id)
-                  ?.attendance ?? 'registered';
-              return (
-                <li
-                  key={session.id}
-                  className="flex items-center gap-4 border-b border-divider px-5 py-3.5 last:border-b-0"
-                >
-                  <DateBlock date={session.date} width={44} daySize={17} />
-                  <span className="flex min-w-0 grow flex-col gap-0.5">
-                    <Link
-                      href={`/admin/sessions/${session.id}`}
-                      className="truncate text-[13.5px] font-medium text-ink! hover:text-accent!"
-                    >
-                      {session.trainingNames.join(', ')}
-                    </Link>
-                    <span className="text-[11.5px] text-ink-tertiary">
-                      {formatLongDate(session.date)} · {session.site}
-                    </span>
-                  </span>
-                  {attendance === 'attended' ? (
-                    <StatusPill tone="success" icon="check">
-                      {t('attendance.attended')}
-                    </StatusPill>
-                  ) : attendance === 'absent' ? (
-                    <StatusPill tone="danger" icon="cross">
-                      {t('attendance.absent')}
-                    </StatusPill>
-                  ) : (
-                    <StatusPill tone="warning" icon="clock">
-                      {t(`attendance.${attendance}`)}
-                    </StatusPill>
-                  )}
-                </li>
-              );
-            })}
+            {historyEntries.map((entry) => (
+              <li
+                key={entry.id}
+                className="flex items-center gap-4 border-b border-divider px-5 py-3.5 last:border-b-0"
+              >
+                <DateBlock date={entry.date} width={44} daySize={17} />
+                <span className="flex min-w-0 grow flex-col gap-0.5">
+                  <Link
+                    href={entry.href}
+                    className="truncate text-[13.5px] font-medium text-ink! hover:text-accent!"
+                  >
+                    {entry.title}
+                  </Link>
+                  <span className="text-[11.5px] text-ink-tertiary">{entry.subtitle}</span>
+                </span>
+                {entry.attendance === 'attended' || entry.attendance === 'certificate' ? (
+                  <StatusPill tone="success" icon="check">
+                    {t(`attendance.${entry.attendance}`)}
+                  </StatusPill>
+                ) : entry.attendance === 'absent' ? (
+                  <StatusPill tone="danger" icon="cross">
+                    {t('attendance.absent')}
+                  </StatusPill>
+                ) : (
+                  <StatusPill tone="warning" icon="clock">
+                    {t(`attendance.${entry.attendance}`)}
+                  </StatusPill>
+                )}
+              </li>
+            ))}
           </ul>
         )}
       </section>

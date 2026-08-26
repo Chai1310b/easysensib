@@ -180,6 +180,7 @@
     "registered": "Registered",
     "attended": "Attended",
     "absent": "Absent",
-    "excused": "Excused"
+    "excused": "Excused",
+    "certificate": "E-learning certificate"
   }
 }

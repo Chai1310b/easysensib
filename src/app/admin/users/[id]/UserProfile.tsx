@@ -7,6 +7,7 @@ import { Button } from '@/components/admin/Button';
 import { Table, TableEmptyRow, Td, Th, Tr } from '@/components/admin/DataTable';
 import { Modal } from '@/components/admin/Modal';
 import { Select } from '@/components/admin/Select';
+import { DonutChart } from '@/components/admin/charts';
 import { useToast } from '@/components/admin/Toast';
 import { ValidityGauge } from '@/components/ValidityGauge';
 import type { AdminTrainingState, Site } from '@/lib/admin-types';
@@ -57,9 +58,21 @@ const FIELD =
 
 const COUNT_TONE = {
   success: 'text-success',
+  warning: 'text-warning-text',
   danger: 'text-danger-text',
   accent: 'text-accent',
+  neutral: 'text-ink-tertiary',
 } as const;
+
+/** Display order, tone and donut color of each obligation state. */
+const STATE_DISPLAY: { state: AdminTrainingState; tone: keyof typeof COUNT_TONE; color: string }[] =
+  [
+    { state: 'overdue', tone: 'danger', color: 'var(--color-gauge-danger)' },
+    { state: 'never', tone: 'neutral', color: 'var(--color-ink-tertiary)' },
+    { state: 'expiring', tone: 'warning', color: 'var(--color-gauge-warning)' },
+    { state: 'registered', tone: 'accent', color: 'var(--color-accent)' },
+    { state: 'valid', tone: 'success', color: 'var(--color-gauge-success)' },
+  ];
 
 /** One of the three counters shown on the right of the profile header. */
 function HeaderCount({
@@ -93,12 +106,18 @@ export function UserProfile({
   userName,
   rows,
   sessions,
+  obligationsTitle,
+  asideCards,
 }: {
   identity: ReactNode;
   notes: ReactNode;
   userName: string;
   rows: UserTrainingRow[];
   sessions: RequeueSession[];
+  /** Title of the obligations donut card, already translated. */
+  obligationsTitle: string;
+  /** Server-rendered indicator cards shown next to the obligations donut. */
+  asideCards: ReactNode;
 }) {
   const t = useTranslations('adminUsers');
   const tCommon = useTranslations('adminCommon');
@@ -162,11 +181,9 @@ export function UserProfile({
       : t('detail.validatedBySession', { date: row.lastValidatedLabel });
   }
 
-  const counts = {
-    valid: items.filter((row) => row.state === 'valid' || row.state === 'expiring').length,
-    late: items.filter((row) => row.state === 'overdue' || row.state === 'never').length,
-    registered: items.filter((row) => row.state === 'registered').length,
-  };
+  const stateCounts = Object.fromEntries(
+    STATE_DISPLAY.map(({ state }) => [state, items.filter((row) => row.state === state).length]),
+  ) as Record<AdminTrainingState, number>;
 
   return (
     <>
@@ -174,17 +191,33 @@ export function UserProfile({
         <div className="flex flex-wrap items-start justify-between gap-5">
           {identity}
           <dl className="flex gap-6">
-            <HeaderCount value={counts.valid} label={t('detail.counters.valid')} tone="success" />
-            <HeaderCount value={counts.late} label={t('detail.counters.late')} tone="danger" />
-            <HeaderCount
-              value={counts.registered}
-              label={t('detail.counters.registered')}
-              tone="accent"
-            />
+            {STATE_DISPLAY.filter(({ state }) => stateCounts[state] > 0).map(({ state, tone }) => (
+              <HeaderCount
+                key={state}
+                value={stateCounts[state]}
+                label={tCommon(`status.${state}`)}
+                tone={tone}
+              />
+            ))}
           </dl>
         </div>
         {notes}
       </header>
+
+      <section className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+        <div className="ui-card flex flex-col gap-4 rounded-xl border border-card-border bg-card p-5">
+          <h2 className="text-[14px] font-semibold text-ink">{obligationsTitle}</h2>
+          <DonutChart
+            size={116}
+            data={STATE_DISPLAY.map(({ state, color }) => ({
+              label: tCommon(`status.${state}`),
+              value: stateCounts[state],
+              color,
+            }))}
+          />
+        </div>
+        {asideCards}
+      </section>
 
       <section className="ui-stagger [--ui-index:1] flex flex-col gap-4">
         <div className="flex flex-col gap-1">
