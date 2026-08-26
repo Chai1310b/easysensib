@@ -89,14 +89,15 @@ export default async function HomePage() {
               key={training.id}
               training={training}
               labels={{
-                subtitle:
-                  training.lastValidation?.kind === 'certificate'
+                subtitle: training.lastValidation
+                  ? training.lastValidation.kind === 'certificate'
                     ? t('validatedByCertificate', {
                         date: formatLongDate(training.lastValidation.date),
                       })
                     : t('validatedBySession', {
-                        date: formatLongDate(training.lastValidation?.date ?? ''),
-                      }),
+                        date: formatLongDate(training.lastValidation.date),
+                      })
+                  : undefined,
                 myCertificate: t('myCertificate'),
                 gauge: tc(`validity.${training.validity.labelKey}`, {
                   count: training.validity.labelCount,
@@ -303,14 +304,14 @@ function ValidTrainingRow({
   labels,
 }: {
   training: Training;
-  labels: { subtitle: string; myCertificate: string; gauge: string };
+  labels: { subtitle?: string; myCertificate: string; gauge: string };
 }) {
   return (
     <Card muted className="flex items-center gap-4 px-6 py-4">
       <StateIcon state="valid" size={22} className="shrink-0" />
       <div className="flex w-[280px] shrink-0 flex-col gap-0.5">
         <span className="text-[15px] font-semibold text-ink-strong">{training.name}</span>
-        <span className="text-xs text-ink-tertiary">{labels.subtitle}</span>
+        {labels.subtitle && <span className="text-xs text-ink-tertiary">{labels.subtitle}</span>}
       </div>
       <ValidityGauge
         label={labels.gauge}
