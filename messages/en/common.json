@@ -1,0 +1,40 @@
+{
+  "app": {
+    "name": "EasySensib"
+  },
+  "topbar": {
+    "help": "Help"
+  },
+  "actions": {
+    "register": "Register",
+    "backToHome": "My awareness trainings",
+    "addToCalendar": "Add to calendar",
+    "cancelRegistration": "Cancel registration",
+    "download": "Download"
+  },
+  "session": {
+    "seats": "{count} seats",
+    "full": "Full",
+    "onsite": "On site",
+    "remote": "Remote",
+    "registered": "Registered"
+  },
+  "mode": {
+    "session": "Session",
+    "elearning": "E-learning"
+  },
+  "state": {
+    "nothingToDo": "Nothing to do"
+  },
+  "stepper": {
+    "registration": "Registration",
+    "session": "Session",
+    "validation": "Validation"
+  },
+  "validity": {
+    "overdueDays": "{count} days overdue",
+    "remainingDays": "{count} days left",
+    "expiresInMonths": "Expires in {count} months",
+    "validMonthsLeft": "Valid for {count} more months"
+  }
+}

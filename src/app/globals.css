@@ -1,26 +1,79 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  /* Fonts (variables injected by next/font in the root layout) */
+  --font-display: var(--font-space-grotesk), 'Space Grotesk', 'Segoe UI', system-ui, sans-serif;
+  --font-body: var(--font-instrument-sans), 'Instrument Sans', 'Segoe UI', system-ui, sans-serif;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* Page + top bar */
+  --color-page: #f4f5f1;
+  --color-topbar: #14161a;
+  --color-topbar-text: #f4f5f1;
+  --color-topbar-secondary: #b9bcc4;
+  --color-topbar-muted: #d8dae0;
+  --color-topbar-border: #3a3d44;
+  --color-logo-accent: #8fa0ff;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Surfaces */
+  --color-card: #ffffff;
+  --color-card-muted: #fbfcfa;
+  --color-card-border: #e2e4de;
+  --color-divider: #eef0ea;
+
+  /* Ink */
+  --color-ink: #16181c;
+  --color-ink-strong: #454a52;
+  --color-ink-secondary: #5c6068;
+  --color-ink-tertiary: #8a8e96;
+  --color-ink-disabled: #b3b7be;
+
+  /* Accent (blue) */
+  --color-accent: #2b3fbf;
+  --color-accent-hover: #1e2d8f;
+  --color-accent-tint: #eaedfb;
+  --color-accent-surface: #f7f8fd;
+  --color-accent-border: #dfe3f6;
+
+  /* Status: danger (red) */
+  --color-danger: #b8362f;
+  --color-danger-text: #a03232;
+  --color-danger-tint: #f8e9e7;
+
+  /* Status: warning (orange) */
+  --color-warning: #c08a2d;
+  --color-warning-text: #96650f;
+  --color-warning-tint: #f9f0dd;
+
+  /* Status: success (green) */
+  --color-success: #2f7d4f;
+  --color-success-tint: #e9f2ec;
+
+  /* Gauges */
+  --color-gauge-danger: #c66a63;
+  --color-gauge-danger-track: #f0e2e0;
+  --color-gauge-warning: #d3a94e;
+  --color-gauge-warning-track: #f3ead3;
+  --color-gauge-success: #7fae90;
+  --color-gauge-neutral-track: #eceee9;
+
+  /* Buttons + stepper */
+  --color-btn-secondary: #f0f1ed;
+  --color-btn-outline: #d5d7d1;
+  --color-stepper-line: #e6e8e2;
+  --color-stepper-future: #d5d7d1;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-page);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-accent-hover);
 }

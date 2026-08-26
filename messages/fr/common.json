@@ -1,0 +1,40 @@
+{
+  "app": {
+    "name": "EasySensib"
+  },
+  "topbar": {
+    "help": "Aide"
+  },
+  "actions": {
+    "register": "S'inscrire",
+    "backToHome": "Mes sensibilisations",
+    "addToCalendar": "Ajouter au calendrier",
+    "cancelRegistration": "Annuler l'inscription",
+    "download": "Télécharger"
+  },
+  "session": {
+    "seats": "{count} places",
+    "full": "Complète",
+    "onsite": "Présentiel",
+    "remote": "Visio",
+    "registered": "Inscrite"
+  },
+  "mode": {
+    "session": "Session",
+    "elearning": "E-learning"
+  },
+  "state": {
+    "nothingToDo": "Rien à faire"
+  },
+  "stepper": {
+    "registration": "Inscription",
+    "session": "Session",
+    "validation": "Validation"
+  },
+  "validity": {
+    "overdueDays": "En retard de {count} j",
+    "remainingDays": "Reste {count} j",
+    "expiresInMonths": "Expire dans {count} mois",
+    "validMonthsLeft": "Valide {count} mois encore"
+  }
+}
