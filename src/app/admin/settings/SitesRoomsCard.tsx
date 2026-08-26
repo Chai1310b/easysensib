@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useMemo, useState, type ReactNode } from 'react';
 import { useTranslations } from 'next-intl';
 import { Button, Drawer, EmptyState, useToast } from '@/components/admin';
@@ -143,37 +144,39 @@ export function SitesRoomsCard({ siteRooms, index }: SitesRoomsCardProps) {
                   ) : (
                     <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2 xl:grid-cols-3">
                       {entry.rooms.map((entryRoom, roomIndex) => (
-                        <li
-                          key={entryRoom.id}
-                          className={`${staggerClass(roomIndex)} ui-card flex flex-col gap-2 rounded-lg border border-card-border bg-card-muted px-3.5 py-3`}
-                        >
-                          <div className="flex items-start justify-between gap-2">
-                            <div className="flex min-w-0 flex-col">
-                              <span className="truncate text-[13.5px] font-medium text-ink">
-                                {entryRoom.room}
-                              </span>
-                              <span className="truncate text-[12px] text-ink-tertiary">
-                                {entryRoom.building}
+                        <li key={entryRoom.id} className={staggerClass(roomIndex)}>
+                          <Link
+                            href={`/admin/settings/rooms/${entryRoom.id}`}
+                            className="ui-card ui-pressable flex cursor-pointer flex-col gap-2 rounded-lg border border-card-border bg-card-muted px-3.5 py-3 text-ink! transition-colors duration-150 hover:bg-card"
+                          >
+                            <div className="flex items-start justify-between gap-2">
+                              <div className="flex min-w-0 flex-col">
+                                <span className="truncate text-[13.5px] font-medium text-ink">
+                                  {entryRoom.room}
+                                </span>
+                                <span className="truncate text-[12px] text-ink-tertiary">
+                                  {entryRoom.building}
+                                </span>
+                              </div>
+                              <span className="flex shrink-0 flex-col items-end">
+                                <span className="font-display text-[15px] leading-none font-semibold tabular-nums text-ink">
+                                  {entryRoom.capacity}
+                                </span>
+                                <span className="mt-0.5 text-[10.5px] text-ink-tertiary">
+                                  {t('rooms.seats')}
+                                </span>
                               </span>
                             </div>
-                            <span className="flex shrink-0 flex-col items-end">
-                              <span className="font-display text-[15px] leading-none font-semibold tabular-nums text-ink">
-                                {entryRoom.capacity}
-                              </span>
-                              <span className="mt-0.5 text-[10.5px] text-ink-tertiary">
-                                {t('rooms.seats')}
-                              </span>
+                            <span
+                              className={`w-fit rounded-full px-2 py-0.5 text-[11px] font-medium ${
+                                entryRoom.sessionsPlanned > 0
+                                  ? 'bg-accent-tint text-accent'
+                                  : 'bg-card text-ink-tertiary'
+                              }`}
+                            >
+                              {t('rooms.booked', { count: entryRoom.sessionsPlanned })}
                             </span>
-                          </div>
-                          <span
-                            className={`w-fit rounded-full px-2 py-0.5 text-[11px] font-medium ${
-                              entryRoom.sessionsPlanned > 0
-                                ? 'bg-accent-tint text-accent'
-                                : 'bg-card text-ink-tertiary'
-                            }`}
-                          >
-                            {t('rooms.booked', { count: entryRoom.sessionsPlanned })}
-                          </span>
+                          </Link>
                         </li>
                       ))}
                     </ul>

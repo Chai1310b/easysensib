@@ -142,5 +142,14 @@
     "emptyHint": "Aucune session ne porte encore cette sensibilisation.",
     "seeSession": "Voir la session",
     "planSession": "Planifier une session"
+  },
+  "filterGroups": {
+    "mode": "Mode de validation",
+    "late": "Retards",
+    "withLate": "Avec utilisateurs en retard",
+    "withoutLate": "Sans retard",
+    "modeSession": "Session",
+    "modeElearning": "E-learning",
+    "modeBoth": "Session ou e-learning"
   }
 }

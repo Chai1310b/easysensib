@@ -147,5 +147,75 @@
   "notFound": {
     "title": "Exécution introuvable",
     "description": "Cette exécution n'existe pas ou a été purgée de l'historique."
+  },
+  "funnel": {
+    "title": "Les étapes du moteur",
+    "hint": "Comment le moteur passe de tous les utilisateurs aux mails envoyés",
+    "steps": {
+      "analysed": {
+        "label": "1 · Utilisateurs analysés",
+        "hint": "Tous les utilisateurs connus au moment de l'exécution"
+      },
+      "excluded": {
+        "label": "2 · Exclus d'office",
+        "hint": "VIP, objectif valide, mail récent, créneau réservé, sans email, inactif"
+      },
+      "eligible": {
+        "label": "3 · Éligibles",
+        "hint": "Retenus après exclusions, puis classés par score de priorité"
+      },
+      "assigned": {
+        "label": "4 · Assignés · mails produits",
+        "hint": "Un seul créneau par personne, invitations = places libres x {margin}"
+      },
+      "unassigned": {
+        "label": "5 · Non assignés",
+        "hint": "Aucun créneau compatible ne pouvait les recevoir"
+      }
+    }
+  },
+  "slots": {
+    "title": "Assignations par créneau",
+    "hint": "Invitations envoyées créneau par créneau : places libres x {margin}, arrondi au supérieur",
+    "columns": {
+      "session": "Créneau",
+      "site": "Site",
+      "occupancy": "Remplissage",
+      "free": "Places libres",
+      "invitations": "Invitations"
+    }
+  },
+  "mailsPreview": {
+    "title": "Aperçu des mails produits",
+    "hint": "Les plus prioritaires d'abord : le score suit le barème du guide (nouveau 1000, expiré 400 à 799, expire bientôt 200 à 399)",
+    "columns": {
+      "user": "Destinataire",
+      "training": "Sensibilisation",
+      "priority": "Priorité",
+      "score": "Score",
+      "status": "Statut"
+    },
+    "status": {
+      "scheduled": "Programmé",
+      "sent": "Envoyé"
+    },
+    "footer": "Aperçu des {shown} premiers mails sur {total} produits par l'exécution"
+  },
+  "exclusionsTable": {
+    "title": "Le détail des exclusions",
+    "columns": {
+      "reason": "Raison",
+      "description": "Ce que ça veut dire",
+      "count": "Utilisateurs",
+      "share": "Part"
+    },
+    "descriptions": {
+      "vip": "Marqué VIP : volontairement exclu du système de relance automatique",
+      "validTraining": "Son objectif est encore valide, il n'a pas besoin d'être relancé",
+      "recentMail": "A déjà reçu un mail de relance dans les {days} derniers jours",
+      "bookedSlot": "Déjà inscrit à un créneau futur, inutile de le relancer",
+      "noEmail": "Aucune adresse mail connue",
+      "inactive": "Compte inactif"
+    }
   }
 }

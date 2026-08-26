@@ -1,6 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 import { Breadcrumb } from '@/components/admin/Breadcrumb';
 import { StatTile } from '@/components/admin/StatTile';
+import { DonutChart } from '@/components/admin/charts';
 import {
   BadgeCheckIcon,
   CalendarGridIcon,
@@ -36,6 +37,10 @@ export default async function AdminUsersPage() {
   }));
 
   const lateCount = rows.filter((row) => row.counts.late > 0).length;
+  // Exclusive buckets for the donut: late wins, then registered, then up to date.
+  const registeredOnlyCount = rows.filter(
+    (row) => row.counts.late === 0 && row.counts.registered > 0,
+  ).length;
   const registeredCount = rows.filter((row) => row.counts.registered > 0).length;
   const privilegedCount = rows.filter((row) => row.role !== 'user').length;
 
@@ -87,6 +92,52 @@ export default async function AdminUsersPage() {
           href="/admin/users/privileged"
           className="ui-stagger [--ui-index:3]"
         />
+      </section>
+
+      <section className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+        <div className="ui-card flex flex-col gap-4 rounded-xl border border-card-border bg-card p-5">
+          <div className="flex flex-col gap-0.5">
+            <h2 className="text-[14px] font-semibold text-ink">{t('indicators.byState')}</h2>
+            <p className="text-[11.5px] text-ink-tertiary">{t('indicators.byStateHint')}</p>
+          </div>
+          <DonutChart
+            size={124}
+            data={[
+              {
+                label: t('filterGroups.late'),
+                value: lateCount,
+                color: 'var(--color-gauge-danger)',
+              },
+              {
+                label: t('filterGroups.registered'),
+                value: registeredOnlyCount,
+                color: 'var(--color-accent)',
+              },
+              {
+                label: t('filterGroups.upToDate'),
+                value: rows.length - lateCount - registeredOnlyCount,
+                color: 'var(--color-gauge-success)',
+              },
+            ]}
+            centerValue={String(rows.length)}
+          />
+        </div>
+        <div className="ui-card flex flex-col gap-4 rounded-xl border border-card-border bg-card p-5">
+          <h2 className="text-[14px] font-semibold text-ink">{t('indicators.bySite')}</h2>
+          <DonutChart
+            size={124}
+            data={sites.map((site, index) => ({
+              label: site,
+              value: rows.filter((row) => row.site === site).length,
+              color: [
+                'var(--color-accent)',
+                'var(--color-gauge-success)',
+                'var(--color-gauge-warning)',
+                'var(--color-ink-tertiary)',
+              ][index % 4],
+            }))}
+          />
+        </div>
       </section>
 
       <UsersTable rows={rows} sites={sites} />

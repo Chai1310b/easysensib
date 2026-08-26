@@ -142,5 +142,14 @@
     "emptyHint": "No session carries this training yet.",
     "seeSession": "See the session",
     "planSession": "Plan a session"
+  },
+  "filterGroups": {
+    "mode": "Validation mode",
+    "late": "Overdue",
+    "withLate": "With overdue users",
+    "withoutLate": "No overdue user",
+    "modeSession": "Session",
+    "modeElearning": "E-learning",
+    "modeBoth": "Session or e-learning"
   }
 }

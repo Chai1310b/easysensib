@@ -5,6 +5,15 @@
   "topbar": {
     "help": "Aide"
   },
+  "userMenu": {
+    "open": "Ouvrir le menu utilisateur",
+    "profile": "Mon profil",
+    "history": "Historique de mes participations",
+    "certificates": "Mes certificats e-learning",
+    "language": "Langue",
+    "signOut": "Se déconnecter",
+    "demo": "Bientôt disponible (démo)"
+  },
   "actions": {
     "register": "S'inscrire",
     "backToHome": "Mes sensibilisations",

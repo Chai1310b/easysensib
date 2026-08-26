@@ -177,5 +177,24 @@
       "keep": "Keep it",
       "done": "Session cancelled (demo)"
     }
+  },
+  "view": {
+    "list": "List",
+    "calendar": "Calendar"
+  },
+  "calendar": {
+    "prev": "Previous month",
+    "next": "Next month",
+    "today": "Today",
+    "empty": "No session this month with these filters"
+  },
+  "filterGroups": {
+    "site": "Site",
+    "format": "Format",
+    "fill": "Occupancy",
+    "fillAvailable": "Seats available",
+    "fillAlmost": "Almost full",
+    "fillFull": "Full",
+    "tags": "Tags"
   }
 }

@@ -95,5 +95,24 @@
     "roomPlaceholder": "Ex. Salle 14",
     "capacityHint": "Nombre de places assises, plafond des inscriptions à une session.",
     "addedToast": "Salle « {name} » ajoutée sur le site {site} (démo)"
+  },
+  "roomPage": {
+    "backToRooms": "Sites et salles",
+    "capacity": "{count} places",
+    "stats": {
+      "upcoming": "Sessions à venir",
+      "upcomingHint": "Planifiées dans cette salle",
+      "done": "Sessions passées",
+      "doneHint": "Historique de la salle",
+      "occupancy": "Occupation moyenne",
+      "occupancyHint": "Inscrits sur capacité, sessions à venir",
+      "nextSession": "Prochaine session",
+      "nextSessionHint": "Dans cette salle",
+      "none": "Aucune"
+    },
+    "sessionsTitle": "Sessions dans cette salle",
+    "empty": "Aucune session enregistrée dans cette salle",
+    "notFound": "Salle introuvable",
+    "notFoundHint": "Cette salle n'existe pas ou a été supprimée."
   }
 }

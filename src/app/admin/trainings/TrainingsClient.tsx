@@ -6,8 +6,10 @@ import { useTranslations } from 'next-intl';
 import { useMemo, useState, type CSSProperties } from 'react';
 import {
   Button,
+  FilterBar,
   FilterChips,
   SearchInput,
+  type FilterSelection,
   SortableTh,
   Table,
   TableEmptyRow,
@@ -51,6 +53,7 @@ export function TrainingsClient({ trainings, categories }: TrainingsClientProps)
 
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('');
+  const [advanced, setAdvanced] = useState<FilterSelection>({});
   const [sortKey, setSortKey] = useState<SortKey>('category');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
 
@@ -68,16 +71,26 @@ export function TrainingsClient({ trainings, categories }: TrainingsClientProps)
 
   const rows = useMemo(() => {
     const needle = search.trim().toLowerCase();
+    const modeFilter = advanced.mode ?? [];
+    const lateFilter = advanced.late ?? [];
     const filtered = trainings.filter((training) => {
       if (category && training.category !== category) return false;
       if (needle && !training.name.toLowerCase().includes(needle)) return false;
+      if (modeFilter.length > 0 && !modeFilter.includes(training.mode)) return false;
+      if (lateFilter.length === 1) {
+        if (lateFilter[0] === 'with' && training.usersLate === 0) return false;
+        if (lateFilter[0] === 'without' && training.usersLate > 0) return false;
+      }
       return true;
     });
     const sorted = [...filtered].sort((a, b) => compare(a, b, sortKey));
     return sortDirection === 'asc' ? sorted : sorted.reverse();
-  }, [category, search, sortDirection, sortKey, trainings]);
+  }, [advanced, category, search, sortDirection, sortKey, trainings]);
 
-  const filtersActive = search.trim().length > 0 || category !== '';
+  const filtersActive =
+    search.trim().length > 0 ||
+    category !== '' ||
+    Object.values(advanced).some((values) => values.length > 0);
 
   function toggleSort(key: SortKey) {
     if (key === sortKey) {
@@ -103,9 +116,47 @@ export function TrainingsClient({ trainings, categories }: TrainingsClientProps)
           value={search}
           onChange={(event) => setSearch(event.target.value)}
         />
-        <span className="font-display text-[12.5px] tabular-nums text-ink-tertiary">
-          {t('list.resultCount', { count: rows.length })}
-        </span>
+        <div className="flex items-center gap-3">
+          <FilterBar
+            groups={[
+              {
+                id: 'mode',
+                label: t('filterGroups.mode'),
+                options: [
+                  { value: 'session', label: t('filterGroups.modeSession') },
+                  { value: 'elearning', label: t('filterGroups.modeElearning') },
+                  { value: 'both', label: t('filterGroups.modeBoth') },
+                ],
+              },
+              {
+                id: 'late',
+                label: t('filterGroups.late'),
+                options: [
+                  {
+                    value: 'with',
+                    label: t('filterGroups.withLate'),
+                    count: trainings.filter((item) => item.usersLate > 0).length,
+                  },
+                  {
+                    value: 'without',
+                    label: t('filterGroups.withoutLate'),
+                    count: trainings.filter((item) => item.usersLate === 0).length,
+                  },
+                ],
+              },
+            ]}
+            selection={advanced}
+            onChange={setAdvanced}
+            labels={{
+              filters: tCommon('filters.button'),
+              reset: tCommon('filters.reset'),
+              close: tCommon('filters.close'),
+            }}
+          />
+          <span className="font-display text-[12.5px] tabular-nums text-ink-tertiary">
+            {t('list.resultCount', { count: rows.length })}
+          </span>
+        </div>
       </div>
 
       <FilterChips

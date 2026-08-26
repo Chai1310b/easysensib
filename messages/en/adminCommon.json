@@ -20,7 +20,15 @@
     "privilegedUsers": "Privileged users",
     "mails": "Mail reminders",
     "settings": "Settings",
-    "ariaLabel": "Manager space navigation"
+    "ariaLabel": "Manager space navigation",
+    "settingsMenu": {
+      "back": "Back to the menu",
+      "title": "Settings",
+      "relance": "Mail relances",
+      "categories": "Business lines",
+      "tags": "Session tags",
+      "rooms": "Sites and rooms"
+    }
   },
   "actions": {
     "search": "Search",
@@ -101,5 +109,10 @@
     "dismiss": "Dismiss notification",
     "saved": "Changes saved",
     "simulated": "Simulated action, no data was changed"
+  },
+  "filters": {
+    "button": "Filters",
+    "reset": "Reset",
+    "close": "Close"
   }
 }

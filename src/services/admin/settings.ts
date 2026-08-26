@@ -158,3 +158,25 @@ export async function getSiteRooms(): Promise<SiteRooms[]> {
     };
   });
 }
+
+/** One room of the referential, or null. */
+export async function getRoom(id: string): Promise<Room | null> {
+  return ROOMS.find((room) => room.id === id) ?? null;
+}
+
+export async function getRooms(): Promise<Room[]> {
+  return ROOMS;
+}
+
+/** Every session (planned, done, cancelled) booked in the given room. */
+export async function getRoomSessions(id: string) {
+  const room = ROOMS.find((item) => item.id === id);
+  if (!room) return [];
+  const sessions = await getAdminSessions();
+  return sessions.filter(
+    (session) =>
+      session.site === room.site &&
+      session.location?.building === room.building &&
+      session.location?.room === room.room,
+  );
+}

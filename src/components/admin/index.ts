@@ -18,3 +18,19 @@ export { SearchInput } from './SearchInput';
 export { StatTile, type StatTone } from './StatTile';
 export { Tabs, type TabItem } from './Tabs';
 export { ToastProvider, useToast, type ToastTone } from './Toast';
+export { Select, type SelectOption } from './Select';
+export {
+  FilterBar,
+  type FilterGroupDef,
+  type FilterOption,
+  type FilterSelection,
+} from './FilterBar';
+export {
+  DonutChart,
+  BarChart,
+  LineChart,
+  ProgressRing,
+  type ChartSlice,
+  type BarPoint,
+} from './charts';
+export { useExitTransition } from './useExitTransition';

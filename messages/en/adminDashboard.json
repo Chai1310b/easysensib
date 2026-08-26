@@ -57,5 +57,24 @@
     "privileged": "Privileged users",
     "mails": "Mail reminders",
     "settings": "Settings"
+  },
+  "indicators": {
+    "title": "Indicators",
+    "obligations": "Obligation statuses",
+    "obligationsHint": "Across every assigned training",
+    "states": {
+      "valid": "Up to date",
+      "expiring": "Renew soon",
+      "overdue": "Overdue",
+      "registered": "Registered",
+      "never": "Never completed"
+    },
+    "rates": "Key rates",
+    "participationRate": "Participation rate",
+    "responseRate": "Response rate",
+    "ratesHint": "Participation: attended over convened · Response: registered users among those with something to do",
+    "monthly": "Session participation",
+    "monthlyHint": "Attended (color) over registered (gray), past sessions",
+    "categories": "Trainings per business line"
   }
 }

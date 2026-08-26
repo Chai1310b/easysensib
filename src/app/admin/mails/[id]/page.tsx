@@ -24,8 +24,12 @@ import {
 import {
   getRelanceExecution,
   getRelanceExecutions,
+  getRelanceMailPreview,
   getRelanceSettings,
+  getRelanceSlotAssignments,
 } from '@/services/admin/mails';
+import { Table, Td, Th } from '@/components/admin';
+import { formatLongDate } from '@/lib/format';
 import { ChevronLeftIcon, ClockIcon, FunnelIcon, ScaleIcon, SeatsIcon } from '../mailIcons';
 import {
   countExcluded,
@@ -56,11 +60,14 @@ export default async function RelanceDetailPage({ params }: RelanceDetailPagePro
     notFound();
   }
 
-  const [t, tCommon, settings] = await Promise.all([
+  const [t, tCommon, settings, slotAssignments, mailPreview] = await Promise.all([
     getTranslations('adminMails'),
     getTranslations('adminCommon'),
     getRelanceSettings(),
+    getRelanceSlotAssignments(),
+    getRelanceMailPreview(execution.type !== 'simulation' && execution.status === 'done'),
   ]);
+  const previewRows = mailPreview.slice(0, 8);
 
   const newcomers = countNewcomers(execution);
   const excluded = countExcluded(execution);
@@ -335,6 +342,257 @@ export default async function RelanceDetailPage({ params }: RelanceDetailPagePro
             </Panel>
           </div>
         </div>
+      )}
+
+      {execution.status === 'failed' ? null : (
+        <>
+          {/* The engine, step by step */}
+          <section className="flex flex-col gap-4 rounded-xl border border-card-border bg-card p-5">
+            <div className="flex flex-col gap-0.5">
+              <h2 className="font-display text-[15px] font-semibold text-ink">
+                {t('funnel.title')}
+              </h2>
+              <p className="text-[12px] text-ink-tertiary">{t('funnel.hint')}</p>
+            </div>
+            <ol className="flex flex-col gap-3">
+              {(
+                [
+                  {
+                    step: 'analysed',
+                    value: execution.analysed,
+                    color: 'var(--color-ink-tertiary)',
+                  },
+                  { step: 'excluded', value: excluded, color: 'var(--color-gauge-danger)' },
+                  { step: 'eligible', value: execution.eligible, color: 'var(--color-accent)' },
+                  {
+                    step: 'assigned',
+                    value: execution.mailsToSend,
+                    color: 'var(--color-gauge-success)',
+                  },
+                  {
+                    step: 'unassigned',
+                    value: execution.unassigned,
+                    color: 'var(--color-gauge-warning)',
+                  },
+                ] as const
+              ).map((row) => (
+                <li key={row.step} className="flex items-center gap-4">
+                  <span className="flex w-64 shrink-0 flex-col">
+                    <span className="text-[12.5px] font-medium text-ink">
+                      {t(`funnel.steps.${row.step}.label`)}
+                    </span>
+                    <span className="text-[11.5px] leading-snug text-ink-tertiary">
+                      {t(`funnel.steps.${row.step}.hint`, { margin: settings.seatMargin })}
+                    </span>
+                  </span>
+                  <span className="flex h-4 grow overflow-hidden rounded-full bg-gauge-neutral-track">
+                    <span
+                      className="rounded-full"
+                      style={{
+                        width: `${Math.max(2, Math.round((row.value / Math.max(1, execution.analysed)) * 100))}%`,
+                        background: row.color,
+                      }}
+                    />
+                  </span>
+                  <span className="w-14 shrink-0 text-right font-display text-[15px] font-semibold tabular-nums text-ink">
+                    {row.value}
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </section>
+
+          {/* Exclusions, explained */}
+          <section className="flex flex-col gap-4 rounded-xl border border-card-border bg-card p-5">
+            <h2 className="font-display text-[15px] font-semibold text-ink">
+              {t('exclusionsTable.title')}
+            </h2>
+            <Table
+              head={
+                <tr>
+                  <Th>{t('exclusionsTable.columns.reason')}</Th>
+                  <Th>{t('exclusionsTable.columns.description')}</Th>
+                  <Th align="right">{t('exclusionsTable.columns.count')}</Th>
+                  <Th align="right">{t('exclusionsTable.columns.share')}</Th>
+                </tr>
+              }
+            >
+              {EXCLUSION_ORDER.map((reason) => {
+                const entry = execution.exclusionBreakdown.find((item) => item.reason === reason);
+                const count = entry?.count ?? 0;
+                return (
+                  <tr key={reason} className="ui-row">
+                    <Td>
+                      <span className="flex items-center gap-2 whitespace-nowrap">
+                        <span
+                          aria-hidden
+                          className="h-2 w-2 rounded-full"
+                          style={{ backgroundColor: EXCLUSION_COLORS[reason] }}
+                        />
+                        <span className="text-[12.5px] font-medium text-ink">
+                          {t(`exclusions.reasons.${reason}`)}
+                        </span>
+                      </span>
+                    </Td>
+                    <Td>
+                      <span className="text-[12px] text-ink-secondary">
+                        {t(`exclusionsTable.descriptions.${reason}`, {
+                          days: settings.daysBetweenMails,
+                        })}
+                      </span>
+                    </Td>
+                    <Td align="right">
+                      <span className="font-display text-[13px] font-medium tabular-nums">
+                        {count}
+                      </span>
+                    </Td>
+                    <Td align="right">
+                      <span className="font-display text-[12px] tabular-nums text-ink-tertiary">
+                        {share(count, excluded)}
+                      </span>
+                    </Td>
+                  </tr>
+                );
+              })}
+            </Table>
+          </section>
+
+          {/* Assignments per slot */}
+          <section className="flex flex-col gap-4 rounded-xl border border-card-border bg-card p-5">
+            <div className="flex flex-col gap-0.5">
+              <h2 className="font-display text-[15px] font-semibold text-ink">
+                {t('slots.title')}
+              </h2>
+              <p className="text-[12px] text-ink-tertiary">
+                {t('slots.hint', { margin: settings.seatMargin })}
+              </p>
+            </div>
+            <Table
+              head={
+                <tr>
+                  <Th>{t('slots.columns.session')}</Th>
+                  <Th>{t('slots.columns.site')}</Th>
+                  <Th>{t('slots.columns.occupancy')}</Th>
+                  <Th align="right">{t('slots.columns.free')}</Th>
+                  <Th align="right">{t('slots.columns.invitations')}</Th>
+                </tr>
+              }
+            >
+              {slotAssignments.map((slot) => (
+                <tr key={slot.sessionId} className="ui-row">
+                  <Td>
+                    <Link
+                      href={`/admin/sessions/${slot.sessionId}`}
+                      className="flex flex-col gap-0.5"
+                    >
+                      <span className="text-[13px] font-medium text-ink">
+                        {slot.trainingNames.join(', ')}
+                      </span>
+                      <span className="text-[11.5px] text-ink-tertiary">
+                        {formatLongDate(slot.date)} · {slot.startTime}
+                      </span>
+                    </Link>
+                  </Td>
+                  <Td>
+                    <span className="text-[12.5px] text-ink-secondary">{slot.site}</span>
+                  </Td>
+                  <Td>
+                    <span className="flex items-center gap-2">
+                      <span className="flex h-1.5 w-24 overflow-hidden rounded-full bg-gauge-neutral-track">
+                        <span
+                          className="rounded-full bg-accent"
+                          style={{
+                            width: `${Math.round((slot.registered / slot.capacity) * 100)}%`,
+                          }}
+                        />
+                      </span>
+                      <span className="font-display text-[12px] tabular-nums text-ink-secondary">
+                        {slot.registered}/{slot.capacity}
+                      </span>
+                    </span>
+                  </Td>
+                  <Td align="right">
+                    <span className="font-display text-[13px] tabular-nums">{slot.freeSeats}</span>
+                  </Td>
+                  <Td align="right">
+                    <span className="font-display text-[13px] font-semibold tabular-nums text-accent">
+                      {slot.invitations}
+                    </span>
+                  </Td>
+                </tr>
+              ))}
+            </Table>
+          </section>
+
+          {/* Mails preview */}
+          <section className="flex flex-col gap-4 rounded-xl border border-card-border bg-card p-5">
+            <div className="flex flex-col gap-0.5">
+              <h2 className="font-display text-[15px] font-semibold text-ink">
+                {t('mailsPreview.title')}
+              </h2>
+              <p className="text-[12px] text-ink-tertiary">{t('mailsPreview.hint')}</p>
+            </div>
+            <Table
+              head={
+                <tr>
+                  <Th>{t('mailsPreview.columns.user')}</Th>
+                  <Th>{t('mailsPreview.columns.training')}</Th>
+                  <Th>{t('mailsPreview.columns.priority')}</Th>
+                  <Th align="right">{t('mailsPreview.columns.score')}</Th>
+                  <Th>{t('mailsPreview.columns.status')}</Th>
+                </tr>
+              }
+            >
+              {previewRows.map((mail) => (
+                <tr key={`${mail.userId}-${mail.trainingName}`} className="ui-row">
+                  <Td>
+                    <Link href={`/admin/users/${mail.userId}`} className="flex flex-col gap-0.5">
+                      <span className="text-[13px] font-medium text-ink">{mail.userName}</span>
+                      <span className="text-[11.5px] text-ink-tertiary">{mail.site}</span>
+                    </Link>
+                  </Td>
+                  <Td>
+                    <span className="text-[12.5px] text-ink-secondary">{mail.trainingName}</span>
+                  </Td>
+                  <Td>
+                    <span className="flex items-center gap-2 whitespace-nowrap">
+                      <span
+                        aria-hidden
+                        className="h-2 w-2 rounded-full"
+                        style={{ backgroundColor: PRIORITY_COLORS[mail.category] }}
+                      />
+                      <span className="text-[12.5px] text-ink-secondary">
+                        {t(`priority.categories.${mail.category}`)}
+                      </span>
+                    </span>
+                  </Td>
+                  <Td align="right">
+                    <span className="font-display text-[13px] font-semibold tabular-nums">
+                      {mail.score}
+                    </span>
+                  </Td>
+                  <Td>
+                    <span
+                      className={`rounded-full px-2.5 py-0.5 text-[11.5px] font-semibold ${
+                        mail.status === 'sent'
+                          ? 'bg-success-tint text-success'
+                          : 'bg-accent-tint text-accent'
+                      }`}
+                    >
+                      {t(`mailsPreview.status.${mail.status}`)}
+                    </span>
+                  </Td>
+                </tr>
+              ))}
+            </Table>
+            <p className="text-[11.5px] text-ink-tertiary">
+              {t('mailsPreview.footer', {
+                shown: previewRows.length,
+                total: execution.mailsToSend,
+              })}
+            </p>
+          </section>
+        </>
       )}
     </div>
   );

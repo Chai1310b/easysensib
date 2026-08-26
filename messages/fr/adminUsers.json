@@ -150,5 +150,36 @@
     "drawerTrainings": "Sensibilisations",
     "seeProfile": "Voir la fiche complète",
     "trainingsAll": "Toutes les sensibilisations"
+  },
+  "indicators": {
+    "byState": "Répartition par situation",
+    "byStateHint": "Utilisateurs selon leurs obligations",
+    "bySite": "Répartition par site"
+  },
+  "filterGroups": {
+    "site": "Site",
+    "state": "Situation",
+    "late": "En retard",
+    "upToDate": "À jour",
+    "registered": "Inscrit à une session",
+    "role": "Rôle",
+    "account": "Compte",
+    "vip": "VIP",
+    "inactive": "Inactif"
+  },
+  "sections": {
+    "indicators": "Indicateurs",
+    "upcoming": "Inscriptions à venir",
+    "history": "Historique de participation",
+    "assiduity": "Assiduité",
+    "obligations": "Ses obligations",
+    "noUpcoming": "Aucune inscription à venir",
+    "noHistory": "Aucune participation passée"
+  },
+  "attendance": {
+    "registered": "Inscrit",
+    "attended": "Présent",
+    "absent": "Absent",
+    "excused": "Excusé"
   }
 }

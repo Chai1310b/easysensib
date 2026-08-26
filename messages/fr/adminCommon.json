@@ -20,7 +20,15 @@
     "privilegedUsers": "Utilisateurs à privilège",
     "mails": "Relances mail",
     "settings": "Paramètres",
-    "ariaLabel": "Navigation de l'espace responsable"
+    "ariaLabel": "Navigation de l'espace responsable",
+    "settingsMenu": {
+      "back": "Retour au menu",
+      "title": "Paramètres",
+      "relance": "Relances mail",
+      "categories": "Filières",
+      "tags": "Tags de session",
+      "rooms": "Sites et salles"
+    }
   },
   "actions": {
     "search": "Rechercher",
@@ -101,5 +109,10 @@
     "dismiss": "Fermer la notification",
     "saved": "Modifications enregistrées",
     "simulated": "Action simulée, aucune donnée n'a été modifiée"
+  },
+  "filters": {
+    "button": "Filtres",
+    "reset": "Réinitialiser",
+    "close": "Fermer"
   }
 }

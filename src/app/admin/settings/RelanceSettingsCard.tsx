@@ -122,34 +122,11 @@ export function RelanceSettingsCard({ settings, freeSeats, index }: RelanceSetti
           </div>
         </SettingsRow>
 
-        <SettingsRow label={t('relance.sender')} hint={t('relance.senderHint')}>
-          <div className="flex items-center justify-end gap-2">
-            <input
-              type="email"
-              aria-label={t('relance.sender')}
-              value={draft.senderEmail}
-              onChange={(event) => update('senderEmail', event.target.value)}
-              className={`${FIELD_CLASS} w-[240px]`}
-            />
-            <span className={UNIT_SLOT} aria-hidden="true" />
-          </div>
-        </SettingsRow>
-
         <SettingsRow label={t('relance.autoRun')} hint={t('relance.autoRunHint')}>
           <Toggle
             checked={draft.autoRunEnabled}
             onChange={(value) => update('autoRunEnabled', value)}
             label={t('relance.autoRun')}
-            onLabel={t('toggle.on')}
-            offLabel={t('toggle.off')}
-          />
-        </SettingsRow>
-
-        <SettingsRow label={t('relance.onCancel')} hint={t('relance.onCancelHint')}>
-          <Toggle
-            checked={draft.relanceOnValidationCancel}
-            onChange={(value) => update('relanceOnValidationCancel', value)}
-            label={t('relance.onCancel')}
             onLabel={t('toggle.on')}
             offLabel={t('toggle.off')}
           />

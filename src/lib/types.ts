@@ -45,6 +45,8 @@ export interface TrainingLastValidation {
 export interface Training {
   id: string;
   name: string;
+  /** Short description shown on the training page. */
+  description?: string;
   /** Business line ("filiere"): Securite, Surete, QHSE... */
   category: string;
   mode: ValidationMode;
@@ -82,6 +84,8 @@ export interface SessionSlot {
   site: string;
   /** Remaining seats; null means the session is full. */
   seatsLeft: number | null;
+  /** Total seats of the slot, to render occupancy gauges. */
+  capacity?: number;
   /** True when the current user is registered on this slot. */
   isRegistered: boolean;
 }
@@ -90,6 +94,10 @@ export interface ParticipationRecord {
   id: string;
   date: string;
   trainingName: string;
+  /** Set when the training still exists in the catalog (deep link). */
+  trainingId?: string;
+  startTime?: string;
+  endTime?: string;
   kind: 'session' | 'elearning';
   /** Session format, when kind is 'session'. */
   format?: 'onsite' | 'remote';
@@ -123,4 +131,5 @@ export interface CurrentUser {
   initials: string;
   /** Home site, e.g. "Cholet". */
   site: string;
+  email: string;
 }

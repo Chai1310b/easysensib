@@ -57,5 +57,24 @@
     "privileged": "Utilisateurs à privilège",
     "mails": "Relances mail",
     "settings": "Paramètres"
+  },
+  "indicators": {
+    "title": "Indicateurs",
+    "obligations": "Statut des obligations",
+    "obligationsHint": "Toutes sensibilisations attribuées confondues",
+    "states": {
+      "valid": "À jour",
+      "expiring": "À repasser bientôt",
+      "overdue": "En retard",
+      "registered": "Inscrit",
+      "never": "Jamais passée"
+    },
+    "rates": "Taux clés",
+    "participationRate": "Taux de participation",
+    "responseRate": "Taux de réponse",
+    "ratesHint": "Participation : présents sur convoqués · Réponse : utilisateurs inscrits parmi ceux qui ont une action à faire",
+    "monthly": "Participation aux sessions",
+    "monthlyHint": "Présents (couleur) sur inscrits (gris), sessions passées",
+    "categories": "Sensibilisations par filière"
   }
 }

@@ -5,6 +5,8 @@ export const trainingsFixture: Training[] = [
   {
     id: 't-h0b0',
     name: 'Habilitation électrique H0B0',
+    description:
+      "Reconnaître les risques électriques, appliquer les distances de sécurité et les consignes pour travailler à proximité d'installations électriques sans habilitation de travaux.",
     category: 'Sécurité',
     mode: 'session',
     state: 'overdue',
@@ -21,6 +23,8 @@ export const trainingsFixture: Training[] = [
   {
     id: 't-cyber',
     name: 'Cybersécurité au poste de travail',
+    description:
+      'Adopter les bons réflexes au poste de travail : mots de passe, hameçonnage, données sensibles et signalement des incidents de sécurité.',
     category: 'Sûreté',
     mode: 'both',
     state: 'todo',
@@ -37,6 +41,8 @@ export const trainingsFixture: Training[] = [
   {
     id: 't-gestes',
     name: 'Gestes et postures',
+    description:
+      'Prévenir les troubles musculo-squelettiques : postures de travail, manutention de charges et aménagement du poste.',
     category: 'QHSE',
     mode: 'session',
     state: 'registered',
@@ -56,6 +62,8 @@ export const trainingsFixture: Training[] = [
   {
     id: 't-incendie',
     name: 'Risque incendie',
+    description:
+      "Réagir face à un départ de feu : alarme, extincteurs, cheminements d'évacuation et points de rassemblement du site.",
     category: 'Sécurité',
     mode: 'session',
     state: 'valid',
@@ -74,6 +82,8 @@ export const trainingsFixture: Training[] = [
   {
     id: 't-accueil',
     name: 'Accueil sécurité site',
+    description:
+      "Consignes générales du site : accès, circulation, équipements de protection et conduite à tenir en cas d'urgence.",
     category: 'Sécurité',
     mode: 'elearning',
     state: 'valid',

@@ -147,5 +147,75 @@
   "notFound": {
     "title": "Run not found",
     "description": "This run does not exist or was purged from the history."
+  },
+  "funnel": {
+    "title": "The engine steps",
+    "hint": "How the engine goes from every user to the sent mails",
+    "steps": {
+      "analysed": {
+        "label": "1 · Users analysed",
+        "hint": "Every user known when the run started"
+      },
+      "excluded": {
+        "label": "2 · Excluded upfront",
+        "hint": "VIP, valid training, recent mail, booked slot, no email, inactive"
+      },
+      "eligible": {
+        "label": "3 · Eligible",
+        "hint": "Kept after exclusions, then ranked by priority score"
+      },
+      "assigned": {
+        "label": "4 · Assigned · mails produced",
+        "hint": "One slot per person, invitations = free seats x {margin}"
+      },
+      "unassigned": {
+        "label": "5 · Unassigned",
+        "hint": "No compatible slot could take them"
+      }
+    }
+  },
+  "slots": {
+    "title": "Assignments per slot",
+    "hint": "Invitations sent slot by slot: free seats x {margin}, rounded up",
+    "columns": {
+      "session": "Slot",
+      "site": "Site",
+      "occupancy": "Occupancy",
+      "free": "Free seats",
+      "invitations": "Invitations"
+    }
+  },
+  "mailsPreview": {
+    "title": "Preview of the produced mails",
+    "hint": "Highest priority first: the score follows the guide's model (new 1000, expired 400 to 799, expiring soon 200 to 399)",
+    "columns": {
+      "user": "Recipient",
+      "training": "Training",
+      "priority": "Priority",
+      "score": "Score",
+      "status": "Status"
+    },
+    "status": {
+      "scheduled": "Scheduled",
+      "sent": "Sent"
+    },
+    "footer": "Preview of the first {shown} mails out of {total} produced by the run"
+  },
+  "exclusionsTable": {
+    "title": "Exclusions in detail",
+    "columns": {
+      "reason": "Reason",
+      "description": "What it means",
+      "count": "Users",
+      "share": "Share"
+    },
+    "descriptions": {
+      "vip": "Marked VIP: deliberately excluded from the automatic relance system",
+      "validTraining": "Their training is still valid, no need to chase them",
+      "recentMail": "Already received a relance mail within the last {days} days",
+      "bookedSlot": "Already registered to a future slot, no need to chase them",
+      "noEmail": "No known email address",
+      "inactive": "Inactive account"
+    }
   }
 }

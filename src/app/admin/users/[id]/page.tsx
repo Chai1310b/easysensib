@@ -3,11 +3,14 @@ import { getTranslations } from 'next-intl/server';
 import { Breadcrumb } from '@/components/admin/Breadcrumb';
 import { EmptyState } from '@/components/admin/EmptyState';
 import { ButtonLink } from '@/components/admin/Button';
-import { KeyIcon, UsersIcon } from '@/components/admin/adminIcons';
+import { CalendarGridIcon, KeyIcon, UsersIcon } from '@/components/admin/adminIcons';
+import { DonutChart, ProgressRing } from '@/components/admin/charts';
+import { StatusPill } from '@/components/StatusPill';
+import { DateBlock } from '@/components/DateBlock';
 import { MailIcon, PinIcon } from '@/components/icons';
 import { formatLongDate } from '@/lib/format';
 import { getAdminTrainings } from '@/services/admin/trainings';
-import { getUpcomingSessions } from '@/services/admin/sessions';
+import { getAdminSessions, getUpcomingSessions } from '@/services/admin/sessions';
 import { getAdminUser, getAdminUsers } from '@/services/admin/users';
 import { Avatar, FieldBlock, InactiveBadge, Tag, VipBadge } from '../UserBits';
 import { initialsOf, todayIso, validityOf } from '../userDisplay';
@@ -95,6 +98,40 @@ export default async function AdminUserPage({ params }: UserPageProps) {
       time: session.startTime,
     }));
 
+  const allSessions = await getAdminSessions();
+  const myUpcoming = allSessions.filter(
+    (session) =>
+      session.status === 'planned' &&
+      session.participants.some((participant) => participant.userId === user.id),
+  );
+  const myPast = allSessions
+    .filter(
+      (session) =>
+        session.status !== 'planned' &&
+        session.participants.some((participant) => participant.userId === user.id),
+    )
+    .sort((a, b) => b.date.localeCompare(a.date));
+  const attendedCount = myPast.filter(
+    (session) => session.participants.find((p) => p.userId === user.id)?.attendance === 'attended',
+  ).length;
+  const absentCount = myPast.filter(
+    (session) => session.participants.find((p) => p.userId === user.id)?.attendance === 'absent',
+  ).length;
+  const assiduityPercent =
+    attendedCount + absentCount > 0
+      ? Math.round((attendedCount / (attendedCount + absentCount)) * 100)
+      : 100;
+
+  const stateCounts = { valid: 0, expiring: 0, overdue: 0, registered: 0, never: 0 };
+  for (const entry of user.trainings) stateCounts[entry.state] += 1;
+  const stateColors = {
+    valid: 'var(--color-gauge-success)',
+    registered: 'var(--color-accent)',
+    expiring: 'var(--color-gauge-warning)',
+    overdue: 'var(--color-gauge-danger)',
+    never: 'var(--color-ink-tertiary)',
+  } as const;
+
   const isManager = user.role !== 'user';
   const managedTrainingNames = (user.managedTrainingIds ?? []).map(
     (trainingId) => trainingById.get(trainingId)?.name ?? trainingId,
@@ -157,6 +194,114 @@ export default async function AdminUserPage({ params }: UserPageProps) {
           ) : null
         }
       />
+
+      <section className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+        <div className="ui-card flex flex-col gap-4 rounded-xl border border-card-border bg-card p-5">
+          <h2 className="text-[14px] font-semibold text-ink">{t('sections.obligations')}</h2>
+          <DonutChart
+            size={116}
+            data={(['overdue', 'never', 'expiring', 'registered', 'valid'] as const).map(
+              (state) => ({
+                label: tCommon(`status.${state}`),
+                value: stateCounts[state],
+                color: stateColors[state],
+              }),
+            )}
+          />
+        </div>
+
+        <div className="ui-card flex flex-col gap-4 rounded-xl border border-card-border bg-card p-5">
+          <h2 className="text-[14px] font-semibold text-ink">{t('sections.assiduity')}</h2>
+          <div className="flex grow items-center justify-center">
+            <ProgressRing
+              percent={assiduityPercent}
+              label={t('sections.assiduity')}
+              color={assiduityPercent >= 80 ? 'var(--color-success)' : 'var(--color-warning)'}
+              size={100}
+            />
+          </div>
+        </div>
+
+        <div className="ui-card flex flex-col gap-3 rounded-xl border border-card-border bg-card p-5">
+          <h2 className="flex items-center gap-2 text-[14px] font-semibold text-ink">
+            <CalendarGridIcon size={15} />
+            {t('sections.upcoming')}
+          </h2>
+          {myUpcoming.length === 0 ? (
+            <p className="text-[12.5px] text-ink-tertiary">{t('sections.noUpcoming')}</p>
+          ) : (
+            <ul className="flex flex-col gap-2">
+              {myUpcoming.map((session) => (
+                <li key={session.id}>
+                  <Link
+                    href={`/admin/sessions/${session.id}`}
+                    className="ui-row flex items-center gap-3 rounded-lg border border-card-border px-3 py-2 text-ink! hover:bg-card-muted"
+                  >
+                    <DateBlock date={session.date} width={38} daySize={16} tone="accent" />
+                    <span className="flex min-w-0 flex-col">
+                      <span className="truncate text-[13px] font-medium">
+                        {session.trainingNames.join(', ')}
+                      </span>
+                      <span className="text-[11.5px] text-ink-tertiary">
+                        {session.startTime} · {session.site}
+                      </span>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </section>
+
+      <section className="flex flex-col gap-3">
+        <h2 className="font-display text-[16px] font-semibold">{t('sections.history')}</h2>
+        {myPast.length === 0 ? (
+          <p className="rounded-xl border border-card-border bg-card-muted px-4 py-3.5 text-[12.5px] text-ink-tertiary">
+            {t('sections.noHistory')}
+          </p>
+        ) : (
+          <ul className="flex flex-col overflow-hidden rounded-xl border border-card-border bg-card">
+            {myPast.map((session) => {
+              const attendance =
+                session.participants.find((participant) => participant.userId === user.id)
+                  ?.attendance ?? 'registered';
+              return (
+                <li
+                  key={session.id}
+                  className="flex items-center gap-4 border-b border-divider px-5 py-3.5 last:border-b-0"
+                >
+                  <DateBlock date={session.date} width={44} daySize={17} />
+                  <span className="flex min-w-0 grow flex-col gap-0.5">
+                    <Link
+                      href={`/admin/sessions/${session.id}`}
+                      className="truncate text-[13.5px] font-medium text-ink! hover:text-accent!"
+                    >
+                      {session.trainingNames.join(', ')}
+                    </Link>
+                    <span className="text-[11.5px] text-ink-tertiary">
+                      {formatLongDate(session.date)} · {session.site}
+                    </span>
+                  </span>
+                  {attendance === 'attended' ? (
+                    <StatusPill tone="success" icon="check">
+                      {t('attendance.attended')}
+                    </StatusPill>
+                  ) : attendance === 'absent' ? (
+                    <StatusPill tone="danger" icon="cross">
+                      {t('attendance.absent')}
+                    </StatusPill>
+                  ) : (
+                    <StatusPill tone="warning" icon="clock">
+                      {t(`attendance.${attendance}`)}
+                    </StatusPill>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </section>
 
       {isManager ? (
         <section className="ui-stagger [--ui-index:2] flex flex-col gap-4 rounded-xl border border-card-border bg-card-muted p-6">

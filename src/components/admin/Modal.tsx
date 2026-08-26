@@ -2,6 +2,7 @@
 
 import { useEffect, type ReactNode } from 'react';
 import { CloseIcon } from './adminIcons';
+import { useExitTransition } from './useExitTransition';
 
 interface ModalProps {
   open: boolean;
@@ -27,6 +28,8 @@ export function Modal({
   width = 460,
   children,
 }: ModalProps) {
+  const { mounted, closing } = useExitTransition(open);
+
   useEffect(() => {
     if (!open) return;
     const onKeyDown = (event: KeyboardEvent) => {
@@ -36,7 +39,7 @@ export function Modal({
     return () => document.removeEventListener('keydown', onKeyDown);
   }, [open, onClose]);
 
-  if (!open) return null;
+  if (!mounted) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -44,14 +47,14 @@ export function Modal({
         type="button"
         aria-label={closeLabel}
         onClick={onClose}
-        className="ui-overlay absolute inset-0 cursor-default bg-[#16181c]/35"
+        className={`${closing ? 'ui-overlay-out' : 'ui-overlay'} absolute inset-0 cursor-default bg-[#16181c]/35`}
       />
       <div
         role="dialog"
         aria-modal="true"
         aria-label={title}
         style={{ maxWidth: width }}
-        className="ui-modal relative flex w-full flex-col rounded-xl border border-card-border bg-card shadow-[0_18px_48px_rgba(22,24,28,0.18)]"
+        className={`${closing ? 'ui-modal-out' : 'ui-modal'} relative flex w-full flex-col rounded-xl border border-card-border bg-card shadow-[0_18px_48px_rgba(22,24,28,0.18)]`}
       >
         <header className="flex items-start justify-between gap-4 border-b border-divider px-5 py-4">
           <div className="flex flex-col gap-1">

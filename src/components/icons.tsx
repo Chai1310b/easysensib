@@ -386,3 +386,29 @@ export function ExclamationIcon({
     </svg>
   );
 }
+
+/** Arrow leaving a frame: sign out. */
+export function LogoutIcon({
+  size = 16,
+  color = '#5c6068',
+  strokeWidth = 1.7,
+  className,
+}: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+      <path
+        d="M14 4H7C5.9 4 5 4.9 5 6V18C5 19.1 5.9 20 7 20H14"
+        stroke={color}
+        strokeWidth={strokeWidth}
+        strokeLinecap="round"
+      />
+      <path
+        d="M11 12H20M20 12L16.5 8.5M20 12L16.5 15.5"
+        stroke={color}
+        strokeWidth={strokeWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}

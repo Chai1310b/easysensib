@@ -12,5 +12,16 @@
     "attended": "Présente",
     "absent": "Absente",
     "certificate": "Validée"
+  },
+  "expanded": {
+    "date": "Date",
+    "time": "Horaire",
+    "format": "Format",
+    "location": "Lieu",
+    "trainerLabel": "Formateur",
+    "statusLabel": "Statut",
+    "viewTraining": "Voir la sensibilisation",
+    "viewCertificate": "Voir mon certificat",
+    "toggle": "Afficher le détail"
   }
 }

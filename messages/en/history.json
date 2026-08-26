@@ -12,5 +12,16 @@
     "attended": "Attended",
     "absent": "Absent",
     "certificate": "Validated"
+  },
+  "expanded": {
+    "date": "Date",
+    "time": "Time",
+    "format": "Format",
+    "location": "Location",
+    "trainerLabel": "Trainer",
+    "statusLabel": "Status",
+    "viewTraining": "View the training",
+    "viewCertificate": "View my certificate",
+    "toggle": "Show details"
   }
 }

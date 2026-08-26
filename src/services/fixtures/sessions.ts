@@ -12,6 +12,7 @@ export const sessionsFixture: SessionSlot[] = [
     location: { building: 'Bât. B', room: 'salle 204' },
     site: 'Cholet',
     seatsLeft: 6,
+    capacity: 12,
     isRegistered: false,
   },
   {
@@ -24,6 +25,7 @@ export const sessionsFixture: SessionSlot[] = [
     format: 'remote',
     site: 'Cholet',
     seatsLeft: 18,
+    capacity: 20,
     isRegistered: false,
   },
   {
@@ -37,6 +39,7 @@ export const sessionsFixture: SessionSlot[] = [
     location: { building: 'Bât. C', room: 'salle 8' },
     site: 'Cholet',
     seatsLeft: 4,
+    capacity: 12,
     isRegistered: true,
   },
   {
@@ -50,6 +53,7 @@ export const sessionsFixture: SessionSlot[] = [
     location: { building: 'Bât. B', room: 'salle 204' },
     site: 'Cholet',
     seatsLeft: 12,
+    capacity: 14,
     isRegistered: false,
   },
   {
@@ -63,6 +67,7 @@ export const sessionsFixture: SessionSlot[] = [
     location: { building: 'Bât. A', room: 'salle 3' },
     site: 'Cholet',
     seatsLeft: null,
+    capacity: 12,
     isRegistered: false,
   },
 ];

@@ -1,6 +1,42 @@
 {
-  "meta": "{category} · duration {duration} · valid for {years, plural, one {# year} other {# years}}",
+  "meta": "{category} · duration {duration} · valid {years, plural, one {# year} other {# years}}",
   "sessionsAvailable": "{count, plural, =0 {No session available} one {# session available} other {# sessions available}}",
   "allSites": "All sites",
-  "mailNote": "No date works for you? You will be reminded by email as soon as a new session opens."
+  "allFormats": "All formats",
+  "mailNote": "No date works for you? You will get an email as soon as a new session opens.",
+  "about": {
+    "title": "About this training"
+  },
+  "timeline": {
+    "title": "Where do I stand?",
+    "today": "Today",
+    "plannedSession": "Session planned on {date}",
+    "obtainedOn": "validated in {date}",
+    "expiresOn": "expires in {date}",
+    "assigned": "assigned",
+    "dueBefore": "due before {date}",
+    "neverDone": "never completed",
+    "legendValid": "valid",
+    "legendWarning": "renew soon",
+    "legendOverdue": "overdue"
+  },
+  "journey": {
+    "lastValidatedSession": "Validated on {date} in a session",
+    "lastValidatedCertificate": "Validated on {date} with an e-learning certificate",
+    "neverValidated": "Never validated yet",
+    "registered": "Registered to the session of {date}"
+  },
+  "seatsGauge": "{left} seats out of {total}",
+  "pastTitle": "My past participations",
+  "pastEmpty": "No participation to this training yet.",
+  "elearning": {
+    "title": "Validate online",
+    "hint": "Complete the online module then upload your certificate: it counts as validation after review.",
+    "action": "Upload my certificate"
+  },
+  "past": {
+    "attended": "Attended",
+    "absent": "Absent",
+    "certificate": "Certificate"
+  }
 }

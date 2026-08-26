@@ -1,6 +1,7 @@
 'use client';
 
 import { useId, type ReactNode } from 'react';
+import { Select } from '@/components/admin/Select';
 
 const CONTROL =
   'h-11 w-full rounded-lg border border-card-border bg-card px-3 text-[13.5px] text-ink transition-[border-color,box-shadow] duration-200 outline-none placeholder:text-ink-disabled focus:border-accent-border focus:shadow-[0_0_0_3px_var(--color-accent-surface)]';
@@ -124,31 +125,7 @@ export function SelectField({
   const id = useId();
   return (
     <Field label={label} hint={hint} htmlFor={id} className={className}>
-      <div className="relative">
-        <select
-          id={id}
-          value={value}
-          onChange={(event) => onChange(event.target.value)}
-          className={`${CONTROL} cursor-pointer appearance-none pr-9`}
-        >
-          {options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-        <span className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-ink-tertiary">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path
-              d="M6 9L12 15L18 9"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </span>
-      </div>
+      <Select value={value} onChange={onChange} options={options} ariaLabel={label} />
     </Field>
   );
 }

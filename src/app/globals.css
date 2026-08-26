@@ -196,13 +196,101 @@
   animation: ui-pop-in 200ms cubic-bezier(0.22, 0.61, 0.36, 1) backwards;
 }
 
+/* Exit animations: Modal and Drawer stay mounted ~200ms with these classes
+   before unmounting, so closing feels as soft as opening. */
+@keyframes ui-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes ui-slide-right-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+}
+
+@keyframes ui-pop-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+}
+
+.ui-overlay-out {
+  animation: ui-fade-out 180ms ease forwards;
+}
+
+.ui-drawer-out {
+  animation: ui-slide-right-out 200ms cubic-bezier(0.55, 0, 0.55, 0.2) forwards;
+}
+
+.ui-modal-out {
+  animation: ui-pop-out 180ms cubic-bezier(0.55, 0, 0.55, 0.2) forwards;
+}
+
+/* Sidebar sub-menu (settings): slide in from the right going forward,
+   from the left coming back. */
+@keyframes ui-slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.ui-menu-forward {
+  animation: ui-slide-left 220ms cubic-bezier(0.22, 0.61, 0.36, 1) backwards;
+}
+
+.ui-menu-back {
+  animation: ui-slide-in-left 220ms cubic-bezier(0.22, 0.61, 0.36, 1) backwards;
+}
+
+/* Small popovers: user menu, custom selects, filter panels. */
+@keyframes ui-pop-down {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.ui-popover {
+  animation: ui-pop-down 160ms cubic-bezier(0.22, 0.61, 0.36, 1) backwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .ui-page-enter,
   .ui-stagger,
   .ui-overlay,
   .ui-drawer,
   .ui-modal,
-  .ui-toast {
+  .ui-toast,
+  .ui-overlay-out,
+  .ui-drawer-out,
+  .ui-modal-out,
+  .ui-popover,
+  .ui-menu-forward,
+  .ui-menu-back {
     animation: none;
   }
 

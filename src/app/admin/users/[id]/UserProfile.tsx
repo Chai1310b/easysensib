@@ -6,6 +6,7 @@ import { useState, type ReactNode } from 'react';
 import { Button } from '@/components/admin/Button';
 import { Table, TableEmptyRow, Td, Th, Tr } from '@/components/admin/DataTable';
 import { Modal } from '@/components/admin/Modal';
+import { Select } from '@/components/admin/Select';
 import { useToast } from '@/components/admin/Toast';
 import { ValidityGauge } from '@/components/ValidityGauge';
 import type { AdminTrainingState, Site } from '@/lib/admin-types';
@@ -295,17 +296,15 @@ export function UserProfile({
               <span className="text-[12px] font-medium text-ink-secondary">
                 {t('cancel.reasonLabel')}
               </span>
-              <select
+              <Select
                 value={reason}
-                onChange={(event) => setReason(event.target.value as Reason)}
-                className={`${FIELD} h-10`}
-              >
-                {REASONS.map((item) => (
-                  <option key={item} value={item}>
-                    {t(`cancel.reasons.${item}`)}
-                  </option>
-                ))}
-              </select>
+                onChange={(value) => setReason(value as Reason)}
+                ariaLabel={t('cancel.reasonLabel')}
+                options={REASONS.map((item) => ({
+                  value: item,
+                  label: t(`cancel.reasons.${item}`),
+                }))}
+              />
             </label>
 
             <label className="flex flex-col gap-1.5">
@@ -345,21 +344,19 @@ export function UserProfile({
                   <span className="text-[12px] font-medium text-ink-secondary">
                     {t('cancel.sessionLabel')}
                   </span>
-                  <select
+                  <Select
                     value={sessionId}
-                    onChange={(event) => setSessionId(event.target.value)}
-                    className={`${FIELD} h-10`}
-                  >
-                    {candidates.map((session) => (
-                      <option key={session.id} value={session.id}>
-                        {t('cancel.sessionOption', {
-                          date: session.dateLabel,
-                          site: session.site,
-                          time: session.time,
-                        })}
-                      </option>
-                    ))}
-                  </select>
+                    onChange={setSessionId}
+                    ariaLabel={t('cancel.sessionLabel')}
+                    options={candidates.map((session) => ({
+                      value: session.id,
+                      label: t('cancel.sessionOption', {
+                        date: session.dateLabel,
+                        site: session.site,
+                        time: session.time,
+                      }),
+                    }))}
+                  />
                 </label>
               ) : null}
             </div>

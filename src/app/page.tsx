@@ -219,7 +219,12 @@ function ActiveTrainingCard({
         <div className="flex grow items-center gap-3">
           <StateIcon state={training.state} className="shrink-0" />
           <div className="flex flex-col gap-0.5">
-            <span className="font-display text-base font-semibold">{training.name}</span>
+            <Link
+              href={`/trainings/${training.id}`}
+              className="font-display text-base font-semibold text-ink! hover:text-accent!"
+            >
+              {training.name}
+            </Link>
             <span className="text-xs text-ink-tertiary">{training.category}</span>
           </div>
         </div>
@@ -310,7 +315,12 @@ function ValidTrainingRow({
     <Card muted className="flex items-center gap-4 px-6 py-4">
       <StateIcon state="valid" size={22} className="shrink-0" />
       <div className="flex w-[280px] shrink-0 flex-col gap-0.5">
-        <span className="text-[15px] font-semibold text-ink-strong">{training.name}</span>
+        <Link
+          href={`/trainings/${training.id}`}
+          className="text-[15px] font-semibold text-ink-strong! hover:text-accent!"
+        >
+          {training.name}
+        </Link>
         {labels.subtitle && <span className="text-xs text-ink-tertiary">{labels.subtitle}</span>}
       </div>
       <ValidityGauge

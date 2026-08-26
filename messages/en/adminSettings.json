@@ -95,5 +95,24 @@
     "roomPlaceholder": "E.g. Room 14",
     "capacityHint": "Number of seats, cap of the registrations to a session.",
     "addedToast": "Room \"{name}\" added on the {site} site (demo)"
+  },
+  "roomPage": {
+    "backToRooms": "Sites and rooms",
+    "capacity": "{count} seats",
+    "stats": {
+      "upcoming": "Upcoming sessions",
+      "upcomingHint": "Planned in this room",
+      "done": "Past sessions",
+      "doneHint": "History of the room",
+      "occupancy": "Average occupancy",
+      "occupancyHint": "Registered over capacity, upcoming sessions",
+      "nextSession": "Next session",
+      "nextSessionHint": "In this room",
+      "none": "None"
+    },
+    "sessionsTitle": "Sessions in this room",
+    "empty": "No session recorded in this room",
+    "notFound": "Room not found",
+    "notFoundHint": "This room does not exist or has been removed."
   }
 }

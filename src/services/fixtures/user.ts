@@ -6,4 +6,5 @@ export const currentUserFixture: CurrentUser = {
   lastName: 'Lefebvre',
   initials: 'ML',
   site: 'Cholet',
+  email: 'marie.lefebvre@example.fr',
 };

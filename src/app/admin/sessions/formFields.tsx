@@ -1,6 +1,7 @@
 'use client';
 
 import type { ReactNode } from 'react';
+import { Select } from '@/components/admin/Select';
 
 const CONTROL =
   'h-10 w-full rounded-lg border border-card-border bg-card px-3 text-[13px] text-ink transition-[border-color,box-shadow] duration-200 outline-none placeholder:text-ink-disabled focus:border-accent-border focus:shadow-[0_0_0_3px_var(--color-accent-surface)] disabled:bg-card-muted disabled:text-ink-tertiary';
@@ -90,7 +91,7 @@ export interface SelectOption {
   label: string;
 }
 
-/** Native select with the admin control skin and a custom chevron. */
+/** Styled select shared with the rest of the admin (design-system popover). */
 export function SelectInput({
   id,
   value,
@@ -108,34 +109,16 @@ export function SelectInput({
   disabled?: boolean;
   className?: string;
 }) {
+  void id;
   return (
-    <div className={`relative ${className}`}>
-      <select
-        id={id}
-        value={value}
-        aria-label={ariaLabel}
-        disabled={disabled}
-        onChange={(event) => onChange(event.target.value)}
-        className={`${CONTROL} cursor-pointer appearance-none pr-8`}
-      >
-        {options.map((option) => (
-          <option key={option.value || 'all'} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-      <span className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-ink-tertiary">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path
-            d="m6 9 6 6 6-6"
-            stroke="currentColor"
-            strokeWidth="1.8"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </span>
-    </div>
+    <Select
+      value={value}
+      onChange={onChange}
+      options={options}
+      ariaLabel={ariaLabel ?? ''}
+      disabled={disabled}
+      className={className}
+    />
   );
 }
 

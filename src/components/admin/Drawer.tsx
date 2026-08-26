@@ -2,6 +2,7 @@
 
 import { useEffect, type ReactNode } from 'react';
 import { CloseIcon } from './adminIcons';
+import { useExitTransition } from './useExitTransition';
 
 interface DrawerProps {
   open: boolean;
@@ -26,6 +27,8 @@ export function Drawer({
   closeLabel,
   children,
 }: DrawerProps) {
+  const { mounted, closing } = useExitTransition(open);
+
   useEffect(() => {
     if (!open) return;
     const onKeyDown = (event: KeyboardEvent) => {
@@ -35,7 +38,7 @@ export function Drawer({
     return () => document.removeEventListener('keydown', onKeyDown);
   }, [open, onClose]);
 
-  if (!open) return null;
+  if (!mounted) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
@@ -43,13 +46,13 @@ export function Drawer({
         type="button"
         aria-label={closeLabel}
         onClick={onClose}
-        className="ui-overlay absolute inset-0 cursor-default bg-[#16181c]/35"
+        className={`${closing ? 'ui-overlay-out' : 'ui-overlay'} absolute inset-0 cursor-default bg-[#16181c]/35`}
       />
       <aside
         role="dialog"
         aria-modal="true"
         aria-label={title}
-        className="ui-drawer relative flex h-full w-full max-w-[440px] flex-col bg-card shadow-[-12px_0_40px_rgba(22,24,28,0.14)]"
+        className={`${closing ? 'ui-drawer-out' : 'ui-drawer'} relative flex h-full w-full max-w-[440px] flex-col bg-card shadow-[-12px_0_40px_rgba(22,24,28,0.14)]`}
       >
         <header className="flex items-start justify-between gap-4 border-b border-divider px-6 py-5">
           <div className="flex flex-col gap-1">

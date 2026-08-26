@@ -56,10 +56,10 @@ export default async function CertificatesPage() {
 
 type Translate = Awaited<ReturnType<typeof getTranslations<'certificates'>>>;
 
-/** "Accueil sécurité site · déposé le 2 mai 2026" plus the rejection reason when rejected. */
+/** "certificat-accueil.pdf · déposé le 2 mai 2026" plus the rejection reason when rejected. */
 function buildMetaLine(certificate: Certificate, t: Translate): string {
   const parts = [
-    certificate.trainingName,
+    certificate.fileName,
     t('uploadedOn', { date: formatLongDate(certificate.uploadedAt) }),
   ];
   if (certificate.status === 'rejected' && certificate.rejectionReason) {
@@ -109,7 +109,7 @@ function CertificateRow({
         <FileIcon size={20} />
       </div>
       <div className="flex min-w-0 grow flex-col gap-[3px]">
-        <span className="truncate text-[15px] font-semibold">{certificate.fileName}</span>
+        <span className="truncate text-[15px] font-semibold">{certificate.trainingName}</span>
         <span className="truncate text-xs text-ink-tertiary">{uploadedLabel}</span>
       </div>
       <StatusPill tone={pill.tone} icon={pill.icon}>

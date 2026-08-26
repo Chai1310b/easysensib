@@ -150,5 +150,36 @@
     "drawerTrainings": "Trainings",
     "seeProfile": "See the full profile",
     "trainingsAll": "All trainings"
+  },
+  "indicators": {
+    "byState": "Breakdown by situation",
+    "byStateHint": "Users according to their obligations",
+    "bySite": "Breakdown by site"
+  },
+  "filterGroups": {
+    "site": "Site",
+    "state": "Situation",
+    "late": "Overdue",
+    "upToDate": "Up to date",
+    "registered": "Registered to a session",
+    "role": "Role",
+    "account": "Account",
+    "vip": "VIP",
+    "inactive": "Inactive"
+  },
+  "sections": {
+    "indicators": "Indicators",
+    "upcoming": "Upcoming registrations",
+    "history": "Participation history",
+    "assiduity": "Attendance",
+    "obligations": "Their obligations",
+    "noUpcoming": "No upcoming registration",
+    "noHistory": "No past participation"
+  },
+  "attendance": {
+    "registered": "Registered",
+    "attended": "Attended",
+    "absent": "Absent",
+    "excused": "Excused"
   }
 }

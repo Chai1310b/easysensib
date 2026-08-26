@@ -2,5 +2,41 @@
   "meta": "{category} · durée {duration} · validité {years, plural, one {# an} other {# ans}}",
   "sessionsAvailable": "{count, plural, =0 {Aucune session disponible} one {# session disponible} other {# sessions disponibles}}",
   "allSites": "Tous les sites",
-  "mailNote": "Aucune date ne convient ? Vous serez relancée par mail dès qu'une nouvelle session ouvre."
+  "allFormats": "Tous formats",
+  "mailNote": "Aucune date ne convient ? Vous serez relancée par mail dès qu'une nouvelle session ouvre.",
+  "about": {
+    "title": "À propos de cette sensibilisation"
+  },
+  "timeline": {
+    "title": "Où en suis-je ?",
+    "today": "Aujourd'hui",
+    "plannedSession": "Session prévue le {date}",
+    "obtainedOn": "validée en {date}",
+    "expiresOn": "expire en {date}",
+    "assigned": "attribuée",
+    "dueBefore": "à faire avant le {date}",
+    "neverDone": "jamais passée",
+    "legendValid": "valide",
+    "legendWarning": "à repasser bientôt",
+    "legendOverdue": "en retard"
+  },
+  "journey": {
+    "lastValidatedSession": "Validée le {date} en session",
+    "lastValidatedCertificate": "Validée le {date} par certificat e-learning",
+    "neverValidated": "Jamais validée pour le moment",
+    "registered": "Inscrite à la session du {date}"
+  },
+  "seatsGauge": "{left} places sur {total}",
+  "pastTitle": "Mes participations passées",
+  "pastEmpty": "Aucune participation à cette sensibilisation pour le moment.",
+  "elearning": {
+    "title": "Valider par e-learning",
+    "hint": "Suivez le module en ligne puis déposez votre certificat : il vaut validation après contrôle.",
+    "action": "Déposer mon certificat"
+  },
+  "past": {
+    "attended": "Présente",
+    "absent": "Absente",
+    "certificate": "Certificat"
+  }
 }

@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import type { CSSProperties, ReactNode } from 'react';
 import { StatTile } from '@/components/admin/StatTile';
+import { BarChart, DonutChart, ProgressRing } from '@/components/admin/charts';
+import { formatMonthAbbr as monthAbbr } from '@/lib/format';
 import {
   BadgeCheckIcon,
   CalendarGridIcon,
@@ -15,7 +17,7 @@ import {
 import { EmptyState } from '@/components/admin/EmptyState';
 import { formatDayNumber, formatLongDate, formatMonthAbbr } from '@/lib/format';
 import type { AdminSession, RelanceExecution } from '@/lib/admin-types';
-import { getAdminDashboardStats } from '@/services/admin/dashboard';
+import { getAdminDashboardStats, getDashboardIndicators } from '@/services/admin/dashboard';
 import { getRecentRelanceExecutions } from '@/services/admin/mails';
 import { getUpcomingSessions } from '@/services/admin/sessions';
 import { AttentionPanel } from './AttentionPanel';
@@ -25,13 +27,28 @@ import { AttentionPanel } from './AttentionPanel';
  * short lists and a quick-link strip covering every section of the space.
  */
 export default async function AdminDashboardPage() {
-  const [t, tCommon, stats, upcoming, executions] = await Promise.all([
+  const [t, tCommon, stats, upcoming, executions, indicators] = await Promise.all([
     getTranslations('adminDashboard'),
     getTranslations('adminCommon'),
     getAdminDashboardStats(),
     getUpcomingSessions(4),
     getRecentRelanceExecutions(4),
+    getDashboardIndicators(),
   ]);
+
+  const stateColors = {
+    valid: 'var(--color-gauge-success)',
+    registered: 'var(--color-accent)',
+    expiring: 'var(--color-gauge-warning)',
+    overdue: 'var(--color-gauge-danger)',
+    never: 'var(--color-ink-tertiary)',
+  } as const;
+  const categoryColors = [
+    'var(--color-accent)',
+    'var(--color-gauge-success)',
+    'var(--color-gauge-warning)',
+    'var(--color-ink-tertiary)',
+  ];
 
   return (
     <div className="flex flex-col gap-7">
@@ -77,6 +94,77 @@ export default async function AdminDashboardPage() {
           href="/admin/certificates"
           className="ui-stagger [--ui-index:3]"
         />
+      </section>
+
+      <section className="flex flex-col gap-4">
+        <h2 className="font-display text-[17px] font-semibold">{t('indicators.title')}</h2>
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+          <div className="ui-card ui-stagger flex flex-col gap-4 rounded-xl border border-card-border bg-card p-5">
+            <div className="flex flex-col gap-0.5">
+              <h3 className="text-[14px] font-semibold text-ink">{t('indicators.obligations')}</h3>
+              <p className="text-[11.5px] text-ink-tertiary">{t('indicators.obligationsHint')}</p>
+            </div>
+            <DonutChart
+              size={132}
+              data={(['overdue', 'never', 'expiring', 'registered', 'valid'] as const).map(
+                (state) => ({
+                  label: t(`indicators.states.${state}`),
+                  value: indicators.obligationStates[state],
+                  color: stateColors[state],
+                }),
+              )}
+            />
+          </div>
+
+          <div className="ui-card ui-stagger flex flex-col gap-4 rounded-xl border border-card-border bg-card p-5 [--ui-index:1]">
+            <h3 className="text-[14px] font-semibold text-ink">{t('indicators.rates')}</h3>
+            <div className="flex grow items-center justify-around">
+              <ProgressRing
+                percent={indicators.participationRatePercent}
+                label={t('indicators.participationRate')}
+                color="var(--color-success)"
+                size={96}
+              />
+              <ProgressRing
+                percent={indicators.responseRatePercent}
+                label={t('indicators.responseRate')}
+                color="var(--color-accent)"
+                size={96}
+              />
+            </div>
+            <p className="text-[11px] leading-relaxed text-ink-tertiary">
+              {t('indicators.ratesHint')}
+            </p>
+          </div>
+
+          <div className="ui-card ui-stagger flex flex-col gap-4 rounded-xl border border-card-border bg-card p-5 [--ui-index:2]">
+            <h3 className="text-[14px] font-semibold text-ink">{t('indicators.categories')}</h3>
+            <DonutChart
+              size={132}
+              data={indicators.trainingsPerCategory.map((entry, index) => ({
+                label: entry.category,
+                value: entry.count,
+                color: categoryColors[index % categoryColors.length],
+              }))}
+            />
+          </div>
+        </div>
+
+        <div className="ui-card flex flex-col gap-3 rounded-xl border border-card-border bg-card p-5">
+          <div className="flex items-baseline justify-between">
+            <h3 className="text-[14px] font-semibold text-ink">{t('indicators.monthly')}</h3>
+            <span className="text-[11.5px] text-ink-tertiary">{t('indicators.monthlyHint')}</span>
+          </div>
+          <BarChart
+            height={110}
+            data={indicators.monthlyParticipation.map((entry) => ({
+              label: monthAbbr(`${entry.monthIso}-01`),
+              value: entry.attended,
+              reference: entry.registered,
+              color: 'var(--color-accent)',
+            }))}
+          />
+        </div>
       </section>
 
       <AttentionPanel />

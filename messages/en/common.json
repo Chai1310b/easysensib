@@ -40,5 +40,14 @@
   "notFound": {
     "title": "Page not found",
     "description": "This page does not exist or is no longer available."
+  },
+  "userMenu": {
+    "open": "Open the user menu",
+    "profile": "My profile",
+    "history": "My participation history",
+    "certificates": "My e-learning certificates",
+    "language": "Language",
+    "signOut": "Sign out",
+    "demo": "Coming soon (demo)"
   }
 }

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
-import { FilterChips, type FilterChip } from '@/components/admin/FilterChips';
+import { FilterBar, type FilterSelection } from '@/components/admin/FilterBar';
 import { Pagination } from '@/components/admin/Pagination';
 import { SearchInput } from '@/components/admin/SearchInput';
 import { SortableTh, Table, TableEmptyRow, Td, Th, Tr } from '@/components/admin/DataTable';
@@ -25,7 +25,6 @@ export interface UserRow {
   counts: TrainingCounts;
 }
 
-type StateFilter = '' | 'late' | 'upToDate' | 'vip' | 'inactive';
 type SortKey = 'name' | 'site' | 'late' | 'lastActivity';
 
 const PAGE_SIZE = 12;
@@ -38,52 +37,88 @@ export function UsersTable({ rows, sites }: { rows: UserRow[]; sites: Site[] }) 
   const tCommon = useTranslations('adminCommon');
 
   const [search, setSearch] = useState('');
-  const [site, setSite] = useState<string>('');
-  const [state, setState] = useState<StateFilter>('');
+  const [advanced, setAdvanced] = useState<FilterSelection>({});
   const [sort, setSort] = useState<{ key: SortKey; descending: boolean }>({
     key: 'name',
     descending: false,
   });
   const [page, setPage] = useState(1);
 
-  const siteChips: FilterChip[] = [
-    { value: '', label: t('list.filters.all'), count: rows.length },
-    ...sites.map((item) => ({
-      value: item,
-      label: item,
-      count: rows.filter((row) => row.site === item).length,
-    })),
-  ];
-
-  const stateChips: FilterChip[] = [
-    { value: '', label: t('list.filters.all') },
+  const filterGroups = [
     {
-      value: 'late',
-      label: t('list.filters.late'),
-      count: rows.filter((r) => r.counts.late > 0).length,
+      id: 'site',
+      label: t('filterGroups.site'),
+      options: sites.map((item) => ({
+        value: item,
+        label: item,
+        count: rows.filter((row) => row.site === item).length,
+      })),
     },
     {
-      value: 'upToDate',
-      label: t('list.filters.upToDate'),
-      count: rows.filter((r) => r.counts.late === 0).length,
+      id: 'state',
+      label: t('filterGroups.state'),
+      options: [
+        {
+          value: 'late',
+          label: t('filterGroups.late'),
+          count: rows.filter((r) => r.counts.late > 0).length,
+        },
+        {
+          value: 'upToDate',
+          label: t('filterGroups.upToDate'),
+          count: rows.filter((r) => r.counts.late === 0).length,
+        },
+        {
+          value: 'registered',
+          label: t('filterGroups.registered'),
+          count: rows.filter((r) => r.counts.registered > 0).length,
+        },
+      ],
     },
-    { value: 'vip', label: t('list.filters.vip'), count: rows.filter((r) => r.isVip).length },
     {
-      value: 'inactive',
-      label: t('list.filters.inactive'),
-      count: rows.filter((r) => !r.isActive).length,
+      id: 'role',
+      label: t('filterGroups.role'),
+      options: (['user', 'perimeter_manager', 'training_manager', 'admin'] as const).map(
+        (role) => ({
+          value: role,
+          label: tCommon(`roles.${role}`),
+          count: rows.filter((r) => r.role === role).length,
+        }),
+      ),
+    },
+    {
+      id: 'account',
+      label: t('filterGroups.account'),
+      options: [
+        { value: 'vip', label: t('filterGroups.vip'), count: rows.filter((r) => r.isVip).length },
+        {
+          value: 'inactive',
+          label: t('filterGroups.inactive'),
+          count: rows.filter((r) => !r.isActive).length,
+        },
+      ],
     },
   ];
 
   const filtered = useMemo(() => {
     const needle = search.trim().toLowerCase();
 
+    const siteSel = advanced.site ?? [];
+    const stateSel = advanced.state ?? [];
+    const roleSel = advanced.role ?? [];
+    const accountSel = advanced.account ?? [];
     const kept = rows.filter((row) => {
-      if (site && row.site !== site) return false;
-      if (state === 'late' && row.counts.late === 0) return false;
-      if (state === 'upToDate' && row.counts.late > 0) return false;
-      if (state === 'vip' && !row.isVip) return false;
-      if (state === 'inactive' && row.isActive) return false;
+      if (siteSel.length > 0 && !siteSel.includes(row.site)) return false;
+      if (stateSel.length > 0) {
+        const matches =
+          (stateSel.includes('late') && row.counts.late > 0) ||
+          (stateSel.includes('upToDate') && row.counts.late === 0) ||
+          (stateSel.includes('registered') && row.counts.registered > 0);
+        if (!matches) return false;
+      }
+      if (roleSel.length > 0 && !roleSel.includes(row.role)) return false;
+      if (accountSel.includes('vip') && !row.isVip) return false;
+      if (accountSel.includes('inactive') && row.isActive) return false;
       if (needle && !`${row.name} ${row.email}`.toLowerCase().includes(needle)) return false;
       return true;
     });
@@ -103,7 +138,7 @@ export function UsersTable({ rows, sites }: { rows: UserRow[]; sites: Site[] }) 
       }
       return a.name.localeCompare(b.name, 'fr') * direction;
     });
-  }, [rows, search, site, state, sort]);
+  }, [rows, search, advanced, sort]);
 
   const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const currentPage = Math.min(page, pageCount);
@@ -128,26 +163,20 @@ export function UsersTable({ rows, sites }: { rows: UserRow[]; sites: Site[] }) 
             setPage(1);
           }}
         />
-        <FilterChips
-          options={stateChips}
-          value={state}
-          onChange={(value) => {
-            setState(value as StateFilter);
+        <FilterBar
+          groups={filterGroups}
+          selection={advanced}
+          onChange={(next) => {
+            setAdvanced(next);
             setPage(1);
           }}
-          ariaLabel={t('list.filters.stateAria')}
+          labels={{
+            filters: tCommon('filters.button'),
+            reset: tCommon('filters.reset'),
+            close: tCommon('filters.close'),
+          }}
         />
       </div>
-
-      <FilterChips
-        options={siteChips}
-        value={site}
-        onChange={(value) => {
-          setSite(value);
-          setPage(1);
-        }}
-        ariaLabel={t('list.filters.siteAria')}
-      />
 
       <Table
         className="min-w-0"

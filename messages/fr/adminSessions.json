@@ -177,5 +177,24 @@
       "keep": "Conserver",
       "done": "Session annulée (démo)"
     }
+  },
+  "view": {
+    "list": "Liste",
+    "calendar": "Calendrier"
+  },
+  "calendar": {
+    "prev": "Mois précédent",
+    "next": "Mois suivant",
+    "today": "Aujourd'hui",
+    "empty": "Aucune session ce mois-ci avec ces filtres"
+  },
+  "filterGroups": {
+    "site": "Site",
+    "format": "Format",
+    "fill": "Remplissage",
+    "fillAvailable": "Places disponibles",
+    "fillAlmost": "Presque complète",
+    "fillFull": "Complète",
+    "tags": "Tags"
   }
 }
