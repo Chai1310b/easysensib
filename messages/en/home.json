@@ -11,5 +11,7 @@
   "shortcutHistory": "My participation history",
   "shortcutCertificates": "My e-learning certificates",
   "shortcutContact": "Contact my manager",
-  "mailNote": "A reminder is sent to you by email as soon as a seat becomes available on a session that concerns you."
+  "mailNote": "A reminder is sent to you by email as soon as a seat becomes available on a session that concerns you.",
+  "nearestSession": "Nearest session",
+  "otherSlots": "{count, plural, one {+# more slot} other {+# more slots}} · see all"
 }

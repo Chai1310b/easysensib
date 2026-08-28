@@ -11,5 +11,7 @@
   "shortcutHistory": "Historique de mes participations",
   "shortcutCertificates": "Mes certificats e-learning",
   "shortcutContact": "Contacter mon responsable",
-  "mailNote": "Un rappel vous est envoyé par mail dès qu'une place se libère sur une session qui vous concerne."
+  "mailNote": "Un rappel vous est envoyé par mail dès qu'une place se libère sur une session qui vous concerne.",
+  "nearestSession": "Session la plus proche",
+  "otherSlots": "{count, plural, one {+# autre créneau} other {+# autres créneaux}} · tout voir"
 }

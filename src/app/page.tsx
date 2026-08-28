@@ -11,6 +11,7 @@ import { ClockIcon, FileCheckIcon, LaptopIcon, MailIcon } from '@/components/ico
 import { formatLongDate } from '@/lib/format';
 import type { SessionSlot, Training, TrainingState } from '@/lib/types';
 import { getUpcomingSessions } from '@/services/sessions';
+import { getRegistrableSessions } from '@/services/registrationSessions';
 import { getTrainings } from '@/services/trainings';
 import { getCurrentUser } from '@/services/user';
 
@@ -39,6 +40,21 @@ export default async function HomePage() {
     }
   }
   const sessionListRows = [...nextSessionByTraining.values()];
+
+  // Open slots beyond the one shown on the card, per active training.
+  const otherSlotsByTraining = new Map<string, number>();
+  await Promise.all(
+    activeTrainings.map(async (training) => {
+      const slots = await getRegistrableSessions(training.id);
+      const shown = training.registration
+        ? training.registration.sessionId
+        : nextSessionByTraining.get(training.id)?.id;
+      const open = slots.filter(
+        (slot) => slot.seatsLeft !== null && !slot.isRegistered && slot.id !== shown,
+      );
+      otherSlotsByTraining.set(training.id, open.length);
+    }),
+  );
 
   const stepLabels = {
     registration: tc('stepper.registration'),
@@ -69,8 +85,11 @@ export default async function HomePage() {
                   : (nextSessionByTraining.get(training.id) ?? null)
               }
               stepLabels={stepLabels}
+              otherSlotsCount={otherSlotsByTraining.get(training.id) ?? 0}
               labels={{
                 register: tc('actions.register'),
+                nearestSession: t('nearestSession'),
+                otherSlots: (count: number) => t('otherSlots', { count }),
                 seats: (count: number) => tc('session.seats', { count }),
                 remote: tc('session.remote'),
                 registered: tc('session.registered'),
@@ -173,6 +192,8 @@ export default async function HomePage() {
 }
 
 interface ActiveCardLabels {
+  nearestSession: string;
+  otherSlots: (count: number) => string;
   register: string;
   seats: (count: number) => string;
   remote: string;
@@ -204,11 +225,14 @@ function ActiveTrainingCard({
   training,
   session,
   stepLabels,
+  otherSlotsCount,
   labels,
 }: {
   training: Training;
   session: SessionSlot | null;
   stepLabels: { registration: string; session: string; validation: string };
+  /** Open slots beyond the one embedded in the card. */
+  otherSlotsCount: number;
   labels: ActiveCardLabels;
 }) {
   const registered = training.state === 'registered';
@@ -237,6 +261,11 @@ function ActiveTrainingCard({
         <Stepper steps={buildSteps(training.state, stepLabels)} />
       </div>
 
+      {session && !registered && (
+        <span className="-mb-2 text-[11px] font-semibold tracking-[0.05em] text-ink-tertiary uppercase">
+          {labels.nearestSession}
+        </span>
+      )}
       {session && (
         <div
           className={`flex items-center gap-4 rounded-[10px] border px-4 py-3 ${
@@ -290,14 +319,35 @@ function ActiveTrainingCard({
         </div>
       )}
 
-      {training.mode === 'both' && !registered && (
-        <Link
-          href="/certificates"
-          className="flex items-center gap-1.5 self-end text-xs font-medium text-accent hover:text-accent-hover"
-        >
-          <LaptopIcon size={12} />
-          {labels.elearningHint}
-        </Link>
+      {(otherSlotsCount > 0 || (training.mode === 'both' && !registered)) && (
+        <div className="flex items-center gap-5 self-end">
+          {training.mode === 'both' && !registered && (
+            <Link
+              href="/certificates"
+              className="flex items-center gap-1.5 text-xs font-medium text-accent hover:text-accent-hover"
+            >
+              <LaptopIcon size={12} />
+              {labels.elearningHint}
+            </Link>
+          )}
+          {otherSlotsCount > 0 && (
+            <Link
+              href={`/trainings/${training.id}`}
+              className="flex items-center gap-1 text-xs font-medium text-ink-secondary! hover:text-accent!"
+            >
+              {labels.otherSlots(otherSlotsCount)}
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <path
+                  d="M10 6L16 12L10 18"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Link>
+          )}
+        </div>
       )}
     </Card>
   );
