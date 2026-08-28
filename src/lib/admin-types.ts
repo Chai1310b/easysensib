@@ -104,7 +104,6 @@ export interface AdminSessionParticipant {
 }
 
 export interface AdminSessionLocation {
-  building: string;
   room: string;
 }
 
@@ -133,7 +132,8 @@ export interface AdminSession {
 /* Certificates to review                                              */
 /* ------------------------------------------------------------------ */
 
-export type CertificateReviewStatus = 'pending' | 'approved' | 'rejected';
+/** Deposited certificates count as validated; a manager may invalidate one. */
+export type CertificateReviewStatus = 'approved' | 'invalidated';
 
 export interface CertificateReview {
   id: string;
@@ -150,8 +150,9 @@ export interface CertificateReview {
   /** Passing date read on the document, when provided. */
   completedAt?: string;
   status: CertificateReviewStatus;
-  reviewedBy?: string;
-  rejectionReason?: string;
+  /** Manager who invalidated it, when invalidated. */
+  invalidatedBy?: string;
+  invalidationReason?: string;
 }
 
 /* ------------------------------------------------------------------ */
@@ -240,5 +241,6 @@ export interface AdminDashboardStats {
   upcomingSessions: number;
   /** Average seat fill rate of upcoming sessions, 0 to 100. */
   fillRatePercent: number;
-  certificatesToReview: number;
+  /** Certificates deposited over the last 30 days. */
+  recentCertificates: number;
 }

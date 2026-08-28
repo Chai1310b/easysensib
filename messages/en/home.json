@@ -1,17 +1,16 @@
 {
   "greeting": "Hello {firstName}",
   "subtitle": "{actionCount, plural, one {# awareness training awaits an action} other {# awareness trainings await an action}}, {plannedCount, plural, one {# session is already planned} other {# sessions are already planned}}.",
-  "elearningHint": "Also available through e-learning · upload a certificate",
   "validatedBySession": "Session on {date}",
   "validatedByCertificate": "Certificate from {date}",
-  "myCertificate": "My certificate",
-  "upcomingSessions": "Upcoming sessions",
   "filterAll": "All",
   "shortcuts": "Shortcuts",
   "shortcutHistory": "My participation history",
   "shortcutCertificates": "My e-learning certificates",
   "shortcutContact": "Contact my manager",
   "mailNote": "A reminder is sent to you by email as soon as a seat becomes available on a session that concerns you.",
-  "nearestSession": "Nearest session",
-  "otherSlots": "{count, plural, one {# more slot available} other {# more slots available}}"
+  "sessionsForYou": "Upcoming sessions for you",
+  "sessionsForYouEmpty": "No upcoming session matches the trainings you still have to validate. You will get an email as soon as a slot opens.",
+  "validates": "Validates",
+  "myTrainings": "My trainings"
 }

@@ -52,7 +52,6 @@ interface Draft {
   startTime: string;
   endTime: string;
   site: string;
-  building: string;
   room: string;
   format: SessionFormat;
   capacity: number;
@@ -106,7 +105,6 @@ function toDraft(session: AdminSession): Draft {
     startTime: toInputTime(session.startTime),
     endTime: toInputTime(session.endTime),
     site: session.site,
-    building: session.location?.building ?? '',
     room: session.location?.room ?? '',
     format: session.format,
     capacity: session.capacity,
@@ -174,8 +172,8 @@ export function SessionDetail({ session, sites, candidates, commonTags }: Sessio
       startTime: toDisplayTime(draft.startTime),
       endTime: toDisplayTime(draft.endTime),
       site: draft.site as Site,
-      ...(draft.format !== 'remote' && (draft.building || draft.room)
-        ? { location: { building: draft.building, room: draft.room } }
+      ...(draft.format !== 'remote' && draft.room
+        ? { location: { room: draft.room } }
         : { location: undefined }),
       format: draft.format,
       capacity: draft.capacity,
@@ -374,15 +372,6 @@ export function SessionDetail({ session, sites, candidates, commonTags }: Sessio
                       options={sites.map((value) => ({ value, label: value }))}
                     />
                   </Field>
-                  <Field label={t('create.fields.building')} htmlFor="detail-building">
-                    <TextInput
-                      id="detail-building"
-                      value={draft.building}
-                      disabled={!needsRoom}
-                      placeholder={t('create.fields.buildingPlaceholder')}
-                      onChange={(value) => setDraft((d) => ({ ...d, building: value }))}
-                    />
-                  </Field>
                   <Field label={t('create.fields.room')} htmlFor="detail-room">
                     <TextInput
                       id="detail-room"
@@ -485,7 +474,7 @@ export function SessionDetail({ session, sites, candidates, commonTags }: Sessio
                   label={t('detail.info.place')}
                   value={
                     current.location
-                      ? `${current.site} · ${current.location.building} · ${current.location.room}`
+                      ? `${current.site} · ${current.location.room}`
                       : `${current.site} · ${t('row.remotePlace')}`
                   }
                 />

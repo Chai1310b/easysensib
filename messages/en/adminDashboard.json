@@ -8,8 +8,8 @@
     "upcomingSessionsHint": "planned from today on",
     "fillRate": "Fill rate",
     "fillRateHint": "actual registrations over open seats",
-    "certificates": "Certificates to review",
-    "certificatesHint": "waiting for a decision"
+    "certificates": "Certificates uploaded",
+    "certificatesHint": "Over the last 30 days"
   },
   "upcoming": {
     "title": "Next sessions",
@@ -60,8 +60,6 @@
   },
   "indicators": {
     "title": "Indicators",
-    "obligations": "Obligation statuses",
-    "obligationsHint": "Across every assigned training",
     "states": {
       "valid": "Up to date",
       "expiring": "Renew soon",
@@ -75,6 +73,8 @@
     "ratesHint": "Participation: attended over convened · Response: registered users among those with something to do",
     "monthly": "Session participation",
     "monthlyHint": "Attended (color) over registered (gray), past sessions",
-    "categories": "Trainings per business line"
+    "categories": "Trainings per business line",
+    "obligations": "Training statuses",
+    "obligationsHint": "Across every assigned training"
   }
 }

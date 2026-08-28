@@ -88,9 +88,7 @@
     "emptyHint": "Ajoutez une salle pour pouvoir la sélectionner lors de la planification d'une session.",
     "drawerTitle": "Nouvelle salle",
     "drawerSubtitle": "Site {site}",
-    "buildingLabel": "Bâtiment",
-    "buildingPlaceholder": "Ex. Bât. A",
-    "buildingHint": "Choisissez un bâtiment existant ou saisissez-en un nouveau.",
+
     "roomLabel": "Salle",
     "roomPlaceholder": "Ex. Salle 14",
     "capacityHint": "Nombre de places assises, plafond des inscriptions à une session.",

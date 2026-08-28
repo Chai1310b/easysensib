@@ -24,13 +24,6 @@ export async function generateStaticParams() {
   return trainings.map((training) => ({ id: training.id }));
 }
 
-/** "3" -> "3h", "2.5" -> "2h30" */
-function formatDuration(hours: number): string {
-  const wholeHours = Math.floor(hours);
-  const minutes = Math.round((hours - wholeHours) * 60);
-  return minutes > 0 ? `${wholeHours}h${String(minutes).padStart(2, '0')}` : `${wholeHours}h`;
-}
-
 interface TrainingPageProps {
   params: Promise<{ id: string }>;
 }
@@ -88,11 +81,10 @@ export default async function TrainingPage({ params }: TrainingPageProps) {
                   <ModeTag mode="session" />
                 )}
                 {canElearning && <ModeTag mode="elearning" />}
-                {training.durationHours !== undefined && training.validityYears !== undefined && (
+                {training.validityYears !== undefined && (
                   <span className="text-xs text-ink-tertiary">
                     {t('meta', {
                       category: training.category,
-                      duration: formatDuration(training.durationHours),
                       years: training.validityYears,
                     })}
                   </span>

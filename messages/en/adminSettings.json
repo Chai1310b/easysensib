@@ -88,9 +88,7 @@
     "emptyHint": "Add a room to be able to pick it when planning a session.",
     "drawerTitle": "New room",
     "drawerSubtitle": "{site} site",
-    "buildingLabel": "Building",
-    "buildingPlaceholder": "E.g. Building A",
-    "buildingHint": "Pick an existing building or type a new one.",
+
     "roomLabel": "Room",
     "roomPlaceholder": "E.g. Room 14",
     "capacityHint": "Number of seats, cap of the registrations to a session.",

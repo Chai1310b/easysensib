@@ -1,7 +1,7 @@
 {
   "list": {
     "title": "Users",
-    "subtitle": "Training obligations tracked site by site.",
+    "subtitle": "Training trainings tracked site by site.",
     "searchPlaceholder": "Search a name or an email",
     "stats": {
       "total": "Tracked users",
@@ -58,7 +58,7 @@
     "inactiveNote": "Inactive account, no reminder is ever sent.",
     "noEmailNote": "No known email, this user cannot be reminded.",
     "trainingsTitle": "Assigned trainings",
-    "trainingsSubtitle": "Each row is an obligation carried by the user.",
+    "trainingsSubtitle": "Each row is an training carried by the user.",
     "columns": {
       "training": "Training",
       "state": "State",
@@ -71,9 +71,9 @@
     "neverValidated": "Never validated",
     "registeredHint": "Seat booked",
     "empty": "No assigned training",
-    "emptyHint": "This user carries no obligation for now.",
+    "emptyHint": "This user carries no training for now.",
     "perimeterTitle": "Rights perimeter",
-    "perimeterSubtitle": "What this user may see and manage, apart from their own obligations.",
+    "perimeterSubtitle": "What this user may see and manage, apart from their own trainings.",
     "managedSites": "Managed sites",
     "managedTrainings": "Managed trainings",
     "allSites": "All sites",
@@ -116,7 +116,7 @@
     "title": "Privileged users",
     "subtitle": "Perimeter managers, training managers and administrators.",
     "explainerTitle": "Assignment and rights perimeter are two different things",
-    "explainerAssignment": "Assigning a training creates an obligation: the manager must validate it too and sees it in their own user space.",
+    "explainerAssignment": "Assigning a training creates an training: the manager must validate it too and sees it in their own user space.",
     "explainerPerimeter": "The rights perimeter defines what the manager may see and manage for other people: sites, trainings, or both.",
     "stats": {
       "perimeter": "Perimeter managers",
@@ -132,7 +132,7 @@
       "role": "Role",
       "sites": "Perimeter · sites",
       "trainings": "Perimeter · trainings",
-      "own": "Own obligations"
+      "own": "Own trainings"
     },
     "sitesAll": "All sites",
     "sitesNone": "No site",
@@ -144,7 +144,7 @@
     "emptyHint": "No account carries this role for now.",
     "drawerPerimeter": "Rights perimeter",
     "drawerPerimeterHint": "What they may manage for other people.",
-    "drawerOwn": "Own obligations",
+    "drawerOwn": "Own trainings",
     "drawerOwnHint": "What they must validate themselves.",
     "drawerSites": "Sites",
     "drawerTrainings": "Trainings",
@@ -153,7 +153,7 @@
   },
   "indicators": {
     "byState": "Breakdown by situation",
-    "byStateHint": "Users according to their obligations",
+    "byStateHint": "Users according to their trainings",
     "bySite": "Breakdown by site"
   },
   "filterGroups": {
@@ -172,9 +172,9 @@
     "upcoming": "Upcoming registrations",
     "history": "Participation history",
     "assiduity": "Attendance",
-    "obligations": "Their obligations",
     "noUpcoming": "No upcoming registration",
-    "noHistory": "No past participation"
+    "noHistory": "No past participation",
+    "obligations": "Their trainings"
   },
   "attendance": {
     "registered": "Registered",

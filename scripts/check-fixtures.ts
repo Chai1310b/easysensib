@@ -19,6 +19,7 @@ import { getAdminSessions } from '../src/services/admin/sessions';
 import { getAdminTrainings } from '../src/services/admin/trainings';
 import { getAdminUsers } from '../src/services/admin/users';
 import { getRelanceExecutions } from '../src/services/admin/mails';
+import { certificateReviewsFixture } from '../src/services/admin/fixtures';
 
 const problems: string[] = [];
 
@@ -58,9 +59,7 @@ for (const user of users) {
 
 /* 2. Training counters */
 for (const training of trainings) {
-  const holders = users.filter((user) =>
-    user.trainings.some((t) => t.trainingId === training.id),
-  );
+  const holders = users.filter((user) => user.trainings.some((t) => t.trainingId === training.id));
   const late = holders.filter((user) =>
     user.trainings.some(
       (t) => t.trainingId === training.id && (t.state === 'overdue' || t.state === 'never'),
@@ -164,6 +163,23 @@ for (const user of users) {
     // a covered session exists with an incoherent date, checked in rule 4.
     void coveredTrainingIds;
   }
+}
+
+/* 7. An approved certificate implies a certificate-validated training. */
+for (const certificate of certificateReviewsFixture) {
+  if (certificate.status !== 'approved') continue;
+  const user = users.find((u) => u.id === certificate.userId);
+  const held = user?.trainings.find((t) => t.trainingId === certificate.trainingId);
+  if (!held) {
+    problems.push(
+      `${certificate.id}: approved certificate but ${certificate.userId} does not hold ${certificate.trainingId}`,
+    );
+    continue;
+  }
+  check(
+    held.state === 'valid' || held.state === 'expiring' || held.state === 'registered',
+    `${certificate.id}: approved certificate but ${certificate.userId}/${certificate.trainingId} state=${held.state}`,
+  );
 }
 
 if (problems.length > 0) {

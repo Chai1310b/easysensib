@@ -1,5 +1,5 @@
 {
-  "meta": "{category} · duration {duration} · valid {years, plural, one {# year} other {# years}}",
+  "meta": "{category} · valid {years, plural, one {# year} other {# years}}",
   "sessionsAvailable": "{count, plural, =0 {No session available} one {# session available} other {# sessions available}}",
   "allSites": "All sites",
   "allFormats": "All formats",
@@ -31,7 +31,7 @@
   "pastEmpty": "No participation to this training yet.",
   "elearning": {
     "title": "Validate online",
-    "hint": "Complete the online module then upload your certificate: it counts as validation after review.",
+    "hint": "Complete the online module then upload your certificate: it counts as validated right away.",
     "action": "Upload my certificate"
   },
   "past": {

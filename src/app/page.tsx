@@ -1,66 +1,57 @@
+/**
+ * Home page of the end user: the upcoming sessions compatible with their
+ * to-do trainings in the main column, their trainings (status + gauge) on
+ * the right.
+ */
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import { Card } from '@/components/Card';
-import { DateBlock } from '@/components/DateBlock';
-import { IconButton } from '@/components/IconButton';
-import { InfoItem } from '@/components/InfoItem';
 import { StateIcon } from '@/components/StateIcon';
-import { Stepper, type StepperStep } from '@/components/Stepper';
 import { ValidityGauge } from '@/components/ValidityGauge';
 import { ClockIcon, FileCheckIcon, LaptopIcon, MailIcon } from '@/components/icons';
 import { formatLongDate } from '@/lib/format';
-import type { SessionSlot, Training, TrainingState } from '@/lib/types';
-import { getUpcomingSessions } from '@/services/sessions';
+import type { Training } from '@/lib/types';
 import { getRegistrableSessions } from '@/services/registrationSessions';
 import { getTrainings } from '@/services/trainings';
 import { getCurrentUser } from '@/services/user';
+import { HomeSessions, type HomeSessionRow } from './HomeSessions';
 
-/** Home page: "Mes sensibilisations" (mockup: VarianteMix). */
 export default async function HomePage() {
-  const [t, tc, user, trainings, sessions] = await Promise.all([
+  const [t, tc, user, trainings] = await Promise.all([
     getTranslations('home'),
     getTranslations('common'),
     getCurrentUser(),
     getTrainings(),
-    getUpcomingSessions(),
   ]);
 
   const activeTrainings = trainings.filter((training) => training.state !== 'valid');
-  const validTrainings = trainings.filter((training) => training.state === 'valid');
   const actionCount = trainings.filter(
     (training) => training.state === 'overdue' || training.state === 'todo',
   ).length;
   const plannedCount = trainings.filter((training) => training.state === 'registered').length;
 
-  // Next upcoming session of each training (sessions are already sorted by date).
-  const nextSessionByTraining = new Map<string, SessionSlot>();
-  for (const session of sessions) {
-    if (!nextSessionByTraining.has(session.trainingId)) {
-      nextSessionByTraining.set(session.trainingId, session);
-    }
-  }
-  const sessionListRows = [...nextSessionByTraining.values()];
-
-  // Open slots beyond the one shown on the card, per active training.
-  const otherSlotsByTraining = new Map<string, number>();
+  // Sessions compatible with the user's to-do trainings, deduplicated by slot:
+  // one row per session, carrying every to-do training it validates.
+  const rowsBySlot = new Map<string, HomeSessionRow>();
   await Promise.all(
     activeTrainings.map(async (training) => {
       const slots = await getRegistrableSessions(training.id);
-      const shown = training.registration
-        ? training.registration.sessionId
-        : nextSessionByTraining.get(training.id)?.id;
-      const open = slots.filter(
-        (slot) => slot.seatsLeft !== null && !slot.isRegistered && slot.id !== shown,
-      );
-      otherSlotsByTraining.set(training.id, open.length);
+      for (const slot of slots) {
+        if (slot.seatsLeft === null && !slot.isRegistered) continue; // full
+        const row = rowsBySlot.get(slot.id) ?? { slot, covered: [] };
+        row.covered.push({ id: training.id, name: training.name, state: training.state });
+        rowsBySlot.set(slot.id, row);
+      }
     }),
   );
+  const sessionRows = [...rowsBySlot.values()].sort((a, b) =>
+    a.slot.date.localeCompare(b.slot.date),
+  );
 
-  const stepLabels = {
-    registration: tc('stepper.registration'),
-    session: tc('stepper.session'),
-    validation: tc('stepper.validation'),
-  };
+  const orderedTrainings: Training[] = [
+    ...activeTrainings,
+    ...trainings.filter((training) => training.state === 'valid'),
+  ];
 
   return (
     <div className="mx-auto flex w-full max-w-[1440px] flex-col">
@@ -74,82 +65,39 @@ export default async function HomePage() {
       </div>
 
       <div className="flex items-start gap-8 px-10 pb-12">
-        <div className="flex grow flex-col gap-3.5">
-          {activeTrainings.map((training) => (
-            <ActiveTrainingCard
-              key={training.id}
-              training={training}
-              session={
-                training.registration
-                  ? (sessions.find((s) => s.id === training.registration?.sessionId) ?? null)
-                  : (nextSessionByTraining.get(training.id) ?? null)
-              }
-              stepLabels={stepLabels}
-              otherSlotsCount={otherSlotsByTraining.get(training.id) ?? 0}
-              labels={{
-                register: tc('actions.register'),
-                nearestSession: t('nearestSession'),
-                otherSlots: (count: number) => t('otherSlots', { count }),
-                seats: (count: number) => tc('session.seats', { count }),
-                remote: tc('session.remote'),
-                registered: tc('session.registered'),
-                addToCalendar: tc('actions.addToCalendar'),
-                cancelRegistration: tc('actions.cancelRegistration'),
-                elearningHint: t('elearningHint'),
-                gauge: tc(`validity.${training.validity.labelKey}`, {
-                  count: training.validity.labelCount,
-                }),
-              }}
-            />
-          ))}
-
-          {validTrainings.map((training) => (
-            <ValidTrainingRow
-              key={training.id}
-              training={training}
-              labels={{
-                subtitle: training.lastValidation
-                  ? training.lastValidation.kind === 'certificate'
-                    ? t('validatedByCertificate', {
-                        date: formatLongDate(training.lastValidation.date),
-                      })
-                    : t('validatedBySession', {
-                        date: formatLongDate(training.lastValidation.date),
-                      })
-                  : undefined,
-                myCertificate: t('myCertificate'),
-                gauge: tc(`validity.${training.validity.labelKey}`, {
-                  count: training.validity.labelCount,
-                }),
-              }}
-            />
-          ))}
+        {/* Main: sessions for the user */}
+        <div className="flex min-w-0 grow flex-col gap-4">
+          <HomeSessions rows={sessionRows} userSite={user.site} />
+          <div className="flex items-center gap-2.5 px-1">
+            <MailIcon size={15} />
+            <span className="text-xs text-ink-tertiary">{t('mailNote')}</span>
+          </div>
         </div>
 
+        {/* Right: the user's trainings + shortcuts */}
         <div className="flex w-[400px] shrink-0 flex-col gap-7">
           <div className="flex flex-col gap-3.5">
-            <div className="flex items-center justify-between">
-              <h2 className="font-display text-[17px] font-semibold">{t('upcomingSessions')}</h2>
-              <div className="flex gap-1.5">
-                <span className="rounded-full bg-ink px-3 py-[5px] text-xs font-medium text-page">
-                  {user.site}
-                </span>
-                <span className="rounded-full border border-card-border px-3 py-[5px] text-xs font-medium text-ink-secondary">
-                  {t('filterAll')}
-                </span>
-              </div>
-            </div>
+            <h2 className="font-display text-[17px] font-semibold">{t('myTrainings')}</h2>
             <Card className="flex flex-col">
-              {sessionListRows.map((session, index) => (
-                <SessionListRow
-                  key={session.id}
-                  session={session}
-                  isLast={index === sessionListRows.length - 1}
-                  labels={{
-                    register: tc('actions.register'),
-                    remote: tc('session.remote'),
-                    registered: tc('session.registered'),
-                  }}
+              {orderedTrainings.map((training, index) => (
+                <TrainingRow
+                  key={training.id}
+                  training={training}
+                  isLast={index === orderedTrainings.length - 1}
+                  subtitle={
+                    training.state === 'valid' && training.lastValidation
+                      ? training.lastValidation.kind === 'certificate'
+                        ? t('validatedByCertificate', {
+                            date: formatLongDate(training.lastValidation.date),
+                          })
+                        : t('validatedBySession', {
+                            date: formatLongDate(training.lastValidation.date),
+                          })
+                      : training.category
+                  }
+                  gaugeLabel={tc(`validity.${training.validity.labelKey}`, {
+                    count: training.validity.labelCount,
+                  })}
                 />
               ))}
             </Card>
@@ -169,21 +117,17 @@ export default async function HomePage() {
                 href="/certificates"
                 className="flex items-center gap-3 border-b border-divider px-[18px] py-3.5 text-sm font-medium text-ink"
               >
-                <FileCheckIcon size={16} />
+                <FileCheckIcon size={16} color="#5c6068" />
                 {t('shortcutCertificates')}
               </Link>
               <a
                 href="#"
                 className="flex items-center gap-3 px-[18px] py-3.5 text-sm font-medium text-ink"
               >
-                <MailIcon size={16} color="#5c6068" strokeWidth={1.7} />
+                <MailIcon size={16} color="#5c6068" />
                 {t('shortcutContact')}
               </a>
             </Card>
-            <div className="flex items-start gap-2.5 px-1 py-0.5">
-              <MailIcon size={15} className="mt-[1px] shrink-0" />
-              <span className="text-xs leading-normal text-ink-tertiary">{t('mailNote')}</span>
-            </div>
           </div>
         </div>
       </div>
@@ -191,249 +135,46 @@ export default async function HomePage() {
   );
 }
 
-interface ActiveCardLabels {
-  nearestSession: string;
-  otherSlots: (count: number) => string;
-  register: string;
-  seats: (count: number) => string;
-  remote: string;
-  registered: string;
-  addToCalendar: string;
-  cancelRegistration: string;
-  elearningHint: string;
-  gauge: string;
-}
-
-function buildSteps(
-  state: TrainingState,
-  labels: { registration: string; session: string; validation: string },
-): StepperStep[] {
-  const registered = state === 'registered';
-  return [
-    { label: labels.registration, icon: 'pencil', status: registered ? 'done' : 'current' },
-    { label: labels.session, icon: 'calendar', status: registered ? 'current' : 'future' },
-    { label: labels.validation, icon: 'check', status: 'future' },
-  ];
-}
-
-function sessionPlace(session: SessionSlot, remoteLabel: string): string {
-  return session.location ? `${session.location.building}, ${session.location.room}` : remoteLabel;
-}
-
-/** Card of a training that still needs an action (overdue, todo or registered). */
-function ActiveTrainingCard({
+/** One training of the right column: state, name, gauge. */
+function TrainingRow({
   training,
-  session,
-  stepLabels,
-  otherSlotsCount,
-  labels,
-}: {
-  training: Training;
-  session: SessionSlot | null;
-  stepLabels: { registration: string; session: string; validation: string };
-  /** Open slots beyond the one embedded in the card. */
-  otherSlotsCount: number;
-  labels: ActiveCardLabels;
-}) {
-  const registered = training.state === 'registered';
-
-  return (
-    <Card className="flex flex-col gap-3.5 px-6 py-5">
-      <div className="flex items-center justify-between gap-5">
-        <div className="flex grow items-center gap-3">
-          <StateIcon state={training.state} className="shrink-0" />
-          <div className="flex flex-col gap-0.5">
-            <Link
-              href={`/trainings/${training.id}`}
-              className="font-display text-base font-semibold text-ink! hover:text-accent!"
-            >
-              {training.name}
-            </Link>
-            <span className="text-xs text-ink-tertiary">{training.category}</span>
-          </div>
-        </div>
-        <ValidityGauge
-          label={labels.gauge}
-          tone={training.validity.tone}
-          percent={training.validity.progressPercent}
-          neutralTrack={registered}
-        />
-        <Stepper steps={buildSteps(training.state, stepLabels)} />
-      </div>
-
-      {session && !registered && (
-        <span className="-mb-2 text-[11px] font-semibold tracking-[0.05em] text-ink-tertiary uppercase">
-          {labels.nearestSession}
-        </span>
-      )}
-      {session && (
-        <div
-          className={`flex items-center gap-4 rounded-[10px] border px-4 py-3 ${
-            registered ? 'border-accent-border bg-accent-surface' : 'border-card-border'
-          }`}
-        >
-          <DateBlock date={session.date} tone={registered ? 'accent' : 'default'} />
-          <div className={`w-px self-stretch ${registered ? 'bg-accent-border' : 'bg-divider'}`} />
-          <div className="flex grow items-center gap-4 whitespace-nowrap">
-            <InfoItem icon="clock">
-              {session.startTime} · {session.endTime}
-            </InfoItem>
-            <InfoItem icon={session.location ? 'pin' : 'video'}>
-              {sessionPlace(session, labels.remote)}
-            </InfoItem>
-            {registered ? (
-              <div className="flex items-center gap-1.5">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                  <circle cx="12" cy="12" r="10" fill="#e7eafa" />
-                  <path
-                    d="M7.5 12L10.5 15L16.5 9"
-                    stroke="#0816a1"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                <span className="text-[13px] font-semibold text-accent">{labels.registered}</span>
-              </div>
-            ) : (
-              session.seatsLeft !== null && (
-                <InfoItem icon="people" tone="success">
-                  {labels.seats(session.seatsLeft)}
-                </InfoItem>
-              )
-            )}
-          </div>
-          {registered ? (
-            <div className="flex shrink-0 gap-2">
-              <IconButton icon="calendarPlus" label={labels.addToCalendar} accentBorder />
-              <IconButton icon="cross" label={labels.cancelRegistration} accentBorder />
-            </div>
-          ) : (
-            <Link
-              href={`/trainings/${training.id}`}
-              className="flex h-[42px] shrink-0 items-center rounded-lg bg-accent px-[18px] text-[13px] font-semibold text-white hover:bg-accent-hover hover:text-white"
-            >
-              {labels.register}
-            </Link>
-          )}
-        </div>
-      )}
-
-      {(otherSlotsCount > 0 || (training.mode === 'both' && !registered)) && (
-        <div className="flex items-center gap-5 self-end">
-          {training.mode === 'both' && !registered && (
-            <Link
-              href="/certificates"
-              className="flex items-center gap-1.5 text-xs font-medium text-accent hover:text-accent-hover"
-            >
-              <LaptopIcon size={12} />
-              {labels.elearningHint}
-            </Link>
-          )}
-          {otherSlotsCount > 0 && (
-            <Link
-              href={`/trainings/${training.id}`}
-              className="flex items-center gap-1.5 text-xs font-medium text-ink-secondary! transition-colors duration-150 hover:text-accent!"
-            >
-              {labels.otherSlots(otherSlotsCount)}
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" aria-hidden>
-                <path
-                  d="M10 6L16 12L10 18"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </Link>
-          )}
-        </div>
-      )}
-    </Card>
-  );
-}
-
-/** Collapsed row of an already validated training. */
-function ValidTrainingRow({
-  training,
-  labels,
-}: {
-  training: Training;
-  labels: { subtitle?: string; myCertificate: string; gauge: string };
-}) {
-  return (
-    <Card muted className="flex items-center gap-4 px-6 py-4">
-      <StateIcon state="valid" size={22} className="shrink-0" />
-      <div className="flex w-[280px] shrink-0 flex-col gap-0.5">
-        <Link
-          href={`/trainings/${training.id}`}
-          className="text-[15px] font-semibold text-ink-strong! hover:text-accent!"
-        >
-          {training.name}
-        </Link>
-        {labels.subtitle && <span className="text-xs text-ink-tertiary">{labels.subtitle}</span>}
-      </div>
-      <ValidityGauge
-        label={labels.gauge}
-        tone={training.validity.tone}
-        percent={training.validity.progressPercent}
-      />
-      <span className="grow" />
-      {training.lastValidation?.kind === 'certificate' && (
-        <Link
-          href="/certificates"
-          className="shrink-0 text-[13px] font-medium text-accent hover:text-accent-hover"
-        >
-          {labels.myCertificate}
-        </Link>
-      )}
-    </Card>
-  );
-}
-
-/** One row of the "Sessions à venir" side list. */
-function SessionListRow({
-  session,
+  subtitle,
+  gaugeLabel,
   isLast,
-  labels,
 }: {
-  session: SessionSlot;
+  training: Training;
+  subtitle: string;
+  gaugeLabel: string;
   isLast: boolean;
-  labels: { register: string; remote: string; registered: string };
 }) {
-  const place = sessionPlace(session, labels.remote);
+  const canElearning = training.mode === 'elearning' || training.mode === 'both';
 
   return (
     <div
-      className={`flex items-center gap-3.5 px-[18px] py-4 ${
-        isLast ? '' : 'border-b border-divider'
-      } ${session.isRegistered ? 'rounded-b-xl bg-accent-surface' : ''}`}
+      className={`flex items-center gap-3 px-[18px] py-3.5 ${isLast ? '' : 'border-b border-divider'}`}
     >
-      <DateBlock
-        date={session.date}
-        daySize={20}
-        tone={session.isRegistered ? 'accent' : 'default'}
-      />
-      <div className="flex grow flex-col gap-0.5">
-        <span className="text-sm font-semibold">{session.trainingName}</span>
-        {session.isRegistered ? (
-          <span className="text-xs font-medium text-accent">
-            {labels.registered} · {session.startTime} · {place}
-          </span>
-        ) : (
-          <span className="text-xs text-ink-secondary">
-            {session.startTime} · {place}
-          </span>
-        )}
+      <StateIcon state={training.state} size={20} className="shrink-0" />
+      <div className="flex min-w-0 grow flex-col gap-0.5">
+        <span className="flex items-center gap-1.5">
+          <Link
+            href={`/trainings/${training.id}`}
+            className="truncate text-[13.5px] font-semibold text-ink! hover:text-accent!"
+          >
+            {training.name}
+          </Link>
+          {canElearning ? (
+            <LaptopIcon size={12} color="var(--color-ink-tertiary)" className="shrink-0" />
+          ) : null}
+        </span>
+        <span className="truncate text-[11.5px] text-ink-tertiary">{subtitle}</span>
       </div>
-      {!session.isRegistered && (
-        <Link
-          href={`/trainings/${session.trainingId}`}
-          className="shrink-0 text-[13px] font-semibold text-accent hover:text-accent-hover"
-        >
-          {labels.register}
-        </Link>
-      )}
+      <ValidityGauge
+        label={gaugeLabel}
+        tone={training.validity.tone}
+        percent={training.validity.progressPercent}
+        width={116}
+        neutralTrack={training.state === 'registered'}
+      />
     </div>
   );
 }

@@ -1,17 +1,16 @@
 {
   "greeting": "Bonjour {firstName}",
   "subtitle": "{actionCount, plural, one {# sensibilisation attend une action} other {# sensibilisations attendent une action}}, {plannedCount, plural, one {# session est déjà planifiée} other {# sessions sont déjà planifiées}}.",
-  "elearningHint": "Aussi validable par e-learning · déposer un certificat",
   "validatedBySession": "Session du {date}",
   "validatedByCertificate": "Certificat du {date}",
-  "myCertificate": "Mon certificat",
-  "upcomingSessions": "Sessions à venir",
   "filterAll": "Tous",
   "shortcuts": "Raccourcis",
   "shortcutHistory": "Historique de mes participations",
   "shortcutCertificates": "Mes certificats e-learning",
   "shortcutContact": "Contacter mon responsable",
   "mailNote": "Un rappel vous est envoyé par mail dès qu'une place se libère sur une session qui vous concerne.",
-  "nearestSession": "Session la plus proche",
-  "otherSlots": "{count, plural, one {# autre créneau disponible} other {# autres créneaux disponibles}}"
+  "sessionsForYou": "Prochaines sessions pour vous",
+  "sessionsForYouEmpty": "Aucune session à venir ne correspond à vos sensibilisations à passer. Vous serez relancé par mail dès qu'un créneau ouvrira.",
+  "validates": "Valide",
+  "myTrainings": "Mes sensibilisations"
 }

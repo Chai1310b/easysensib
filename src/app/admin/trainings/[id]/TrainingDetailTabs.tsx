@@ -7,9 +7,12 @@ import { Tabs } from '@/components/admin';
 interface TrainingDetailTabsProps {
   usersCount: number;
   sessionsCount: number;
+  certificatesCount?: number;
   settings: ReactNode;
   users: ReactNode;
   sessions: ReactNode;
+  /** Only for e-learning trainings. */
+  certificates?: ReactNode;
 }
 
 /**
@@ -19,12 +22,14 @@ interface TrainingDetailTabsProps {
 export function TrainingDetailTabs({
   usersCount,
   sessionsCount,
+  certificatesCount,
   settings,
   users,
   sessions,
+  certificates,
 }: TrainingDetailTabsProps) {
   const t = useTranslations('adminTrainings');
-  const [tab, setTab] = useState('settings');
+  const [tab, setTab] = useState('users');
 
   return (
     <div className="flex flex-col gap-5">
@@ -33,16 +38,26 @@ export function TrainingDetailTabs({
         value={tab}
         onChange={setTab}
         items={[
-          { value: 'settings', label: t('detail.tabs.settings') },
           { value: 'users', label: t('detail.tabs.users'), count: usersCount },
           { value: 'sessions', label: t('detail.tabs.sessions'), count: sessionsCount },
+          ...(certificates
+            ? [
+                {
+                  value: 'certificates',
+                  label: t('detail.tabs.certificates'),
+                  count: certificatesCount,
+                },
+              ]
+            : []),
+          { value: 'settings', label: t('detail.tabs.settings') },
         ]}
       />
 
       <div key={tab} className="ui-page-enter">
-        {tab === 'settings' ? settings : null}
         {tab === 'users' ? users : null}
         {tab === 'sessions' ? sessions : null}
+        {tab === 'certificates' ? certificates : null}
+        {tab === 'settings' ? settings : null}
       </div>
     </div>
   );

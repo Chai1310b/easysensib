@@ -3,7 +3,6 @@ import { getTranslations } from 'next-intl/server';
 import type { CSSProperties, ReactNode } from 'react';
 import {
   AlertCircleIcon,
-  BadgeCheckIcon,
   CalendarGridIcon,
   CheckCircleIcon,
   ChevronRightIcon,
@@ -52,32 +51,7 @@ export async function AttentionPanel() {
         <p className="text-xs text-ink-tertiary">{t('attention.subtitle')}</p>
       </header>
 
-      <div className="grid grid-cols-1 divide-y divide-divider lg:grid-cols-3 lg:divide-x lg:divide-y-0">
-        <AttentionGroup
-          tone="warning"
-          icon={<BadgeCheckIcon size={15} />}
-          label={t('attention.certificates.label', {
-            days: ATTENTION_THRESHOLDS.certificateWaitingDays,
-          })}
-          count={points.certificates.total}
-          href="/admin/certificates"
-          seeAll={seeAll}
-          empty={t('attention.certificates.empty')}
-          index={0}
-        >
-          {points.certificates.items.map((row, index) => (
-            <AttentionRow
-              key={row.id}
-              href="/admin/certificates"
-              title={row.userName}
-              subtitle={row.trainingName}
-              pill={t('attention.certificates.pill', { days: row.waitingDays })}
-              tone="warning"
-              index={index}
-            />
-          ))}
-        </AttentionGroup>
-
+      <div className="grid grid-cols-1 divide-y divide-divider lg:grid-cols-2 lg:divide-x lg:divide-y-0">
         <AttentionGroup
           tone="danger"
           icon={<CalendarGridIcon size={15} />}
@@ -89,7 +63,7 @@ export async function AttentionPanel() {
           href="/admin/sessions"
           seeAll={seeAll}
           empty={t('attention.sessions.empty')}
-          index={1}
+          index={0}
         >
           {points.sessions.items.map((row, index) => (
             <AttentionRow
@@ -118,7 +92,7 @@ export async function AttentionPanel() {
           href="/admin/users"
           seeAll={seeAll}
           empty={t('attention.users.empty')}
-          index={2}
+          index={1}
         >
           {points.users.items.map((row, index) => (
             <AttentionRow

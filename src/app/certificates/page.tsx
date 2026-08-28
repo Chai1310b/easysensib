@@ -62,7 +62,7 @@ function buildMetaLine(certificate: Certificate, t: Translate): string {
     certificate.fileName,
     t('uploadedOn', { date: formatLongDate(certificate.uploadedAt) }),
   ];
-  if (certificate.status === 'rejected' && certificate.rejectionReason) {
+  if (certificate.status === 'invalidated' && certificate.rejectionReason) {
     parts.push(t('rejectionReason', { reason: certificate.rejectionReason }));
   }
   return parts.join(' · ');
@@ -74,16 +74,12 @@ function buildStatusLabel(certificate: Certificate, t: Translate): string {
       monthYear: certificate.validUntil ? formatMonthYear(certificate.validUntil) : '',
     });
   }
-  if (certificate.status === 'pending') {
-    return t('status.pending');
-  }
-  return t('status.rejected');
+  return t('status.invalidated');
 }
 
 const PILL_BY_STATUS = {
   approved: { tone: 'success', icon: 'check' },
-  pending: { tone: 'warning', icon: 'clock' },
-  rejected: { tone: 'danger', icon: 'cross' },
+  invalidated: { tone: 'danger', icon: 'cross' },
 } as const;
 
 interface CertificateRowProps {
@@ -115,7 +111,7 @@ function CertificateRow({
       <StatusPill tone={pill.tone} icon={pill.icon}>
         {statusLabel}
       </StatusPill>
-      {certificate.status === 'rejected' ? (
+      {certificate.status === 'invalidated' ? (
         <Link href="/certificates" className="shrink-0 text-[13px] font-semibold">
           {reuploadLabel}
         </Link>

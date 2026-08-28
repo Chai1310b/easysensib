@@ -68,7 +68,6 @@ export function SessionCreateForm({
   const [endTime, setEndTime] = useState('12:00');
 
   const [site, setSite] = useState<string>(sites[0] ?? '');
-  const [building, setBuilding] = useState('');
   const [room, setRoom] = useState('');
   const [format, setFormat] = useState<SessionFormat>('onsite');
   const [capacity, setCapacity] = useState(16);
@@ -215,7 +214,6 @@ export function SessionCreateForm({
                               {training.name}
                             </span>
                             <span className="text-[11.5px] text-ink-tertiary">
-                              {t('create.trainings.duration', { hours: training.durationHours })} ·{' '}
                               {t('create.trainings.validity', { months: training.validityMonths })}{' '}
                               ·{' '}
                               {t('create.trainings.concerned', { count: training.usersConcerned })}
@@ -293,15 +291,6 @@ export function SessionCreateForm({
                   value={site}
                   onChange={setSite}
                   options={sites.map((value) => ({ value, label: value }))}
-                />
-              </Field>
-              <Field label={t('create.fields.building')} htmlFor="session-building">
-                <TextInput
-                  id="session-building"
-                  value={building}
-                  onChange={setBuilding}
-                  disabled={!needsRoom}
-                  placeholder={t('create.fields.buildingPlaceholder')}
                 />
               </Field>
               <Field label={t('create.fields.room')} htmlFor="session-room">
@@ -529,7 +518,7 @@ export function SessionCreateForm({
             label={t('detail.info.place')}
             value={
               needsRoom
-                ? [site, building, room].filter(Boolean).join(' · ')
+                ? [site, room].filter(Boolean).join(' · ')
                 : `${site} · ${t('row.remotePlace')}`
             }
           />

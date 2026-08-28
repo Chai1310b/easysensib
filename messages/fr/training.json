@@ -1,5 +1,5 @@
 {
-  "meta": "{category} · durée {duration} · validité {years, plural, one {# an} other {# ans}}",
+  "meta": "{category} · validité {years, plural, one {# an} other {# ans}}",
   "sessionsAvailable": "{count, plural, =0 {Aucune session disponible} one {# session disponible} other {# sessions disponibles}}",
   "allSites": "Tous les sites",
   "allFormats": "Tous formats",
@@ -31,7 +31,7 @@
   "pastEmpty": "Aucune participation à cette sensibilisation pour le moment.",
   "elearning": {
     "title": "Valider par e-learning",
-    "hint": "Suivez le module en ligne puis déposez votre certificat : il vaut validation après contrôle.",
+    "hint": "Suivez le module en ligne puis déposez votre certificat : il vaut validation immédiate.",
     "action": "Déposer mon certificat"
   },
   "past": {

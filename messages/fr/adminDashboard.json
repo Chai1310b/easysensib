@@ -8,8 +8,8 @@
     "upcomingSessionsHint": "planifiées à partir d'aujourd'hui",
     "fillRate": "Taux de remplissage",
     "fillRateHint": "inscriptions réelles sur les places ouvertes",
-    "certificates": "Certificats à contrôler",
-    "certificatesHint": "en attente d'une décision"
+    "certificates": "Certificats déposés",
+    "certificatesHint": "Sur les 30 derniers jours"
   },
   "upcoming": {
     "title": "Prochaines sessions",
@@ -60,7 +60,7 @@
   },
   "indicators": {
     "title": "Indicateurs",
-    "obligations": "Statut des obligations",
+    "obligations": "Statut des sensibilisations",
     "obligationsHint": "Toutes sensibilisations attribuées confondues",
     "states": {
       "valid": "À jour",

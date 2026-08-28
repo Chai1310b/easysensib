@@ -63,7 +63,6 @@ export interface Training {
 }
 
 export interface SessionLocation {
-  building: string;
   room: string;
 }
 
@@ -101,14 +100,15 @@ export interface ParticipationRecord {
   kind: 'session' | 'elearning';
   /** Session format, when kind is 'session'. */
   format?: 'onsite' | 'remote';
-  /** Free-form location, e.g. "Cholet · Bât. A, salle 12". */
+  /** Free-form location, e.g. "Cholet · Salle 12". */
   location?: string;
   /** Trainer name, e.g. "P. Moreau". */
   trainer?: string;
   status: 'attended' | 'absent' | 'certificate';
 }
 
-export type CertificateStatus = 'approved' | 'pending' | 'rejected';
+/** A deposited certificate counts as validated; a manager may invalidate it. */
+export type CertificateStatus = 'approved' | 'invalidated';
 
 export interface Certificate {
   id: string;
@@ -117,7 +117,7 @@ export interface Certificate {
   trainingName: string;
   uploadedAt: string;
   status: CertificateStatus;
-  /** Set when status is 'rejected', e.g. "document illisible". */
+  /** Set when status is 'invalidated', e.g. "document illisible". */
   rejectionReason?: string;
   /** Set when status is 'approved'. */
   validUntil?: string;

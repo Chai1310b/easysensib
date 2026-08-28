@@ -114,5 +114,20 @@
     "button": "Filtres",
     "reset": "Réinitialiser",
     "close": "Fermer"
+  },
+  "certificatesPanel": {
+    "title": "Certificats e-learning",
+    "empty": "Aucun certificat déposé",
+    "emptyHint": "Les certificats déposés apparaissent ici et valent validation immédiate.",
+    "uploadedOn": "déposé le {date}",
+    "valid": "Validé",
+    "invalidated": "Invalidé",
+    "invalidate": "Invalider",
+    "reasonInline": "motif : {reason}",
+    "modalTitle": "Invalider ce certificat",
+    "modalBody": "La validation obtenue par ce certificat sera annulée : l'utilisateur devra revalider la sensibilisation et réapparaîtra dans les relances.",
+    "reasonLabel": "Motif (obligatoire)",
+    "confirm": "Invalider",
+    "invalidatedToast": "Certificat invalidé (démo)"
   }
 }

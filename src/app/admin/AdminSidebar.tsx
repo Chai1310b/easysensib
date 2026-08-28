@@ -6,7 +6,6 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import type { ReactNode } from 'react';
 import {
-  BadgeCheckIcon,
   CalendarGridIcon,
   GridIcon,
   KeyIcon,
@@ -41,11 +40,6 @@ const SECTIONS: NavSection[] = [
     entries: [
       { href: '/admin/trainings', labelKey: 'nav.trainingsList', icon: <ListIcon size={17} /> },
       { href: '/admin/sessions', labelKey: 'nav.sessions', icon: <CalendarGridIcon size={17} /> },
-      {
-        href: '/admin/certificates',
-        labelKey: 'nav.certificates',
-        icon: <BadgeCheckIcon size={17} />,
-      },
     ],
   },
   {

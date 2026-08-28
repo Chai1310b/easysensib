@@ -1,12 +1,11 @@
 {
   "title": "Mes certificats e-learning",
-  "subtitle": "Les certificats que vous avez déposés pour valider une sensibilisation en ligne.",
+  "subtitle": "Un certificat déposé vaut validation immédiate. Un responsable peut l'invalider a posteriori.",
   "uploadedOn": "déposé le {date}",
   "rejectionReason": "motif : {reason}",
   "status": {
     "approved": "Validé · jusqu'en {monthYear}",
-    "pending": "En attente de contrôle",
-    "rejected": "Rejeté"
+    "invalidated": "Invalidé"
   },
   "reupload": "Redéposer",
   "dropzone": {

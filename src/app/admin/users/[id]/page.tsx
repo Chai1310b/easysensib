@@ -11,6 +11,8 @@ import { MailIcon, PinIcon } from '@/components/icons';
 import { formatLongDate } from '@/lib/format';
 import { getAdminTrainings } from '@/services/admin/trainings';
 import { getAdminSessions, getUpcomingSessions } from '@/services/admin/sessions';
+import { getCertificatesForUser } from '@/services/admin/certificates';
+import { CertificatesPanel } from '@/components/admin/CertificatesPanel';
 import { getAdminUser, getAdminUsers } from '@/services/admin/users';
 import { Avatar, FieldBlock, InactiveBadge, Tag, VipBadge } from '../UserBits';
 import { initialsOf, todayIso, validityOf } from '../userDisplay';
@@ -99,6 +101,7 @@ export default async function AdminUserPage({ params }: UserPageProps) {
     }));
 
   const allSessions = await getAdminSessions();
+  const userCertificates = await getCertificatesForUser(user.id);
   const myUpcoming = allSessions.filter(
     (session) =>
       session.status === 'planned' &&
@@ -143,8 +146,7 @@ export default async function AdminUserPage({ params }: UserPageProps) {
       title: entry.trainingName,
       subtitle: formatLongDate(entry.date),
       attendance: (entry.kind === 'certificate' ? 'certificate' : 'attended') as
-        | 'certificate'
-        | 'attended',
+        'certificate' | 'attended',
     })),
   ].sort((a, b) => b.date.localeCompare(a.date));
   const attendedCount = myPast.filter(
@@ -174,48 +176,48 @@ export default async function AdminUserPage({ params }: UserPageProps) {
         obligationsTitle={t('sections.obligations')}
         asideCards={
           <>
-        <div className="ui-card flex flex-col gap-4 rounded-xl border border-card-border bg-card p-5">
-          <h2 className="text-[14px] font-semibold text-ink">{t('sections.assiduity')}</h2>
-          <div className="flex grow items-center justify-center">
-            <ProgressRing
-              percent={assiduityPercent}
-              label={t('sections.assiduity')}
-              color={assiduityPercent >= 80 ? 'var(--color-success)' : 'var(--color-warning)'}
-              size={100}
-            />
-          </div>
-        </div>
+            <div className="ui-card flex flex-col gap-4 rounded-xl border border-card-border bg-card p-5">
+              <h2 className="text-[14px] font-semibold text-ink">{t('sections.assiduity')}</h2>
+              <div className="flex grow items-center justify-center">
+                <ProgressRing
+                  percent={assiduityPercent}
+                  label={t('sections.assiduity')}
+                  color={assiduityPercent >= 80 ? 'var(--color-success)' : 'var(--color-warning)'}
+                  size={100}
+                />
+              </div>
+            </div>
 
-        <div className="ui-card flex flex-col gap-3 rounded-xl border border-card-border bg-card p-5">
-          <h2 className="flex items-center gap-2 text-[14px] font-semibold text-ink">
-            <CalendarGridIcon size={15} />
-            {t('sections.upcoming')}
-          </h2>
-          {myUpcoming.length === 0 ? (
-            <p className="text-[12.5px] text-ink-tertiary">{t('sections.noUpcoming')}</p>
-          ) : (
-            <ul className="flex flex-col gap-2">
-              {myUpcoming.map((session) => (
-                <li key={session.id}>
-                  <Link
-                    href={`/admin/sessions/${session.id}`}
-                    className="ui-row flex items-center gap-3 rounded-lg border border-card-border px-3 py-2 text-ink! hover:bg-card-muted"
-                  >
-                    <DateBlock date={session.date} width={38} daySize={16} tone="accent" />
-                    <span className="flex min-w-0 flex-col">
-                      <span className="truncate text-[13px] font-medium">
-                        {session.trainingNames.join(', ')}
-                      </span>
-                      <span className="text-[11.5px] text-ink-tertiary">
-                        {session.startTime} · {session.site}
-                      </span>
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+            <div className="ui-card flex flex-col gap-3 rounded-xl border border-card-border bg-card p-5">
+              <h2 className="flex items-center gap-2 text-[14px] font-semibold text-ink">
+                <CalendarGridIcon size={15} />
+                {t('sections.upcoming')}
+              </h2>
+              {myUpcoming.length === 0 ? (
+                <p className="text-[12.5px] text-ink-tertiary">{t('sections.noUpcoming')}</p>
+              ) : (
+                <ul className="flex flex-col gap-2">
+                  {myUpcoming.map((session) => (
+                    <li key={session.id}>
+                      <Link
+                        href={`/admin/sessions/${session.id}`}
+                        className="ui-row flex items-center gap-3 rounded-lg border border-card-border px-3 py-2 text-ink! hover:bg-card-muted"
+                      >
+                        <DateBlock date={session.date} width={38} daySize={16} tone="accent" />
+                        <span className="flex min-w-0 flex-col">
+                          <span className="truncate text-[13px] font-medium">
+                            {session.trainingNames.join(', ')}
+                          </span>
+                          <span className="text-[11.5px] text-ink-tertiary">
+                            {session.startTime} · {session.site}
+                          </span>
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </>
         }
         identity={
@@ -267,6 +269,15 @@ export default async function AdminUserPage({ params }: UserPageProps) {
           ) : null
         }
       />
+
+      {userCertificates.length > 0 ? (
+        <section className="flex flex-col gap-3">
+          <h2 className="font-display text-[16px] font-semibold">
+            {tCommon('certificatesPanel.title')}
+          </h2>
+          <CertificatesPanel certificates={userCertificates} context="training" />
+        </section>
+      ) : null}
 
       <section className="flex flex-col gap-3">
         <h2 className="font-display text-[16px] font-semibold">{t('sections.history')}</h2>

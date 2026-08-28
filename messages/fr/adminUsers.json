@@ -1,7 +1,7 @@
 {
   "list": {
     "title": "Utilisateurs",
-    "subtitle": "Suivi des obligations de sensibilisation, site par site.",
+    "subtitle": "Suivi des sensibilisations des utilisateurs, site par site.",
     "searchPlaceholder": "Rechercher un nom ou un email",
     "stats": {
       "total": "Utilisateurs suivis",
@@ -58,7 +58,7 @@
     "inactiveNote": "Compte inactif, aucune relance ne lui est envoyée.",
     "noEmailNote": "Aucun email connu, cet utilisateur ne peut pas être relancé.",
     "trainingsTitle": "Sensibilisations attribuées",
-    "trainingsSubtitle": "Chaque ligne est une obligation portée par l'utilisateur.",
+    "trainingsSubtitle": "Chaque ligne est une sensibilisation attribuée à l'utilisateur.",
     "columns": {
       "training": "Sensibilisation",
       "state": "État",
@@ -71,9 +71,9 @@
     "neverValidated": "Jamais validée",
     "registeredHint": "Place réservée",
     "empty": "Aucune sensibilisation attribuée",
-    "emptyHint": "Cet utilisateur ne porte aucune obligation pour le moment.",
+    "emptyHint": "Aucune sensibilisation attribuée à cet utilisateur pour le moment.",
     "perimeterTitle": "Périmètre de droits",
-    "perimeterSubtitle": "Ce que cet utilisateur peut voir et gérer, indépendamment de ses propres obligations.",
+    "perimeterSubtitle": "Ce que cet utilisateur peut voir et gérer, indépendamment de ses propres sensibilisations.",
     "managedSites": "Sites gérés",
     "managedTrainings": "Sensibilisations gérées",
     "allSites": "Tous les sites",
@@ -116,7 +116,7 @@
     "title": "Utilisateurs à privilège",
     "subtitle": "Responsables de périmètre, responsables de sensibilisation et administrateurs.",
     "explainerTitle": "Attribution et périmètre de droits sont deux choses différentes",
-    "explainerAssignment": "L'attribution d'une sensibilisation crée une obligation : le responsable doit lui aussi la valider et il la voit dans son espace utilisateur.",
+    "explainerAssignment": "Une sensibilisation attribuée doit aussi être validée par le responsable : il la voit dans son espace utilisateur.",
     "explainerPerimeter": "Le périmètre de droits définit ce que le responsable peut voir et gérer chez les autres : des sites, des sensibilisations, ou les deux.",
     "stats": {
       "perimeter": "Responsables de périmètre",
@@ -132,7 +132,7 @@
       "role": "Rôle",
       "sites": "Périmètre · sites",
       "trainings": "Périmètre · sensibilisations",
-      "own": "Ses obligations"
+      "own": "Ses sensibilisations"
     },
     "sitesAll": "Tous les sites",
     "sitesNone": "Aucun site",
@@ -144,7 +144,7 @@
     "emptyHint": "Aucun compte ne porte ce rôle pour le moment.",
     "drawerPerimeter": "Périmètre de droits",
     "drawerPerimeterHint": "Ce qu'il peut gérer chez les autres.",
-    "drawerOwn": "Ses propres obligations",
+    "drawerOwn": "Ses propres sensibilisations",
     "drawerOwnHint": "Ce qu'il doit valider lui-même.",
     "drawerSites": "Sites",
     "drawerTrainings": "Sensibilisations",
@@ -153,7 +153,7 @@
   },
   "indicators": {
     "byState": "Répartition par situation",
-    "byStateHint": "Utilisateurs selon leurs obligations",
+    "byStateHint": "Utilisateurs selon l'état de leurs sensibilisations",
     "bySite": "Répartition par site"
   },
   "filterGroups": {
@@ -172,7 +172,7 @@
     "upcoming": "Inscriptions à venir",
     "history": "Historique de participation",
     "assiduity": "Assiduité",
-    "obligations": "Ses obligations",
+    "obligations": "Ses sensibilisations",
     "noUpcoming": "Aucune inscription à venir",
     "noHistory": "Aucune participation passée"
   },

@@ -114,5 +114,20 @@
     "button": "Filters",
     "reset": "Reset",
     "close": "Close"
+  },
+  "certificatesPanel": {
+    "title": "E-learning certificates",
+    "empty": "No certificate uploaded",
+    "emptyHint": "Uploaded certificates appear here and count as validated right away.",
+    "uploadedOn": "uploaded on {date}",
+    "valid": "Valid",
+    "invalidated": "Invalidated",
+    "invalidate": "Invalidate",
+    "reasonInline": "reason: {reason}",
+    "modalTitle": "Invalidate this certificate",
+    "modalBody": "The validation obtained with this certificate will be cancelled: the user will have to validate the training again and will reappear in the relances.",
+    "reasonLabel": "Reason (required)",
+    "confirm": "Invalidate",
+    "invalidatedToast": "Certificate invalidated (demo)"
   }
 }

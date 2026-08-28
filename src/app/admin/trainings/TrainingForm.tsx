@@ -27,7 +27,6 @@ export function TrainingForm({ categories, owners, training }: TrainingFormProps
 
   const [name, setName] = useState(training?.name ?? '');
   const [category, setCategory] = useState<string>(training?.category ?? categories[0] ?? '');
-  const [durationHours, setDurationHours] = useState(String(training?.durationHours ?? 2));
   const [validityMonths, setValidityMonths] = useState(String(training?.validityMonths ?? 24));
   const [ownerId, setOwnerId] = useState(training?.ownerId ?? '');
   const [elearning, setElearning] = useState(training?.elearningEnabled ?? false);
@@ -49,15 +48,6 @@ export function TrainingForm({ categories, owners, training }: TrainingFormProps
       />
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <NumberField
-          label={t('form.duration')}
-          hint={t('form.durationHint')}
-          value={durationHours}
-          onChange={setDurationHours}
-          suffix="h"
-          step="0.5"
-          min={0.5}
-        />
         <NumberField
           label={t('form.validity')}
           hint={t('form.validityHint')}

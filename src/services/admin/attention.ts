@@ -1,20 +1,13 @@
 /**
- * "Points d'attention" service: the three situations a manager should look at
+ * "Points d'attention" service: the situations a manager should look at
  * first, derived from the same fixtures as the rest of the manager space.
  * Backend switch point: only the function bodies change once the API exists.
  */
 import type { Site } from '@/lib/admin-types';
-import {
-  TODAY,
-  adminSessionsFixture,
-  adminUsersFixture,
-  certificateReviewsFixture,
-} from './fixtures';
+import { TODAY, adminSessionsFixture, adminUsersFixture } from './fixtures';
 
 /** Thresholds of the three rules, exposed so the UI can label them. */
 export const ATTENTION_THRESHOLDS = {
-  /** A pending certificate older than this many days is late to review. */
-  certificateWaitingDays: 7,
   /** A session happening within this many days is imminent. */
   sessionHorizonDays: 7,
   /** Under this fill rate an imminent session counts as almost empty. */
@@ -22,13 +15,6 @@ export const ATTENTION_THRESHOLDS = {
   /** A training overdue for longer than this many days is a hard case. */
   userOverdueDays: 60,
 } as const;
-
-export interface AttentionCertificate {
-  id: string;
-  userName: string;
-  trainingName: string;
-  waitingDays: number;
-}
 
 export interface AttentionSession {
   id: string;
@@ -57,7 +43,6 @@ export interface AttentionGroup<T> {
 }
 
 export interface AttentionPoints {
-  certificates: AttentionGroup<AttentionCertificate>;
   sessions: AttentionGroup<AttentionSession>;
   users: AttentionGroup<AttentionUser>;
 }
@@ -76,17 +61,6 @@ function daysBetween(from: string, to: string): number {
  * @param limit maximum rows kept per group (the totals stay exhaustive).
  */
 export async function getAttentionPoints(limit = 3): Promise<AttentionPoints> {
-  const certificates = certificateReviewsFixture
-    .filter((review) => review.status === 'pending')
-    .map((review) => ({
-      id: review.id,
-      userName: review.userName,
-      trainingName: review.trainingName,
-      waitingDays: daysBetween(review.uploadedAt, TODAY),
-    }))
-    .filter((row) => row.waitingDays > ATTENTION_THRESHOLDS.certificateWaitingDays)
-    .sort((a, b) => b.waitingDays - a.waitingDays);
-
   const sessions = adminSessionsFixture
     .filter((session) => session.status === 'planned' && session.date >= TODAY)
     .map((session) => ({
@@ -131,7 +105,6 @@ export async function getAttentionPoints(limit = 3): Promise<AttentionPoints> {
     .sort((a, b) => b.overdueDays - a.overdueDays);
 
   return {
-    certificates: { total: certificates.length, items: certificates.slice(0, limit) },
     sessions: { total: sessions.length, items: sessions.slice(0, limit) },
     users: { total: users.length, items: users.slice(0, limit) },
   };

@@ -19,7 +19,7 @@ export const historyFixture: ParticipationRecord[] = [
     endTime: '11h00',
     kind: 'session',
     format: 'onsite',
-    location: 'Cholet · Bât. A, salle 12',
+    location: 'Cholet · Salle 12',
     trainer: 'P. Moreau',
     status: 'attended',
   },
@@ -31,7 +31,7 @@ export const historyFixture: ParticipationRecord[] = [
     endTime: '17h00',
     kind: 'session',
     format: 'onsite',
-    location: 'Cholet · Bât. B, salle 204',
+    location: 'Cholet · Salle 204',
     status: 'absent',
   },
   {
@@ -40,7 +40,7 @@ export const historyFixture: ParticipationRecord[] = [
     trainingName: 'Gestes et postures',
     kind: 'session',
     format: 'onsite',
-    location: 'Gennevilliers · Bât. D, salle 2',
+    location: 'Gennevilliers · Salle 2',
     status: 'attended',
   },
   {

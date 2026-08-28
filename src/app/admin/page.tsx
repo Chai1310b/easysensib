@@ -86,12 +86,11 @@ export default async function AdminDashboardPage() {
           className="ui-stagger [--ui-index:2]"
         />
         <StatTile
-          value={stats.certificatesToReview}
+          value={stats.recentCertificates}
           label={t('stats.certificates')}
           hint={t('stats.certificatesHint')}
           tone="warning"
           icon={<BadgeCheckIcon size={16} />}
-          href="/admin/certificates"
           className="ui-stagger [--ui-index:3]"
         />
       </section>
@@ -230,7 +229,6 @@ export default async function AdminDashboardPage() {
 interface QuickLinkLabels {
   trainings: string;
   sessions: string;
-  certificates: string;
   users: string;
   privileged: string;
   mails: string;
@@ -242,7 +240,6 @@ function QuickLinks({ title, labels }: { title: string; labels: QuickLinkLabels 
   const links: { href: string; label: string; icon: ReactNode }[] = [
     { href: '/admin/trainings', label: labels.trainings, icon: <ListIcon size={14} /> },
     { href: '/admin/sessions', label: labels.sessions, icon: <CalendarGridIcon size={14} /> },
-    { href: '/admin/certificates', label: labels.certificates, icon: <BadgeCheckIcon size={14} /> },
     { href: '/admin/users', label: labels.users, icon: <UsersIcon size={14} /> },
     { href: '/admin/users/privileged', label: labels.privileged, icon: <KeyIcon size={14} /> },
     { href: '/admin/mails', label: labels.mails, icon: <MailStackIcon size={14} /> },

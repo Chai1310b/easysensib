@@ -81,8 +81,7 @@
       "startTime": "Début",
       "endTime": "Fin",
       "site": "Site",
-      "building": "Bâtiment",
-      "buildingPlaceholder": "Bât. A",
+
       "room": "Salle",
       "roomPlaceholder": "Salle 12",
       "format": "Format",

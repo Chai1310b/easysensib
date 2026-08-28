@@ -639,7 +639,6 @@ interface RawSession {
   startTime: string;
   endTime: string;
   site: Site;
-  building?: string;
   room?: string;
   format: AdminSession['format'];
   capacity: number;
@@ -658,7 +657,6 @@ const RAW_SESSIONS: RawSession[] = [
     startTime: '9h00',
     endTime: '12h00',
     site: 'Cholet',
-    building: 'Bât. A',
     room: 'Salle 12',
     format: 'onsite',
     capacity: 16,
@@ -685,7 +683,6 @@ const RAW_SESSIONS: RawSession[] = [
     startTime: '14h00',
     endTime: '17h30',
     site: 'Cholet',
-    building: 'Bât. C',
     room: 'Salle 3',
     format: 'onsite',
     capacity: 12,
@@ -747,7 +744,6 @@ const RAW_SESSIONS: RawSession[] = [
     startTime: '8h30',
     endTime: '17h00',
     site: 'Cholet',
-    building: 'Bât. A',
     room: 'Salle polyvalente',
     format: 'onsite',
     capacity: 10,
@@ -770,7 +766,6 @@ const RAW_SESSIONS: RawSession[] = [
     startTime: '9h00',
     endTime: '12h00',
     site: 'Mérignac',
-    building: 'Bât. Nord',
     room: 'Salle 7',
     format: 'onsite',
     capacity: 14,
@@ -794,7 +789,6 @@ const RAW_SESSIONS: RawSession[] = [
     startTime: '9h00',
     endTime: '10h30',
     site: 'Mérignac',
-    building: 'Bât. Nord',
     room: 'Auditorium',
     format: 'hybrid',
     capacity: 30,
@@ -827,7 +821,6 @@ const RAW_SESSIONS: RawSession[] = [
     startTime: '14h00',
     endTime: '16h00',
     site: 'Cholet',
-    building: 'Extérieur',
     room: 'Aire de feu',
     format: 'onsite',
     capacity: 12,
@@ -876,7 +869,6 @@ const RAW_SESSIONS: RawSession[] = [
     startTime: '9h00',
     endTime: '12h00',
     site: 'Cholet',
-    building: 'Bât. A',
     room: 'Salle 12',
     format: 'onsite',
     capacity: 16,
@@ -918,7 +910,6 @@ const RAW_SESSIONS: RawSession[] = [
     startTime: '9h00',
     endTime: '10h30',
     site: 'Cholet',
-    building: 'Bât. C',
     room: 'Salle 3',
     format: 'onsite',
     capacity: 30,
@@ -968,7 +959,7 @@ export const adminSessionsFixture: AdminSession[] = RAW_SESSIONS.map((raw) => ({
   startTime: raw.startTime,
   endTime: raw.endTime,
   site: raw.site,
-  ...(raw.building && raw.room ? { location: { building: raw.building, room: raw.room } } : {}),
+  ...(raw.room ? { location: { room: raw.room } } : {}),
   format: raw.format,
   capacity: raw.capacity,
   registered: raw.participants.length,
@@ -1012,6 +1003,133 @@ for (const session of adminSessionsFixture) {
 }
 
 /* ------------------------------------------------------------------ */
+/* Certificates to review                                              */
+/* ------------------------------------------------------------------ */
+
+interface RawCertificate {
+  id: string;
+  userId: string;
+  trainingId: string;
+  fileName: string;
+  fileSizeKb: number;
+  uploadedAt: string;
+  completedAt?: string;
+  status: CertificateReview['status'];
+  invalidatedBy?: string;
+  invalidationReason?: string;
+}
+
+const RAW_CERTIFICATES: RawCertificate[] = [
+  {
+    id: 'c-001',
+    userId: 'u-bonnet',
+    trainingId: 't-rgpd',
+    fileName: 'attestation-rgpd-bonnet.pdf',
+    fileSizeKb: 412,
+    uploadedAt: '2026-08-24',
+    completedAt: '2026-08-22',
+    status: 'approved',
+  },
+  {
+    id: 'c-002',
+    userId: 'u-legrand',
+    trainingId: 't-voyage',
+    fileName: 'certificat-surete-deplacements.pdf',
+    fileSizeKb: 780,
+    uploadedAt: '2026-08-23',
+    completedAt: '2026-08-20',
+    status: 'approved',
+  },
+  {
+    id: 'c-003',
+    userId: 'u-blanchard',
+    trainingId: 't-badge',
+    fileName: 'badge-elearning-blanchard.pdf',
+    fileSizeKb: 205,
+    uploadedAt: '2026-08-21',
+    status: 'approved',
+  },
+  {
+    id: 'c-004',
+    userId: 'u-poirier',
+    trainingId: 't-dechets',
+    fileName: 'tri-dechets-attestation.jpg',
+    fileSizeKb: 1840,
+    uploadedAt: '2026-08-20',
+    completedAt: '2026-08-19',
+    status: 'approved',
+  },
+  {
+    id: 'c-005',
+    userId: 'u-girard',
+    trainingId: 't-confid',
+    fileName: 'protection-secret-2026.pdf',
+    fileSizeKb: 356,
+    uploadedAt: '2026-08-18',
+    completedAt: '2026-08-14',
+    status: 'approved',
+  },
+  {
+    id: 'c-006',
+    userId: 'u-colin',
+    trainingId: 't-rgpd',
+    fileName: 'rgpd-colin.pdf',
+    fileSizeKb: 298,
+    uploadedAt: '2026-07-28',
+    completedAt: '2026-07-26',
+    status: 'approved',
+  },
+  {
+    id: 'c-007',
+    userId: 'u-lambert',
+    trainingId: 't-dechets',
+    fileName: 'scan-dechets.png',
+    fileSizeKb: 94,
+    uploadedAt: '2026-07-15',
+    status: 'invalidated',
+    invalidatedBy: 'Claire Fontaine',
+    invalidationReason: 'Document illisible',
+  },
+];
+
+export const certificateReviewsFixture: CertificateReview[] = RAW_CERTIFICATES.map((raw) => {
+  const user = USERS_BY_ID.get(raw.userId);
+  return {
+    id: raw.id,
+    userId: raw.userId,
+    userName: user?.name ?? raw.userId,
+    userEmail: user?.email ?? '',
+    site: user?.site ?? 'Cholet',
+    trainingId: raw.trainingId,
+    trainingName: trainingName(raw.trainingId),
+    fileName: raw.fileName,
+    fileSizeKb: raw.fileSizeKb,
+    uploadedAt: raw.uploadedAt,
+    ...(raw.completedAt ? { completedAt: raw.completedAt } : {}),
+    status: raw.status,
+    ...(raw.invalidatedBy ? { invalidatedBy: raw.invalidatedBy } : {}),
+    ...(raw.invalidationReason ? { invalidationReason: raw.invalidationReason } : {}),
+  };
+});
+
+/* An approved certificate counts as validated right away: refresh the
+   holder's training so every screen (states, counters, gauges) agrees. */
+for (const certificate of certificateReviewsFixture) {
+  if (certificate.status !== 'approved') continue;
+  const holder = USERS_BY_ID.get(certificate.userId);
+  const held = holder?.trainings.find((t) => t.trainingId === certificate.trainingId);
+  if (!holder || !held) continue;
+  const obtainedAt = certificate.completedAt ?? certificate.uploadedAt;
+  if (held.lastValidatedAt && held.lastValidatedAt >= obtainedAt) continue;
+  const expiresAt = addMonths(obtainedAt, validityMonthsOf(certificate.trainingId));
+  held.lastValidatedAt = obtainedAt;
+  held.expiresAt = expiresAt;
+  held.validatedBy = 'certificate';
+  held.state =
+    daysUntil(expiresAt) < 0 ? 'overdue' : daysUntil(expiresAt) <= 90 ? 'expiring' : 'valid';
+}
+
+/* ------------------------------------------------------------------ */
 /* Trainings, with counters derived from users and sessions            */
 /* ------------------------------------------------------------------ */
 
@@ -1047,117 +1165,6 @@ export const adminTrainingsFixture: AdminTraining[] = RAW_TRAININGS.map((raw) =>
   sessionsPlanned: countSessionsPlanned(raw.id),
   ...(raw.ownerId ? { ownerId: raw.ownerId } : {}),
 }));
-
-/* ------------------------------------------------------------------ */
-/* Certificates to review                                              */
-/* ------------------------------------------------------------------ */
-
-interface RawCertificate {
-  id: string;
-  userId: string;
-  trainingId: string;
-  fileName: string;
-  fileSizeKb: number;
-  uploadedAt: string;
-  completedAt?: string;
-  status: CertificateReview['status'];
-  reviewedBy?: string;
-  rejectionReason?: string;
-}
-
-const RAW_CERTIFICATES: RawCertificate[] = [
-  {
-    id: 'c-001',
-    userId: 'u-bonnet',
-    trainingId: 't-rgpd',
-    fileName: 'attestation-rgpd-bonnet.pdf',
-    fileSizeKb: 412,
-    uploadedAt: '2026-08-24',
-    completedAt: '2026-08-22',
-    status: 'pending',
-  },
-  {
-    id: 'c-002',
-    userId: 'u-legrand',
-    trainingId: 't-voyage',
-    fileName: 'certificat-surete-deplacements.pdf',
-    fileSizeKb: 780,
-    uploadedAt: '2026-08-23',
-    completedAt: '2026-08-20',
-    status: 'pending',
-  },
-  {
-    id: 'c-003',
-    userId: 'u-blanchard',
-    trainingId: 't-badge',
-    fileName: 'badge-elearning-blanchard.pdf',
-    fileSizeKb: 205,
-    uploadedAt: '2026-08-21',
-    status: 'pending',
-  },
-  {
-    id: 'c-004',
-    userId: 'u-poirier',
-    trainingId: 't-dechets',
-    fileName: 'tri-dechets-attestation.jpg',
-    fileSizeKb: 1840,
-    uploadedAt: '2026-08-20',
-    completedAt: '2026-08-19',
-    status: 'pending',
-  },
-  {
-    id: 'c-005',
-    userId: 'u-girard',
-    trainingId: 't-confid',
-    fileName: 'protection-secret-2026.pdf',
-    fileSizeKb: 356,
-    uploadedAt: '2026-08-18',
-    completedAt: '2026-08-14',
-    status: 'pending',
-  },
-  {
-    id: 'c-006',
-    userId: 'u-colin',
-    trainingId: 't-rgpd',
-    fileName: 'rgpd-colin.pdf',
-    fileSizeKb: 298,
-    uploadedAt: '2026-07-28',
-    completedAt: '2026-07-26',
-    status: 'approved',
-    reviewedBy: 'Sophie Moreau',
-  },
-  {
-    id: 'c-007',
-    userId: 'u-lambert',
-    trainingId: 't-dechets',
-    fileName: 'scan-dechets.png',
-    fileSizeKb: 94,
-    uploadedAt: '2026-07-15',
-    status: 'rejected',
-    reviewedBy: 'Claire Fontaine',
-    rejectionReason: 'Document illisible',
-  },
-];
-
-export const certificateReviewsFixture: CertificateReview[] = RAW_CERTIFICATES.map((raw) => {
-  const user = USERS_BY_ID.get(raw.userId);
-  return {
-    id: raw.id,
-    userId: raw.userId,
-    userName: user?.name ?? raw.userId,
-    userEmail: user?.email ?? '',
-    site: user?.site ?? 'Cholet',
-    trainingId: raw.trainingId,
-    trainingName: trainingName(raw.trainingId),
-    fileName: raw.fileName,
-    fileSizeKb: raw.fileSizeKb,
-    uploadedAt: raw.uploadedAt,
-    ...(raw.completedAt ? { completedAt: raw.completedAt } : {}),
-    status: raw.status,
-    ...(raw.reviewedBy ? { reviewedBy: raw.reviewedBy } : {}),
-    ...(raw.rejectionReason ? { rejectionReason: raw.rejectionReason } : {}),
-  };
-});
 
 /* ------------------------------------------------------------------ */
 /* Mail relance executions                                             */

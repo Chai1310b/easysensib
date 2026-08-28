@@ -8,7 +8,7 @@ import { Breadcrumb, EmptyState, StatTile } from '@/components/admin';
 import { ProgressRing } from '@/components/admin/charts';
 import { CalendarGridIcon } from '@/components/admin/adminIcons';
 import { DateBlock } from '@/components/DateBlock';
-import { BuildingIcon, PeopleIcon, PinIcon } from '@/components/icons';
+import { PeopleIcon, PinIcon } from '@/components/icons';
 import { formatLongDate } from '@/lib/format';
 import { getRoom, getRoomSessions, getRooms } from '@/services/admin/settings';
 
@@ -91,10 +91,6 @@ export default async function RoomPage({ params }: RoomPageProps) {
               <span className="inline-flex items-center gap-1.5">
                 <PinIcon size={13} color="currentColor" />
                 {room.site}
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <BuildingIcon size={13} color="currentColor" />
-                {room.building}
               </span>
               <span className="inline-flex items-center gap-1.5">
                 <PeopleIcon size={13} color="currentColor" />

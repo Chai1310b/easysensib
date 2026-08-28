@@ -23,9 +23,9 @@
   "stats": {
     "total": "Trainings",
     "totalHint": "in the catalogue",
-    "concerned": "Active obligations",
+    "concerned": "Active trainings",
     "concernedHint": "across all trainings",
-    "late": "Overdue obligations",
+    "late": "Overdue trainings",
     "lateHint": "to reschedule",
     "sessions": "Planned sessions",
     "sessionsHint": "upcoming"
@@ -69,19 +69,22 @@
     "tabs": {
       "settings": "Settings",
       "users": "Covered users",
-      "sessions": "Sessions"
+      "sessions": "Sessions",
+      "certificates": "Certificates"
     },
     "tabsAria": "Training sections",
     "stats": {
       "concerned": "Covered users",
-      "concernedHint": "active obligation",
+      "concernedHint": "active training",
       "late": "Overdue",
       "lateHint": "to reschedule",
       "sessions": "Planned sessions",
       "sessionsHint": "upcoming",
       "coverage": "Coverage rate",
       "coverageHint": "users up to date"
-    }
+    },
+    "usersChart": "Concerned users status",
+    "usersChartHint": "Breakdown of the users holding this training"
   },
   "settings": {
     "title": "Training settings",

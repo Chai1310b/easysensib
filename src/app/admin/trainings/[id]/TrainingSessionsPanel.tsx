@@ -105,7 +105,7 @@ export async function TrainingSessionsPanel({ sessions }: { sessions: AdminSessi
                     {session.location ? (
                       <span className="flex items-center gap-1">
                         <BuildingIcon size={12} />
-                        {session.location.building} · {session.location.room}
+                        {session.location.room}
                       </span>
                     ) : null}
                     <span>

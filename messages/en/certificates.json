@@ -1,12 +1,11 @@
 {
   "title": "My e-learning certificates",
-  "subtitle": "The certificates you have uploaded to validate an online awareness training.",
+  "subtitle": "An uploaded certificate counts as validated right away. A manager may invalidate it afterwards.",
   "uploadedOn": "uploaded on {date}",
   "rejectionReason": "reason: {reason}",
   "status": {
     "approved": "Approved · until {monthYear}",
-    "pending": "Awaiting review",
-    "rejected": "Rejected"
+    "invalidated": "Invalidated"
   },
   "reupload": "Upload again",
   "dropzone": {

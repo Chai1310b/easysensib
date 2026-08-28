@@ -81,8 +81,7 @@
       "startTime": "Start",
       "endTime": "End",
       "site": "Site",
-      "building": "Building",
-      "buildingPlaceholder": "Bldg. A",
+
       "room": "Room",
       "roomPlaceholder": "Room 12",
       "format": "Format",

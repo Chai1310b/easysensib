@@ -34,3 +34,4 @@ export {
   type BarPoint,
 } from './charts';
 export { useExitTransition } from './useExitTransition';
+export { CertificatesPanel } from './CertificatesPanel';

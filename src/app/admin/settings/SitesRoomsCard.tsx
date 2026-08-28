@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useMemo, useState, type ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { useTranslations } from 'next-intl';
 import { Button, Drawer, EmptyState, useToast } from '@/components/admin';
 import type { Site } from '@/lib/admin-types';
@@ -27,27 +27,15 @@ export function SitesRoomsCard({ siteRooms, index }: SitesRoomsCardProps) {
   const [sites, setSites] = useState<SiteRooms[]>(siteRooms);
   const [openSite, setOpenSite] = useState<Site | null>(siteRooms[0]?.site ?? null);
   const [drawerSite, setDrawerSite] = useState<Site | null>(null);
-  const [building, setBuilding] = useState('');
   const [room, setRoom] = useState('');
   const [capacity, setCapacity] = useState('12');
 
-  const buildings = useMemo(() => {
-    const target = sites.find((entry) => entry.site === drawerSite);
-    return [...new Set((target?.rooms ?? []).map((entry) => entry.building))];
-  }, [sites, drawerSite]);
-
-  const trimmedBuilding = building.trim();
   const trimmedRoom = room.trim();
   const capacityValue = Number(capacity);
-  const canSubmit =
-    trimmedBuilding.length > 1 &&
-    trimmedRoom.length > 1 &&
-    Number.isFinite(capacityValue) &&
-    capacityValue > 0;
+  const canSubmit = trimmedRoom.length > 1 && Number.isFinite(capacityValue) && capacityValue > 0;
 
   function openDrawer(site: Site) {
     setDrawerSite(site);
-    setBuilding('');
     setRoom('');
     setCapacity('12');
   }
@@ -62,7 +50,6 @@ export function SitesRoomsCard({ siteRooms, index }: SitesRoomsCardProps) {
     const created: RoomReference = {
       id: `r-new-${Date.now()}`,
       site: drawerSite,
-      building: trimmedBuilding,
       room: trimmedRoom,
       capacity: capacityValue,
       sessionsPlanned: 0,
@@ -154,9 +141,6 @@ export function SitesRoomsCard({ siteRooms, index }: SitesRoomsCardProps) {
                                 <span className="truncate text-[13.5px] font-medium text-ink">
                                   {entryRoom.room}
                                 </span>
-                                <span className="truncate text-[12px] text-ink-tertiary">
-                                  {entryRoom.building}
-                                </span>
                               </div>
                               <span className="flex shrink-0 flex-col items-end">
                                 <span className="font-display text-[15px] leading-none font-semibold tabular-nums text-ink">
@@ -206,27 +190,11 @@ export function SitesRoomsCard({ siteRooms, index }: SitesRoomsCardProps) {
         }
       >
         <div className="flex flex-col gap-4">
-          <Field label={t('rooms.buildingLabel')} hint={t('rooms.buildingHint')}>
-            <input
-              type="text"
-              list="settings-buildings"
-              value={building}
-              autoFocus
-              placeholder={t('rooms.buildingPlaceholder')}
-              onChange={(event) => setBuilding(event.target.value)}
-              className={INPUT_CLASS}
-            />
-            <datalist id="settings-buildings">
-              {buildings.map((name) => (
-                <option key={name} value={name} />
-              ))}
-            </datalist>
-          </Field>
-
           <Field label={t('rooms.roomLabel')}>
             <input
               type="text"
               value={room}
+              autoFocus
               placeholder={t('rooms.roomPlaceholder')}
               onChange={(event) => setRoom(event.target.value)}
               className={INPUT_CLASS}

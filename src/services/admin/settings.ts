@@ -78,7 +78,6 @@ export async function getSessionTagReferences(): Promise<SessionTagReference[]> 
 export interface Room {
   id: string;
   site: Site;
-  building: string;
   room: string;
   /** Seats available in the room. */
   capacity: number;
@@ -98,39 +97,35 @@ export interface SiteRooms {
 
 /** Raw room referential. Rooms used by the session fixtures are listed first. */
 const ROOMS: Room[] = [
-  { id: 'r-cholet-a12', site: 'Cholet', building: 'Bât. A', room: 'Salle 12', capacity: 18 },
+  { id: 'r-cholet-a12', site: 'Cholet', room: 'Salle 12', capacity: 18 },
   {
     id: 'r-cholet-apoly',
     site: 'Cholet',
-    building: 'Bât. A',
     room: 'Salle polyvalente',
     capacity: 24,
   },
-  { id: 'r-cholet-c3', site: 'Cholet', building: 'Bât. C', room: 'Salle 3', capacity: 30 },
-  { id: 'r-cholet-feu', site: 'Cholet', building: 'Extérieur', room: 'Aire de feu', capacity: 20 },
+  { id: 'r-cholet-c3', site: 'Cholet', room: 'Salle 3', capacity: 30 },
+  { id: 'r-cholet-feu', site: 'Cholet', room: 'Aire de feu', capacity: 20 },
   {
     id: 'r-genn-s105',
     site: 'Gennevilliers',
-    building: 'Bât. Seine',
     room: 'Salle 105',
     capacity: 20,
   },
   {
     id: 'r-genn-s210',
     site: 'Gennevilliers',
-    building: 'Bât. Seine',
     room: 'Salle 210',
     capacity: 12,
   },
   {
     id: 'r-genn-ouest',
     site: 'Gennevilliers',
-    building: 'Bât. Ouest',
     room: 'Salle de formation',
     capacity: 24,
   },
-  { id: 'r-meri-n7', site: 'Mérignac', building: 'Bât. Nord', room: 'Salle 7', capacity: 16 },
-  { id: 'r-meri-audi', site: 'Mérignac', building: 'Bât. Nord', room: 'Auditorium', capacity: 60 },
+  { id: 'r-meri-n7', site: 'Mérignac', room: 'Salle 7', capacity: 16 },
+  { id: 'r-meri-audi', site: 'Mérignac', room: 'Auditorium', capacity: 60 },
 ];
 
 /** Rooms grouped by site, with the number of future sessions booked in each. */
@@ -140,10 +135,7 @@ export async function getSiteRooms(): Promise<SiteRooms[]> {
   const references: RoomReference[] = ROOMS.map((room) => ({
     ...room,
     sessionsPlanned: upcoming.filter(
-      (session) =>
-        session.site === room.site &&
-        session.location?.building === room.building &&
-        session.location?.room === room.room,
+      (session) => session.site === room.site && session.location?.room === room.room,
     ).length,
   }));
 
@@ -174,9 +166,6 @@ export async function getRoomSessions(id: string) {
   if (!room) return [];
   const sessions = await getAdminSessions();
   return sessions.filter(
-    (session) =>
-      session.site === room.site &&
-      session.location?.building === room.building &&
-      session.location?.room === room.room,
+    (session) => session.site === room.site && session.location?.room === room.room,
   );
 }

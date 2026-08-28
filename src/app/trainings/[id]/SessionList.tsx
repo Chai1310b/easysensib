@@ -160,9 +160,7 @@ export function SessionList({ sessions, userSite }: SessionListProps) {
                   </InfoItem>
                 </div>
                 <InfoItem icon="pin" tone={full ? 'muted' : 'default'}>
-                  {session.location
-                    ? `${session.site} · ${session.location.building}, ${session.location.room}`
-                    : session.site}
+                  {session.location ? `${session.site} · ${session.location.room}` : session.site}
                 </InfoItem>
               </div>
 

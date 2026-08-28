@@ -92,7 +92,7 @@ export function SessionsView({ sessions, sites, today }: SessionsViewProps) {
           ...session.tags,
           session.trainerName,
           session.site,
-          session.location ? `${session.location.building} ${session.location.room}` : '',
+          session.location ? session.location.room : '',
         ]
           .join(' ')
           .toLowerCase();
@@ -326,9 +326,7 @@ export function SessionsView({ sessions, sites, today }: SessionsViewProps) {
                     <span className="flex flex-col gap-0.5">
                       <span className="text-[13px] whitespace-nowrap text-ink">{session.site}</span>
                       <span className="text-[11.5px] whitespace-nowrap text-ink-tertiary">
-                        {session.location
-                          ? `${session.location.building} · ${session.location.room}`
-                          : t('row.remotePlace')}
+                        {session.location ? session.location.room : t('row.remotePlace')}
                       </span>
                     </span>
                   </Td>

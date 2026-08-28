@@ -7,13 +7,16 @@ import {
   KeyIcon,
   UsersIcon,
 } from '@/components/admin/adminIcons';
-import { ChevronLeftIcon, ClockIcon } from '@/components/icons';
+import { ChevronLeftIcon } from '@/components/icons';
 import { getAdminSessions } from '@/services/admin/sessions';
 import { getAdminTraining, getTrainingCategories } from '@/services/admin/trainings';
 import { getAdminUsers, getPrivilegedUsers } from '@/services/admin/users';
 import { CategoryChip, ModeTags } from '../TrainingBadges';
 import { subtractMonths } from '../trainingDates';
 import { TrainingDetailTabs } from './TrainingDetailTabs';
+import { CertificatesPanel } from '@/components/admin/CertificatesPanel';
+import { DonutChart } from '@/components/admin/charts';
+import { getCertificatesForTraining } from '@/services/admin/certificates';
 import { TrainingSessionsPanel } from './TrainingSessionsPanel';
 import { TrainingSettingsPanel } from './TrainingSettingsPanel';
 import { TrainingUsersPanel, type TrainingUserRow } from './TrainingUsersPanel';
@@ -37,6 +40,7 @@ export default async function AdminTrainingDetailPage({
     getAdminUsers(),
     getAdminSessions({ trainingId: id }),
   ]);
+  const certificates = await getCertificatesForTraining(id);
 
   if (!training) {
     return (
@@ -77,6 +81,16 @@ export default async function AdminTrainingDetailPage({
     ];
   });
 
+  const stateCounts = { valid: 0, expiring: 0, overdue: 0, registered: 0, never: 0 };
+  for (const row of userRows) stateCounts[row.state] += 1;
+  const stateColors = {
+    overdue: 'var(--color-gauge-danger)',
+    never: 'var(--color-ink-tertiary)',
+    expiring: 'var(--color-gauge-warning)',
+    registered: 'var(--color-accent)',
+    valid: 'var(--color-gauge-success)',
+  } as const;
+
   const coveredCount = userRows.filter((row) => COVERED.includes(row.state)).length;
   const coverage = userRows.length === 0 ? 0 : Math.round((coveredCount / userRows.length) * 100);
 
@@ -102,11 +116,6 @@ export default async function AdminTrainingDetailPage({
               <ModeTags mode={training.mode} />
             </div>
             <dl className="flex flex-wrap items-center gap-x-5 gap-y-1.5 text-[12.5px] text-ink-secondary">
-              <MetaItem
-                icon={<ClockIcon size={13} color="currentColor" />}
-                label={t('detail.duration')}
-                value={t('units.hours', { value: training.durationHours })}
-              />
               <MetaItem
                 icon={<CalendarGridIcon size={13} />}
                 label={t('detail.validity')}
@@ -161,14 +170,35 @@ export default async function AdminTrainingDetailPage({
         />
       </section>
 
+      <section className="ui-card flex flex-col gap-4 rounded-xl border border-card-border bg-card p-5">
+        <div className="flex flex-col gap-0.5">
+          <h2 className="text-[14px] font-semibold text-ink">{t('detail.usersChart')}</h2>
+          <p className="text-[11.5px] text-ink-tertiary">{t('detail.usersChartHint')}</p>
+        </div>
+        <DonutChart
+          size={124}
+          data={(['overdue', 'never', 'expiring', 'registered', 'valid'] as const).map((state) => ({
+            label: tCommon(`status.${state}`),
+            value: stateCounts[state],
+            color: stateColors[state],
+          }))}
+        />
+      </section>
+
       <TrainingDetailTabs
         usersCount={userRows.length}
         sessionsCount={sessions.length}
+        certificatesCount={certificates.length}
         settings={
           <TrainingSettingsPanel training={training} categories={categories} owners={owners} />
         }
         users={<TrainingUsersPanel trainingName={training.name} users={userRows} />}
         sessions={<TrainingSessionsPanel sessions={sessions} />}
+        certificates={
+          training.mode !== 'session' ? (
+            <CertificatesPanel certificates={certificates} context="user" />
+          ) : undefined
+        }
       />
     </div>
   );

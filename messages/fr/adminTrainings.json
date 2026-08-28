@@ -23,9 +23,9 @@
   "stats": {
     "total": "Sensibilisations",
     "totalHint": "au catalogue",
-    "concerned": "Obligations actives",
+    "concerned": "Attributions actives",
     "concernedHint": "toutes sensibilisations confondues",
-    "late": "Obligations en retard",
+    "late": "Attributions en retard",
     "lateHint": "à replanifier",
     "sessions": "Sessions planifiées",
     "sessionsHint": "à venir"
@@ -69,19 +69,22 @@
     "tabs": {
       "settings": "Paramètres",
       "users": "Utilisateurs concernés",
-      "sessions": "Sessions"
+      "sessions": "Sessions",
+      "certificates": "Certificats"
     },
     "tabsAria": "Sections de la sensibilisation",
     "stats": {
       "concerned": "Utilisateurs concernés",
-      "concernedHint": "obligation active",
+      "concernedHint": "attribution active",
       "late": "En retard",
       "lateHint": "à replanifier",
       "sessions": "Sessions planifiées",
       "sessionsHint": "à venir",
       "coverage": "Taux de couverture",
       "coverageHint": "utilisateurs à jour"
-    }
+    },
+    "usersChart": "Statut des utilisateurs concernés",
+    "usersChartHint": "Répartition des utilisateurs qui portent cette sensibilisation"
   },
   "settings": {
     "title": "Paramètres de la sensibilisation",
