@@ -10,6 +10,8 @@ interface ValidityGaugeProps {
   width?: number;
   /** Force the neutral #e9edf3 track (used on some warning gauges). */
   neutralTrack?: boolean;
+  /** White track, for gauges sitting on a tinted background. */
+  whiteTrack?: boolean;
 }
 
 const LABEL_COLOR: Record<StatusTone, string> = {
@@ -37,8 +39,13 @@ export function ValidityGauge({
   percent,
   width = 150,
   neutralTrack = false,
+  whiteTrack = false,
 }: ValidityGaugeProps) {
-  const track = neutralTrack ? 'bg-gauge-neutral-track' : TRACK_COLOR[tone];
+  const track = whiteTrack
+    ? 'bg-white'
+    : neutralTrack
+      ? 'bg-gauge-neutral-track'
+      : TRACK_COLOR[tone];
   const clamped = Math.max(0, Math.min(100, percent));
 
   return (

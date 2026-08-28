@@ -16,6 +16,25 @@ import { getTrainings } from '@/services/trainings';
 import { getCurrentUser } from '@/services/user';
 import { HomeSessions, type HomeSessionRow } from './HomeSessions';
 
+/** Right-column groups (option G): headers plus per-state tinted rows. */
+const TRAINING_GROUPS: {
+  key: 'todo' | 'registered' | 'valid';
+  states: readonly Training['state'][];
+  dot: string;
+}[] = [
+  { key: 'todo', states: ['overdue', 'todo'], dot: 'var(--color-danger)' },
+  { key: 'registered', states: ['registered'], dot: 'var(--color-accent)' },
+  { key: 'valid', states: ['valid'], dot: 'var(--color-success)' },
+];
+
+/** Light full-bleed tint of a row, per state. */
+const ROW_TINT: Record<string, string> = {
+  overdue: 'color-mix(in srgb, var(--color-danger-tint) 45%, white)',
+  todo: 'color-mix(in srgb, var(--color-warning-tint) 45%, white)',
+  registered: 'color-mix(in srgb, var(--color-accent-tint) 45%, white)',
+  valid: 'color-mix(in srgb, var(--color-success-tint) 45%, white)',
+};
+
 export default async function HomePage() {
   const [t, tc, user, trainings] = await Promise.all([
     getTranslations('home'),
@@ -78,28 +97,51 @@ export default async function HomePage() {
         <div className="flex w-[400px] shrink-0 flex-col gap-7">
           <div className="flex flex-col gap-3.5">
             <h2 className="font-display text-[17px] font-semibold">{t('myTrainings')}</h2>
-            <Card className="flex flex-col">
-              {orderedTrainings.map((training, index) => (
-                <TrainingRow
-                  key={training.id}
-                  training={training}
-                  isLast={index === orderedTrainings.length - 1}
-                  subtitle={
-                    training.state === 'valid' && training.lastValidation
-                      ? training.lastValidation.kind === 'certificate'
-                        ? t('validatedByCertificate', {
-                            date: formatLongDate(training.lastValidation.date),
-                          })
-                        : t('validatedBySession', {
-                            date: formatLongDate(training.lastValidation.date),
-                          })
-                      : training.category
-                  }
-                  gaugeLabel={tc(`validity.${training.validity.labelKey}`, {
-                    count: training.validity.labelCount,
-                  })}
-                />
-              ))}
+            <Card className="flex flex-col overflow-hidden">
+              {TRAINING_GROUPS.map((group, groupIndex) => {
+                const members = orderedTrainings.filter((training) =>
+                  group.states.includes(training.state),
+                );
+                if (members.length === 0) return null;
+                return (
+                  <div key={group.key} className="flex flex-col">
+                    <div
+                      className={`flex items-center gap-2 bg-card px-[18px] pt-2.5 pb-1.5 ${
+                        groupIndex > 0 ? 'border-t border-divider' : ''
+                      }`}
+                    >
+                      <span
+                        aria-hidden
+                        className="h-[7px] w-[7px] rounded-full"
+                        style={{ background: group.dot }}
+                      />
+                      <span className="text-[10.5px] font-bold tracking-[0.06em] text-ink-tertiary uppercase">
+                        {t(`groups.${group.key}`)} · {members.length}
+                      </span>
+                    </div>
+                    {members.map((training) => (
+                      <TrainingRow
+                        key={training.id}
+                        training={training}
+                        subtitle={
+                          training.state === 'valid' && training.lastValidation
+                            ? training.lastValidation.kind === 'certificate'
+                              ? t('validatedByCertificate', {
+                                  date: formatLongDate(training.lastValidation.date),
+                                })
+                              : t('validatedBySession', {
+                                  date: formatLongDate(training.lastValidation.date),
+                                })
+                            : training.category
+                        }
+                        gaugeLabel={tc(`validity.${training.validity.labelKey}`, {
+                          count: training.validity.labelCount,
+                        })}
+                      />
+                    ))}
+                  </div>
+                );
+              })}
             </Card>
           </div>
 
@@ -135,25 +177,24 @@ export default async function HomePage() {
   );
 }
 
-/** One training of the right column: state, name, gauge. */
+/** One training of the right column: tinted row, state, name, gauge. */
 function TrainingRow({
   training,
   subtitle,
   gaugeLabel,
-  isLast,
 }: {
   training: Training;
   subtitle: string;
   gaugeLabel: string;
-  isLast: boolean;
 }) {
   const canElearning = training.mode === 'elearning' || training.mode === 'both';
 
   return (
     <div
-      className={`flex items-center gap-3 px-[18px] py-3.5 ${isLast ? '' : 'border-b border-divider'}`}
+      className="flex items-center gap-3 px-[18px] py-3"
+      style={{ background: ROW_TINT[training.state] }}
     >
-      <StateIcon state={training.state} size={20} className="shrink-0" />
+      <StateIcon state={training.state} size={20} className="shrink-0" circleFill="#ffffff" />
       <div className="flex min-w-0 grow flex-col gap-0.5">
         <span className="flex items-center gap-1.5">
           <Link
@@ -173,7 +214,7 @@ function TrainingRow({
         tone={training.validity.tone}
         percent={training.validity.progressPercent}
         width={116}
-        neutralTrack={training.state === 'registered'}
+        whiteTrack
       />
     </div>
   );

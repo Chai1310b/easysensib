@@ -4,6 +4,8 @@ interface StateIconProps {
   state: TrainingState;
   size?: number;
   className?: string;
+  /** Overrides the tinted circle (e.g. white on an already tinted row). */
+  circleFill?: string;
 }
 
 const STYLES: Record<TrainingState, { fill: string; stroke: string }> = {
@@ -17,12 +19,12 @@ const STYLES: Record<TrainingState, { fill: string; stroke: string }> = {
  * Training state icon in a tinted circle:
  * overdue/todo = exclamation, registered = clock, valid = check.
  */
-export function StateIcon({ state, size = 24, className }: StateIconProps) {
+export function StateIcon({ state, size = 24, className, circleFill }: StateIconProps) {
   const { fill, stroke } = STYLES[state];
 
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
-      <circle cx="12" cy="12" r="10" fill={fill} />
+      <circle cx="12" cy="12" r="10" fill={circleFill ?? fill} />
       {(state === 'overdue' || state === 'todo') && (
         <path d="M12 7V13M12 16.5V16.6" stroke={stroke} strokeWidth="1.9" strokeLinecap="round" />
       )}

@@ -12,5 +12,10 @@
   "sessionsForYou": "Prochaines sessions pour vous",
   "sessionsForYouEmpty": "Aucune session à venir ne correspond à vos sensibilisations à passer. Vous serez relancé par mail dès qu'un créneau ouvrira.",
   "validates": "Valide",
-  "myTrainings": "Mes sensibilisations"
+  "myTrainings": "Mes sensibilisations",
+  "groups": {
+    "todo": "À faire",
+    "registered": "Inscrit",
+    "valid": "À jour"
+  }
 }

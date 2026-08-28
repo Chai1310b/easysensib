@@ -12,5 +12,10 @@
   "sessionsForYou": "Upcoming sessions for you",
   "sessionsForYouEmpty": "No upcoming session matches the trainings you still have to validate. You will get an email as soon as a slot opens.",
   "validates": "Validates",
-  "myTrainings": "My trainings"
+  "myTrainings": "My trainings",
+  "groups": {
+    "todo": "To do",
+    "registered": "Registered",
+    "valid": "Up to date"
+  }
 }
