@@ -333,10 +333,10 @@ function ActiveTrainingCard({
           {otherSlotsCount > 0 && (
             <Link
               href={`/trainings/${training.id}`}
-              className="flex items-center gap-1 text-xs font-medium text-ink-secondary! hover:text-accent!"
+              className="flex items-center gap-1.5 text-xs font-medium text-ink-secondary! transition-colors duration-150 hover:text-accent!"
             >
               {labels.otherSlots(otherSlotsCount)}
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden>
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" aria-hidden>
                 <path
                   d="M10 6L16 12L10 18"
                   stroke="currentColor"

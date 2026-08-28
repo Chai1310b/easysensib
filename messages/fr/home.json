@@ -13,5 +13,5 @@
   "shortcutContact": "Contacter mon responsable",
   "mailNote": "Un rappel vous est envoyé par mail dès qu'une place se libère sur une session qui vous concerne.",
   "nearestSession": "Session la plus proche",
-  "otherSlots": "{count, plural, one {+# autre créneau} other {+# autres créneaux}} · tout voir"
+  "otherSlots": "{count, plural, one {# autre créneau disponible} other {# autres créneaux disponibles}}"
 }
