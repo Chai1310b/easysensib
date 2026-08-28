@@ -9,8 +9,8 @@
     "remote": "Visio"
   },
   "status": {
-    "attended": "Présente",
-    "absent": "Absente",
+    "attended": "Présent",
+    "absent": "Absent",
     "certificate": "Validée"
   },
   "expanded": {

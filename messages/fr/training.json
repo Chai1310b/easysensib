@@ -3,7 +3,7 @@
   "sessionsAvailable": "{count, plural, =0 {Aucune session disponible} one {# session disponible} other {# sessions disponibles}}",
   "allSites": "Tous les sites",
   "allFormats": "Tous formats",
-  "mailNote": "Aucune date ne convient ? Vous serez relancée par mail dès qu'une nouvelle session ouvre.",
+  "mailNote": "Aucune date ne convient ? Vous serez relancé par mail dès qu'une nouvelle session ouvre.",
   "about": {
     "title": "À propos de cette sensibilisation"
   },
@@ -24,7 +24,7 @@
     "lastValidatedSession": "Validée le {date} en session",
     "lastValidatedCertificate": "Validée le {date} par certificat e-learning",
     "neverValidated": "Jamais validée pour le moment",
-    "registered": "Inscrite à la session du {date}"
+    "registered": "Inscrit à la session du {date}"
   },
   "seatsGauge": "{left} places sur {total}",
   "pastTitle": "Mes participations passées",
@@ -35,8 +35,8 @@
     "action": "Déposer mon certificat"
   },
   "past": {
-    "attended": "Présente",
-    "absent": "Absente",
+    "attended": "Présent",
+    "absent": "Absent",
     "certificate": "Certificat"
   }
 }
