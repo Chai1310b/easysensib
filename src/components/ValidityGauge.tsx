@@ -8,7 +8,7 @@ interface ValidityGaugeProps {
   percent: number;
   /** Fixed width in px (150 in cards, 170 on the training header). */
   width?: number;
-  /** Force the neutral #eceee9 track (used on some warning gauges). */
+  /** Force the neutral #e9edf3 track (used on some warning gauges). */
   neutralTrack?: boolean;
 }
 

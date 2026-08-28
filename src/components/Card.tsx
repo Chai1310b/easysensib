@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 
 interface CardProps {
-  /** Muted cards use the softer #fbfcfa background (validated rows). */
+  /** Muted cards use the softer #fafbfd background (validated rows). */
   muted?: boolean;
   className?: string;
   children: ReactNode;

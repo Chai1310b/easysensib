@@ -82,8 +82,8 @@ export const PRIORITY_COLORS = {
 /** Palette of the exclusion reasons. */
 export const EXCLUSION_COLORS = {
   validTraining: '#7fae90',
-  recentMail: '#2b3fbf',
-  bookedSlot: '#8fa0ff',
+  recentMail: '#0816a1',
+  bookedSlot: '#87edff',
   vip: '#d3a94e',
   noEmail: '#c66a63',
   inactive: '#b3b7be',

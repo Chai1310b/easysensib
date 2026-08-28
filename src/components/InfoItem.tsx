@@ -22,7 +22,7 @@ const ICONS: Record<InfoIconName, (color: string) => ReactNode> = {
 const TEXT: Record<NonNullable<InfoItemProps['tone']>, { text: string; icon: string }> = {
   default: { text: 'font-medium text-ink', icon: '#8a8e96' },
   success: { text: 'font-semibold text-success', icon: '#2f7d4f' },
-  accent: { text: 'font-semibold text-accent', icon: '#2b3fbf' },
+  accent: { text: 'font-semibold text-accent', icon: '#0816a1' },
   muted: { text: 'font-medium text-ink-tertiary', icon: '#8a8e96' },
 };
 

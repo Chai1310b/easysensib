@@ -18,8 +18,8 @@ function svgProps(size: number, className?: string): SVGProps<SVGSVGElement> {
 /** App logo: shield with an accent check. */
 export function ShieldLogoIcon({
   size = 24,
-  color = '#f4f5f1',
-  accentColor = '#8fa0ff',
+  color = '#f4f9fb',
+  accentColor = '#87edff',
   strokeWidth = 1.6,
   className,
 }: IconProps & { accentColor?: string }) {
@@ -225,7 +225,7 @@ export function PeopleIcon({
 
 export function LaptopIcon({
   size = 12,
-  color = '#2b3fbf',
+  color = '#0816a1',
   strokeWidth = 1.8,
   className,
 }: IconProps) {
@@ -259,7 +259,7 @@ export function DownloadIcon({
 
 export function UploadIcon({
   size = 26,
-  color = '#2b3fbf',
+  color = '#0816a1',
   strokeWidth = 1.8,
   className,
 }: IconProps) {

@@ -255,10 +255,10 @@ function ActiveTrainingCard({
             {registered ? (
               <div className="flex items-center gap-1.5">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                  <circle cx="12" cy="12" r="10" fill="#eaedfb" />
+                  <circle cx="12" cy="12" r="10" fill="#e7eafa" />
                   <path
                     d="M7.5 12L10.5 15L16.5 9"
-                    stroke="#2b3fbf"
+                    stroke="#0816a1"
                     strokeWidth="1.8"
                     strokeLinecap="round"
                     strokeLinejoin="round"

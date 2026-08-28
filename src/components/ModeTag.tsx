@@ -23,7 +23,7 @@ export function ModeTag({ mode }: ModeTagProps) {
 
   return (
     <span className="flex items-center gap-[5px] rounded px-2 py-[3px] text-[11px] font-semibold text-accent bg-accent-tint">
-      <LaptopIcon size={11} color="#2b3fbf" strokeWidth={1.8} />
+      <LaptopIcon size={11} color="#0816a1" strokeWidth={1.8} />
       {t('mode.elearning')}
     </span>
   );

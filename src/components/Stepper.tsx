@@ -28,7 +28,7 @@ function StepGlyph({ icon, status }: { icon: StepIcon; status: StepStatus }) {
 /**
  * Fixed-width 3-step progress stepper: 28px circles linked by 2px lines.
  * done = solid green + white check, current = solid blue + white icon,
- * future = #d5d7d1 outline + #b3b7be icon. Connectors turn blue up to the
+ * future = #d2d8e3 outline + #b3b7be icon. Connectors turn blue up to the
  * current step.
  */
 export function Stepper({ steps, width = 224 }: StepperProps) {

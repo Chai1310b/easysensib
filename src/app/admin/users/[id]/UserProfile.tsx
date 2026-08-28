@@ -360,7 +360,7 @@ export function UserProfile({
                   checked={requeue}
                   onChange={(event) => setRequeue(event.target.checked)}
                   disabled={candidates.length === 0}
-                  className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-[#2b3fbf] disabled:cursor-default"
+                  className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-[#0816a1] disabled:cursor-default"
                 />
                 <span className="flex flex-col gap-0.5">
                   <span className="text-[13px] font-medium text-ink">

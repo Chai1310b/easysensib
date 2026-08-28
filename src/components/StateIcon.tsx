@@ -9,7 +9,7 @@ interface StateIconProps {
 const STYLES: Record<TrainingState, { fill: string; stroke: string }> = {
   overdue: { fill: '#f8e9e7', stroke: '#b8362f' },
   todo: { fill: '#f9f0dd', stroke: '#96650f' },
-  registered: { fill: '#eaedfb', stroke: '#2b3fbf' },
+  registered: { fill: '#e7eafa', stroke: '#0816a1' },
   valid: { fill: '#e9f2ec', stroke: '#2f7d4f' },
 };
 

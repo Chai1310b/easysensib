@@ -148,7 +148,7 @@ export function AdminSidebar() {
             {t('nav.settingsMenu.back')}
           </Link>
           <div className="flex flex-col gap-1">
-            <h2 className="mb-1 px-3 text-[11px] font-semibold tracking-[0.07em] text-[#6d727c] uppercase">
+            <h2 className="mb-1 px-3 text-[11px] font-semibold tracking-[0.07em] text-[#8a92c4] uppercase">
               {t('nav.settingsMenu.title')}
             </h2>
             {SETTINGS_ENTRIES.map((entry) => (
@@ -166,7 +166,7 @@ export function AdminSidebar() {
           {SECTIONS.map((section, index) => (
             <div key={section.titleKey ?? `section-${index}`} className="flex flex-col gap-1">
               {section.titleKey ? (
-                <h2 className="mb-1 px-3 text-[11px] font-semibold tracking-[0.07em] text-[#6d727c] uppercase">
+                <h2 className="mb-1 px-3 text-[11px] font-semibold tracking-[0.07em] text-[#8a92c4] uppercase">
                   {t(section.titleKey)}
                 </h2>
               ) : null}
@@ -203,11 +203,11 @@ function SidebarEntry({
       aria-current={active ? 'page' : undefined}
       className={`ui-pressable flex items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] transition-colors duration-200 ${
         active
-          ? 'bg-[#242830] font-medium text-topbar-text!'
+          ? 'bg-[#14147c] font-medium text-topbar-text!'
           : 'text-topbar-secondary! hover:bg-white/5 hover:text-topbar-text!'
       }`}
     >
-      <span className={active ? 'text-[#8fa0ff]' : 'text-[#8a8e96]'}>{entry.icon}</span>
+      <span className={active ? 'text-[#87edff]' : 'text-[#97a1cf]'}>{entry.icon}</span>
       <span className="truncate">{label}</span>
     </Link>
   );
@@ -237,11 +237,11 @@ export function AdminMobileNav() {
             aria-current={active ? 'page' : undefined}
             className={`ui-pressable flex shrink-0 items-center gap-2 rounded-lg px-3 py-2 text-[13px] transition-colors duration-200 ${
               active
-                ? 'bg-[#242830] font-medium text-topbar-text!'
+                ? 'bg-[#14147c] font-medium text-topbar-text!'
                 : 'text-topbar-secondary! hover:text-topbar-text!'
             }`}
           >
-            <span className={active ? 'text-[#8fa0ff]' : 'text-[#8a8e96]'}>{entry.icon}</span>
+            <span className={active ? 'text-[#87edff]' : 'text-[#97a1cf]'}>{entry.icon}</span>
             {t(entry.labelKey)}
           </Link>
         );

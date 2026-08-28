@@ -55,7 +55,7 @@ export function UserMenu({ initials, fullName, email, site }: UserMenuProps) {
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
           <path
             d="M6 9L12 15L18 9"
-            stroke="#7a7e88"
+            stroke="#aeb6e0"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
