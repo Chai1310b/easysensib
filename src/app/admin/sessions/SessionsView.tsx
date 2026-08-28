@@ -186,7 +186,7 @@ export function SessionsView({ sessions, sites, today }: SessionsViewProps) {
                 onClick={() => setView('list')}
                 className={`ui-pressable flex h-9 cursor-pointer items-center gap-1.5 px-3 text-[12.5px] font-medium transition-colors duration-150 ${
                   view === 'list'
-                    ? 'bg-topbar text-white'
+                    ? 'bg-accent text-white'
                     : 'bg-card text-ink-secondary hover:bg-card-muted'
                 }`}
               >
@@ -199,7 +199,7 @@ export function SessionsView({ sessions, sites, today }: SessionsViewProps) {
                 onClick={() => setView('calendar')}
                 className={`ui-pressable flex h-9 cursor-pointer items-center gap-1.5 px-3 text-[12.5px] font-medium transition-colors duration-150 ${
                   view === 'calendar'
-                    ? 'bg-topbar text-white'
+                    ? 'bg-accent text-white'
                     : 'bg-card text-ink-secondary hover:bg-card-muted'
                 }`}
               >

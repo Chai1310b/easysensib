@@ -46,7 +46,7 @@ export function UserMenu({ initials, fullName, email, site }: UserMenuProps) {
         aria-label={t('userMenu.open')}
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
-        className="ui-pressable flex cursor-pointer items-center gap-2.5 rounded-full py-1 pr-2 pl-1 transition-colors duration-200 hover:bg-white/5"
+        className="ui-pressable flex cursor-pointer items-center gap-2.5 rounded-full py-1 pr-2 pl-1 transition-colors duration-200 hover:bg-card-muted"
       >
         <span className="flex h-9 w-9 items-center justify-center rounded-full bg-accent text-[13px] font-semibold text-white">
           {initials}
@@ -55,7 +55,7 @@ export function UserMenu({ initials, fullName, email, site }: UserMenuProps) {
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
           <path
             d="M6 9L12 15L18 9"
-            stroke="#aeb6e0"
+            stroke="#8a94ac"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -118,7 +118,7 @@ export function UserMenu({ initials, fullName, email, site }: UserMenuProps) {
               {t('userMenu.language')}
             </span>
             <span className="flex overflow-hidden rounded-full border border-card-border text-[11px] font-semibold">
-              <span className="bg-topbar px-2.5 py-1 text-white">FR</span>
+              <span className="bg-accent px-2.5 py-1 text-white">FR</span>
               <span className="px-2.5 py-1 text-ink-disabled" title={t('userMenu.demo')}>
                 EN
               </span>

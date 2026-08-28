@@ -21,7 +21,7 @@ export function SpaceSwitch({ toAdmin, toUser }: SpaceSwitchProps) {
   return (
     <Link
       href={inAdmin ? '/' : '/admin'}
-      className="ui-pressable flex items-center gap-1.5 rounded-full border border-topbar-border px-3 py-1.5 text-[13px] text-topbar-secondary! hover:bg-white/5 hover:text-topbar-text!"
+      className="ui-pressable flex items-center gap-1.5 rounded-full border border-topbar-border px-3 py-1.5 text-[13px] text-topbar-secondary! hover:bg-card-muted hover:text-topbar-text!"
     >
       <SwitchSpaceIcon size={13} color="currentColor" />
       {inAdmin ? toUser : toAdmin}

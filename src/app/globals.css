@@ -7,12 +7,12 @@
 
   /* Page + top bar */
   --color-page: #f3f6f9;
-  --color-topbar: #00005c;
-  --color-topbar-text: #f4f9fb;
-  --color-topbar-secondary: #aeb6e0;
-  --color-topbar-muted: #dde2f5;
-  --color-topbar-border: #2a2a80;
-  --color-logo-accent: #87edff;
+  --color-topbar: #ffffff;
+  --color-topbar-text: #00005c;
+  --color-topbar-secondary: #555f76;
+  --color-topbar-muted: #3c455c;
+  --color-topbar-border: #e1e5ec;
+  --color-logo-accent: #0816a1;
 
   /* Surfaces */
   --color-card: #ffffff;

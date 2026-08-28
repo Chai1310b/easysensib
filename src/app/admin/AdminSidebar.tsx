@@ -124,7 +124,7 @@ export function AdminSidebar() {
   return (
     <nav
       aria-label={t('nav.ariaLabel')}
-      className="sticky top-16 hidden max-h-[calc(100vh-4rem)] min-h-[calc(100vh-4rem)] w-60 shrink-0 flex-col gap-6 self-start overflow-y-auto bg-topbar px-4 py-6 lg:flex"
+      className="sticky top-16 hidden max-h-[calc(100vh-4rem)] min-h-[calc(100vh-4rem)] w-60 shrink-0 flex-col gap-6 self-start overflow-y-auto border-r border-card-border bg-[#f4f9fb] px-4 py-6 lg:flex"
     >
       <span className="mx-1 w-fit rounded-full border border-topbar-border px-2.5 py-1 text-[11px] font-semibold tracking-[0.06em] text-topbar-secondary uppercase">
         {t('space.badge')}
@@ -134,7 +134,7 @@ export function AdminSidebar() {
         <div key="settings" className="ui-menu-forward flex flex-col gap-4">
           <Link
             href="/admin"
-            className="ui-pressable flex items-center gap-2 rounded-lg px-3 py-2 text-[12.5px] text-topbar-secondary! transition-colors duration-200 hover:bg-white/5 hover:text-topbar-text!"
+            className="ui-pressable flex items-center gap-2 rounded-lg px-3 py-2 text-[12.5px] text-topbar-secondary! transition-colors duration-200 hover:bg-[#e9eef7] hover:text-topbar-text!"
           >
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
               <path
@@ -148,7 +148,7 @@ export function AdminSidebar() {
             {t('nav.settingsMenu.back')}
           </Link>
           <div className="flex flex-col gap-1">
-            <h2 className="mb-1 px-3 text-[11px] font-semibold tracking-[0.07em] text-[#8a92c4] uppercase">
+            <h2 className="mb-1 px-3 text-[11px] font-semibold tracking-[0.07em] text-[#9aa3b8] uppercase">
               {t('nav.settingsMenu.title')}
             </h2>
             {SETTINGS_ENTRIES.map((entry) => (
@@ -166,7 +166,7 @@ export function AdminSidebar() {
           {SECTIONS.map((section, index) => (
             <div key={section.titleKey ?? `section-${index}`} className="flex flex-col gap-1">
               {section.titleKey ? (
-                <h2 className="mb-1 px-3 text-[11px] font-semibold tracking-[0.07em] text-[#8a92c4] uppercase">
+                <h2 className="mb-1 px-3 text-[11px] font-semibold tracking-[0.07em] text-[#9aa3b8] uppercase">
                   {t(section.titleKey)}
                 </h2>
               ) : null}
@@ -203,11 +203,11 @@ function SidebarEntry({
       aria-current={active ? 'page' : undefined}
       className={`ui-pressable flex items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] transition-colors duration-200 ${
         active
-          ? 'bg-[#14147c] font-medium text-topbar-text!'
-          : 'text-topbar-secondary! hover:bg-white/5 hover:text-topbar-text!'
+          ? 'bg-[#e7eafa] font-medium text-[#0816a1]!'
+          : 'text-topbar-secondary! hover:bg-[#e9eef7] hover:text-topbar-text!'
       }`}
     >
-      <span className={active ? 'text-[#87edff]' : 'text-[#97a1cf]'}>{entry.icon}</span>
+      <span className={active ? 'text-[#0816a1]' : 'text-[#8a94ac]'}>{entry.icon}</span>
       <span className="truncate">{label}</span>
     </Link>
   );
@@ -226,7 +226,7 @@ export function AdminMobileNav() {
   return (
     <nav
       aria-label={t('nav.ariaLabel')}
-      className="flex gap-1.5 overflow-x-auto bg-topbar px-4 py-3 lg:hidden"
+      className="flex gap-1.5 overflow-x-auto border-b border-card-border bg-[#f4f9fb] px-4 py-3 lg:hidden"
     >
       {entries.map((entry) => {
         const active = isActive(pathname, entry);
@@ -237,11 +237,11 @@ export function AdminMobileNav() {
             aria-current={active ? 'page' : undefined}
             className={`ui-pressable flex shrink-0 items-center gap-2 rounded-lg px-3 py-2 text-[13px] transition-colors duration-200 ${
               active
-                ? 'bg-[#14147c] font-medium text-topbar-text!'
-                : 'text-topbar-secondary! hover:text-topbar-text!'
+                ? 'bg-[#e7eafa] font-medium text-[#0816a1]!'
+                : 'text-topbar-secondary! hover:bg-[#e9eef7] hover:text-topbar-text!'
             }`}
           >
-            <span className={active ? 'text-[#87edff]' : 'text-[#97a1cf]'}>{entry.icon}</span>
+            <span className={active ? 'text-[#0816a1]' : 'text-[#8a94ac]'}>{entry.icon}</span>
             {t(entry.labelKey)}
           </Link>
         );

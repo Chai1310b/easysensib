@@ -14,9 +14,9 @@ export async function TopBar() {
   ]);
 
   return (
-    <header className="sticky top-0 z-40 flex h-16 shrink-0 items-center justify-between bg-topbar px-10">
+    <header className="sticky top-0 z-40 flex h-16 shrink-0 items-center justify-between border-b border-topbar-border bg-topbar px-10">
       <Link href="/" className="flex items-center gap-3">
-        <ShieldLogoIcon size={24} />
+        <ShieldLogoIcon size={24} color="#00005c" accentColor="#0816a1" />
         <span className="font-display text-lg font-semibold text-topbar-text">{t('app.name')}</span>
       </Link>
       <div className="flex items-center gap-[22px]">
@@ -25,7 +25,7 @@ export async function TopBar() {
           {t('topbar.help')}
         </a>
         <div className="flex items-center gap-2 rounded-full border border-topbar-border px-3.5 py-1.5">
-          <PinIcon size={13} color="var(--color-topbar-secondary)" />
+          <PinIcon size={13} color="#8a94ac" />
           <span className="text-[13px] text-topbar-muted">{user.site}</span>
         </div>
         <UserMenu
